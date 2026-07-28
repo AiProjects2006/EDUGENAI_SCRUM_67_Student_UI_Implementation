@@ -6,6 +6,7 @@ const Courses = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = ['All', 'Math', 'Science', 'English', 'ICT'];
   
@@ -16,16 +17,23 @@ const Courses = () => {
     { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: '🐠' },
   ];
 
-  const filteredUnits = activeCategory === 'All' 
-    ? units 
-    : units.filter(u => u.subject === activeCategory);
+  const filteredUnits = units.filter(u => {
+    const matchesCategory = activeCategory === 'All' || u.subject === activeCategory;
+    const matchesSearch = u.title.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="courses-page">
       <div className="courses-header glass-panel">
         <h2>Your Learning Journey 📚</h2>
         <div className="search-bar">
-          <input type="text" placeholder="Search for a course..." />
+          <input 
+            type="text" 
+            placeholder="Search for a course..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <button className="search-btn">🔍</button>
         </div>
       </div>

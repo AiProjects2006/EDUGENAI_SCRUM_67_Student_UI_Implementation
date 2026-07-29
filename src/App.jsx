@@ -3,6 +3,7 @@ import OceanLayout from './components/layout/OceanLayout/OceanLayout';
 import LandingPage from './features/auth/pages/LandingPage';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
+import Modules from './features/primary/modules/Modules';
 import Notes from './features/primary/notes/Notes';
 
 import { AudioProvider } from './context/AudioContext';
@@ -19,6 +20,7 @@ function App() {
             <Route index element={<Navigate to="/landing" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="courses" element={<Courses />} />
+            <Route path="modules" element={<Modules />} />
             <Route path="notes" element={<Notes />} />
           </Route>
         </Routes>

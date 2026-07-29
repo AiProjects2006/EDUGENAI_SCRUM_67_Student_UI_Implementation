@@ -13,7 +13,7 @@ const Courses = () => {
   const units = [
     { id: 1, title: 'Fractions & Decimals', subject: 'Math', status: 'completed', image: '🔢' },
     { id: 2, title: 'Geometry Basics', subject: 'Math', status: 'unlocked', image: '📐' },
-    { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'locked', image: '🧮' },
+    { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'unlocked', image: '🧮' },
     { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: '🐠' },
   ];
 
@@ -61,8 +61,8 @@ const Courses = () => {
               {unit.status === 'locked' ? (
                 <button className="btn-secondary disabled">Locked 🔒</button>
               ) : (
-                <button className="btn-primary" onClick={() => navigate('/notes')}>
-                  {unit.status === 'completed' ? 'Review' : 'Continue'}
+                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title } })}>
+                  {unit.status === 'completed' ? '✅ Review' : '▶ Continue'}
                 </button>
               )}
             </div>

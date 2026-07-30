@@ -6,7 +6,11 @@ import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
 import Notes from './features/primary/notes/Notes';
 import ActivityMap from './features/primary/activity-map/ActivityMap';
+<<<<<<< HEAD
+import ActivityPlayer from './features/primary/activity-player/ActivityPlayer';
+=======
 
+>>>>>>> origin/develop
 
 import { AudioProvider } from './context/AudioContext';
 
@@ -25,6 +29,10 @@ function App() {
             <Route path="modules" element={<Modules />} />
             <Route path="notes" element={<Notes />} />
             <Route path="activity-map" element={<ActivityMap />} />
+<<<<<<< HEAD
+            <Route path="activity" element={<ActivityPlayer />} />
+=======
+>>>>>>> origin/develop
           </Route>
         </Routes>
       </Router>

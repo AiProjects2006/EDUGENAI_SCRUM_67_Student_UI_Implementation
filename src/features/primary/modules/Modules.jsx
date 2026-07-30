@@ -38,7 +38,7 @@ const Modules = () => {
                 <h3>{module.title}</h3>
                 
                 {module.status === 'locked' ? (
-                  <button className="btn-secondary disabled">Locked 🔒</button>
+                   <button className="btn-secondary disabled">Locked 🔒</button>
                 ) : (
                   <button className="btn-primary" onClick={() => navigate('/notes', { state: { module: module.title } })}>
                     {module.status === 'completed' ? '✅ Review' : '▶ Continue Learning'}

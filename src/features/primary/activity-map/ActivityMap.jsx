@@ -7,12 +7,21 @@ const ActivityMap = () => {
     const navigate = useNavigate();
 
     const initialLevels = [
+<<<<<<< HEAD
         { id: 1, status: 'current', stars: 0, label: 'Coral Trivia' },
         { id: 2, status: 'locked', stars: 0, label: 'Reef Spelling' },
         { id: 3, status: 'locked', stars: 0, isCheckpoint: true, label: 'Pearl Bridge' },
         { id: 4,  status: 'locked', stars: 0, label: 'Shell Matching' },
         { id: 5,  status: 'locked', stars: 0, label: 'Deep Sea Math' },
         { id: 6,  status: 'locked', stars: 0, isBoss: true, label: 'Kraken Challenge' },
+=======
+        { id: 1, type: 'mcq', status: 'current', stars: 0, label: 'Coral Trivia' },
+        { id: 2, type: 'fill-blank', status: 'locked', stars: 0, label: 'Reef Spelling' },
+        { id: 3, type: 'checkpoint', status: 'locked', stars: 0, isCheckpoint: true, label: 'Pearl Bridge' },
+        { id: 4, type: 'matching', status: 'locked', stars: 0, label: 'Shell Matching' },
+        { id: 5, type: 'short-answer', status: 'locked', stars: 0, label: 'Deep Sea Math' },
+        { id: 6, type: 'boss', status: 'locked', stars: 0, isBoss: true, label: 'Kraken Challenge' },
+>>>>>>> origin/develop
     ];
 
     const savedActiveLevel = parseInt(sessionStorage.getItem('activeLevelId') || '1', 10);
@@ -90,8 +99,14 @@ const ActivityMap = () => {
                     ))}
                 </div>
             </div>
+<<<<<<< HEAD
             <button className="btn-success ai-generator-btn fixed-right" onClick={() => navigate('/generate-activity')}>
                 ✨ AI Generator
+=======
+
+            <button className="btn-success ai-generator-btn fixed-right" onClick={() => navigate('/generate-activity')}>
+                AI Activity Generator
+>>>>>>> origin/develop
             </button>
         </div>
     );

@@ -60,7 +60,7 @@ const Notes = () => {
   return (
     <div className="notes-page">
       <div className="notes-header glass-panel">
-        <button className="back-btn" onClick={() => navigate('/courses')}>⬅️ Back</button>
+        <button className="back-btn" onClick={() => navigate('/modules')}>← Back</button>
         <h2>Geometry Basics</h2>
         <div className="notes-actions">
           <button className={`action-btn ${isBookmarked ? 'active' : ''}`} onClick={handleBookmark} style={isBookmarked ? {background: 'rgba(42, 157, 143, 0.4)'} : {}}>

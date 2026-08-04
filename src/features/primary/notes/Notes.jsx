@@ -93,7 +93,7 @@ const Notes = () => {
       </div>
 
       <div className="notes-footer">
-        <button className="btn-primary huge-btn" onClick={() => navigate('/activity-map')}>
+        <button className="btn-primary huge-btn" onClick={() => navigate('/generate-activity')}>
           Ready for Activities! 🎮
         </button>
       </div>

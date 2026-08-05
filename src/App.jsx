@@ -7,6 +7,8 @@ import Modules from './features/primary/modules/Modules';
 import Notes from './features/primary/notes/Notes';
 import ActivityMap from './features/primary/activity-map/ActivityMap';
 import ActivityPlayer from './features/primary/activity-player/ActivityPlayer';
+import ActivityGenerator from './features/primary/activity-generator/ActivityGenerator';
+import GenerateActivityActivity from './features/primary/generate-activity-activity/GenerateActivityActivity';
 
 
 import { AudioProvider } from './context/AudioContext';
@@ -27,6 +29,9 @@ function App() {
             <Route path="notes" element={<Notes />} />
             <Route path="activity-map" element={<ActivityMap />} />
             <Route path="activity" element={<ActivityPlayer />} />
+            <Route path="generate-activity" element={<ActivityGenerator />} />
+            <Route path="generate-activity-activity" element={<GenerateActivityActivity />} />
+
           </Route>
         </Routes>
       </Router>

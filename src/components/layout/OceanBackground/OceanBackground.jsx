@@ -43,8 +43,8 @@ const OceanBackground = () => {
       <div className="ocean-decor coral-reef-right">🪸</div>
       <div className="ocean-decor sea-plant-1">🪸</div>
       <div className="ocean-decor sea-plant-2">🪼</div>
-      <div className="ocean-decor treasure-chest">🪙</div>
-      <div className="ocean-decor ocean-crystal">💎</div>
+      {/*<div className="ocean-decor treasure-chest">🪙</div>*/}
+      {/*<div className="ocean-decor ocean-crystal">💎</div>*/}
 
       {/* Ocean Light Rays */}
       <div className="light-rays"></div>

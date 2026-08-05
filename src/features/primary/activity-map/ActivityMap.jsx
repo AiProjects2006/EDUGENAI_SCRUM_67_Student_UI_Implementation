@@ -93,9 +93,6 @@ const ActivityMap = () => {
                 </div>
             </div>
 
-            <button className="btn-success ai-generator-btn fixed-right" onClick={() => navigate('/generate-activity')}>
-                ✨ AI Generator
-            </button>
         </div>
     );
 };

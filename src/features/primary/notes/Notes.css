@@ -1,42 +1,13 @@
 .notes-page {
   max-width: 1000px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+
 }
 
 .notes-header {
-  /*display: flex;*/
-  /*align-items: center;*/
-  /*justify-content: space-between;*/
-  /*padding: 1rem 2rem;*/
-  /*margin-bottom: 2rem;*/
   padding: 1.5rem 2rem;
   margin-bottom: 2rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  /*margin-bottom: 1rem;*/
-}
-
-.back-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-
-  /*position: absolute;*/
-  /*left: 0;*/
-  /*background: rgba(255, 255, 255, 0.2);*/
-  /*border: none;*/
-  /*color: white;*/
-  /*padding: 8px 16px;*/
-  /*border-radius: 20px;*/
-  /*cursor: pointer;*/
-  /*font-weight: bold;*/
-  /*transition: background 0.3s ease;*/
 }
 
 .notes-actions {

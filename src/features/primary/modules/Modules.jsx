@@ -22,7 +22,9 @@ const Modules = () => {
     <div className="modules-page">
       <div className="modules-header glass-panel">
         <div className="header-content">
-          <button className="back-btn" onClick={() => navigate('/courses')}>← Back</button>
+          <button className="back-btn" onClick={() => navigate('/courses')} aria-label="Go Back">
+            <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
           <h2>📐 {courseTitle}</h2>
         </div>
         <p className="progress-text">⭐ Progress: {completedCount}/{totalCount} Modules Completed</p>

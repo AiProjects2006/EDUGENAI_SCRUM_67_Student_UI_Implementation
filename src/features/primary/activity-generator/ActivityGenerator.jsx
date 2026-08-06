@@ -124,8 +124,15 @@ const ActivityGenerator = () => {
     return (
         <div className="generator-page">
             <PlayButton onClick={() => navigate('/activity-map')} />
-            <div className="generator-card glass-panel">
-                <h2>✨ AI Activity Generator</h2>
+            <div className="generator-card glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
+                <div className="header-content" style={{ marginBottom: '2rem' }}>
+                    {step === 1 && (
+                        <button className="back-btn" onClick={() => navigate(-1)} aria-label="Go Back">
+                            <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                    )}
+                    <h2 style={{ margin: 0 }}>✨ AI Activity Generator</h2>
+                </div>
 
                 {!isGenerating && (
                     <div className="progress-bar">

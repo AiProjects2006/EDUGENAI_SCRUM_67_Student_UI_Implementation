@@ -13,6 +13,7 @@ import ScoreFeedback from './features/primary/score-feedback/ScoreFeedback';
 
 
 import { AudioProvider } from './context/AudioContext';
+import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             <Route path="generate-activity" element={<ActivityGenerator />} />
             <Route path="generate-activity-activity" element={<GenerateActivityActivity />} />
             <Route path="score" element={<ScoreFeedback />} />
+            <Route path="generate-activity-score" element={<GenerateActivityScore />} />
+
 
           </Route>
         </Routes>

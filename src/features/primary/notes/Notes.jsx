@@ -60,16 +60,20 @@ const Notes = () => {
   return (
     <div className="notes-page">
       <div className="notes-header glass-panel">
-        <button className="back-btn" onClick={() => navigate('/modules')}>← Back</button>
-        <h2>Geometry Basics</h2>
-        <div className="notes-actions">
-          <button className={`action-btn ${isBookmarked ? 'active' : ''}`} onClick={handleBookmark} style={isBookmarked ? {background: 'rgba(42, 157, 143, 0.4)'} : {}}>
-            {isBookmarked ? '🔖 Bookmarked!' : '🔖 Bookmark'}
+        <div className="header-content">
+          <button className="back-btn" onClick={() => navigate('/modules')} aria-label="Go Back">
+            <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <button className={`action-btn voice-reading ${isReading ? 'reading' : ''}`} onClick={handleReadAloud}>
-            {isReading ? '🔊 Reading...' : '🔊 Read Aloud'}
-          </button>
-          <button className="action-btn" onClick={handleDownload}>⬇️ Download PDF</button>
+          <h2>Geometry Basics</h2>
+          <div className="notes-actions" style={{ position: 'absolute', right: 0 }}>
+            <button className={`action-btn ${isBookmarked ? 'active' : ''}`} onClick={handleBookmark} style={isBookmarked ? {background: 'rgba(42, 157, 143, 0.4)'} : {}}>
+              {isBookmarked ? '🔖 Bookmarked!' : '🔖 Bookmark'}
+            </button>
+            <button className={`action-btn voice-reading ${isReading ? 'reading' : ''}`} onClick={handleReadAloud}>
+              {isReading ? '🔊 Reading...' : '🔊 Read Aloud'}
+            </button>
+            <button className="action-btn" onClick={handleDownload}>⬇️ Download PDF</button>
+          </div>
         </div>
       </div>
 

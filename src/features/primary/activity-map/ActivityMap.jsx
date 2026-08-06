@@ -52,9 +52,14 @@ const ActivityMap = () => {
 
     return (
         <div className="activity-map-page">
-            <div className="map-header ocean-card">
-                <h2>Coral Islands Path 🪸</h2>
-                <p>Complete activities to unlock the Treasure Cave!</p>
+            <div className="map-header ocean-card" style={{ padding: '1.5rem', textAlign: 'center', marginBottom: '2rem' }}>
+                <div className="header-content">
+                    <button className="back-btn" onClick={() => navigate('/generate-activity')} aria-label="Go Back">
+                        <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <h2 style={{ margin: 0 }}>Coral Islands Path 🪸</h2>
+                </div>
+                <p style={{ marginTop: '0.5rem' }}>Complete activities to unlock the Treasure Cave!</p>
             </div>
 
             <div className="map-path-container">

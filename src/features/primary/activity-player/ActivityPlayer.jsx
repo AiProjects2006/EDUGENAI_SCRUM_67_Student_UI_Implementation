@@ -41,8 +41,9 @@ const ActivityPlayer = () => {
             if (currentQuestion < totalQuestions) {
                 setCurrentQuestion(currentQuestion + 1);
             } else {
-                // Navigate to dashboard since score page is removed
-                navigate('/dashboard');
+                // Navigate to score page and pass the final score
+                const finalScore = isCorrect ? score + 1 : score;
+                navigate('/score', { state: { score: finalScore, total: totalQuestions } });
             }
         }, 3000); // Increased wait time to hear the voice
     };

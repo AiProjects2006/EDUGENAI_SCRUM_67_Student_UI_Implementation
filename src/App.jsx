@@ -9,6 +9,7 @@ import ActivityMap from './features/primary/activity-map/ActivityMap';
 import ActivityPlayer from './features/primary/activity-player/ActivityPlayer';
 import ActivityGenerator from './features/primary/activity-generator/ActivityGenerator';
 import GenerateActivityActivity from './features/primary/generate-activity-activity/GenerateActivityActivity';
+import ScoreFeedback from './features/primary/score-feedback/ScoreFeedback';
 
 
 import { AudioProvider } from './context/AudioContext';
@@ -31,6 +32,7 @@ function App() {
             <Route path="activity" element={<ActivityPlayer />} />
             <Route path="generate-activity" element={<ActivityGenerator />} />
             <Route path="generate-activity-activity" element={<GenerateActivityActivity />} />
+            <Route path="score" element={<ScoreFeedback />} />
 
           </Route>
         </Routes>

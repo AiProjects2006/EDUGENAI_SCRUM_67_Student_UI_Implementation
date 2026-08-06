@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useOceanAudio } from '../../../context/AudioContext';
 import './Modules.css';
 
 const Modules = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { triggerMascotVoice } = useOceanAudio();
   const courseTitle = location.state?.course || 'Geometry Basics';
+
+  useEffect(() => {
+    triggerMascotVoice(`Welcome to ${courseTitle}! Let's start learning our modules.`);
+  }, [triggerMascotVoice, courseTitle]);
 
   const modules = [
     { id: 1, title: 'Points, Lines, and Angles', status: 'completed', image: '📘' },

@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOceanAudio } from '../../../context/AudioContext';
 import './ActivityGenerator.css';
 import PlayButton from './PlayButton';
 
 const ActivityGenerator = () => {
     const navigate = useNavigate();
+    const { triggerMascotVoice } = useOceanAudio();
     const [step, setStep] = useState(1);
     const [isGenerating, setIsGenerating] = useState(false);
+
+    useEffect(() => {
+        if (isGenerating) {
+            triggerMascotVoice("Bubbles is generating your magical activity! Gathering sea crystals!");
+        } else if (step === 1) {
+            triggerMascotVoice("Step 1. Choose your activity type!");
+        } else if (step === 2) {
+            triggerMascotVoice("Great! Now choose a difficulty level!");
+        } else if (step === 3) {
+            triggerMascotVoice("Almost there! How many questions do you want?");
+        }
+    }, [step, isGenerating, triggerMascotVoice]);
 
     const [selectedType, setSelectedType] = useState('');
     const [selectedDiff, setSelectedDiff] = useState('');
@@ -15,11 +29,13 @@ const ActivityGenerator = () => {
 
     const handleNext = () => {
         if (step === 1 && !selectedType) {
-            alert("Please select an activity type first.");
+            triggerMascotVoice("Please select an activity type first.");
+            setTimeout(() => alert("Please select an activity type first."), 100);
             return;
         }
         if (step === 2 && !selectedDiff) {
-            alert("Please select a difficulty level first.");
+            triggerMascotVoice("Please select a difficulty level first.");
+            setTimeout(() => alert("Please select a difficulty level first."), 100);
             return;
         }
         setStep(step + 1);
@@ -27,11 +43,13 @@ const ActivityGenerator = () => {
 
     const handleGenerate = () => {
         if (step === 3 && !selectedCount) {
-            alert("Please select or enter a question count first.");
+            triggerMascotVoice("Please select or enter a question count first.");
+            setTimeout(() => alert("Please select or enter a question count first."), 100);
             return;
         }
         if (step === 3 && selectedCount === 'custom' && !customCount) {
-            alert("Please enter a valid custom count.");
+            triggerMascotVoice("Please enter a valid custom count.");
+            setTimeout(() => alert("Please enter a valid custom count."), 100);
             return;
         }
 

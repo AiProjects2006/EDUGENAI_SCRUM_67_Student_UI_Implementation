@@ -9,6 +9,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { isVoiceEnabled, isBgmPlaying, triggerMascotVoice, toggleVoiceSystem, toggleBgmSystem } = useOceanAudio();
 
+  React.useEffect(() => {
+    triggerMascotVoice("Hi! I'm Bubbles! Welcome to our magical ocean adventure!");
+  }, [triggerMascotVoice]);
+
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });

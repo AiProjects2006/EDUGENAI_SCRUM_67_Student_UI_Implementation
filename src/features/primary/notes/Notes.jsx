@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import './Notes.css';
@@ -9,6 +9,10 @@ const Notes = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isReading, setIsReading] = useState(false);
+
+  useEffect(() => {
+    triggerMascotVoice("Let's read our notes on Geometry Basics!");
+  }, [triggerMascotVoice]);
 
   const slides = [
     {

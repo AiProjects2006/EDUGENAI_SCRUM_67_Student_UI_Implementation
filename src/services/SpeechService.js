@@ -24,44 +24,57 @@ class SpeechService {
       if (callback) callback();
       return;
     }
+    
+    // Prevent double speaking from React StrictMode double mounts
+    if (this.lastText === text && Date.now() - (this.lastTime || 0) < 500) {
+        return;
+    }
+    this.lastText = text;
+    this.lastTime = Date.now();
 
     if (this.synth) {
       this.synth.cancel(); // Stop current speech
       
+      // Play a tiny bubble pop sound right before speaking to make it feel instant!
+      this.playPop();
+
       const utterance = new SpeechSynthesisUtterance(text);
       
-      // Attempt to find a high quality English voice (preferably female/child-like)
-      const voices = this.synth.getVoices();
-      let chosenVoice = voices.find(voice => 
-        voice.lang.includes('en') && 
-        (voice.name.toLowerCase().includes('google') || voice.name.toLowerCase().includes('zira') || voice.name.toLowerCase().includes('natural'))
-      );
-      if (!chosenVoice) {
-        chosenVoice = voices.find(voice => voice.lang.includes('en'));
-      }
-      
-      if (chosenVoice) {
-        utterance.voice = chosenVoice;
-      }
+      // Use a tiny timeout to avoid the SpeechSynthesis cancel bug where it drops the next utterance
+      setTimeout(() => {
+        // Attempt to find a high quality English voice (preferably female/child-like)
+        const voices = this.synth.getVoices();
+        let chosenVoice = voices.find(voice => 
+          voice.lang.includes('en') && 
+          (voice.name.toLowerCase().includes('google') || voice.name.toLowerCase().includes('zira') || voice.name.toLowerCase().includes('natural'))
+        );
+        if (!chosenVoice) {
+          chosenVoice = voices.find(voice => voice.lang.includes('en'));
+        }
+        
+        if (chosenVoice) {
+          utterance.voice = chosenVoice;
+        }
 
-      // Voice tuning parameters for Bubbles (cute, child-like baby octopus)
-      utterance.pitch = 1.45; // High pitch for child voice
-      utterance.rate = 0.95;  // Slightly slower, child-friendly reading speed
-      utterance.volume = 1.0;
+        // Voice tuning parameters for Bubbles (cute, child-like baby octopus)
+        utterance.pitch = 1.45; // High pitch for child voice
+        utterance.rate = 0.95;  // Slightly slower, child-friendly reading speed
+        utterance.volume = 1.0;
 
-      utterance.onend = () => {
-        this.currentUtterance = null;
-        if (callback) callback();
-      };
+        utterance.onend = () => {
+          this.currentUtterance = null;
+          if (callback) callback();
+        };
 
-      utterance.onerror = (e) => {
-        console.error("Speech synthesis error:", e);
-        this.currentUtterance = null;
-        if (callback) callback();
-      };
+        utterance.onerror = (e) => {
+          console.error("Speech synthesis error:", e);
+          this.currentUtterance = null;
+          if (callback) callback();
+        };
 
-      this.currentUtterance = utterance;
-      this.synth.speak(utterance);
+        this.currentUtterance = utterance;
+        this.synth.speak(utterance);
+      }, 50);
     } else {
       if (callback) callback();
     }

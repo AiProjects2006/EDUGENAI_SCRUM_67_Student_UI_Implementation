@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import speechService from '../../../services/SpeechService';
 import './ActivityPlayer.css';
 
 const ActivityPlayer = () => {
@@ -16,6 +17,10 @@ const ActivityPlayer = () => {
 
     const questionText = "What is the main habitat of a clownfish?";
 
+    React.useEffect(() => {
+        triggerMascotVoice(`Here is question ${currentQuestion}! ${questionText}`);
+    }, [currentQuestion, triggerMascotVoice]);
+
     const handleReadQuestion = () => {
         triggerMascotVoice(questionText);
     };
@@ -28,9 +33,11 @@ const ActivityPlayer = () => {
 
         if (isCorrect) {
             setScore(prev => prev + 1);
+            speechService.playCorrect();
             triggerMascotVoice("Correct! Great job!", 1.6, 1.1);
             triggerMascotAnimation('happy');
         } else {
+            speechService.playIncorrect();
             triggerMascotVoice("Oops! The correct answer is Sea Anemone.", 1.5, 0.9);
             triggerMascotAnimation('sad');
         }

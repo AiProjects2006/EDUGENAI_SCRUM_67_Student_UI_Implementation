@@ -77,23 +77,24 @@ const PlayButton = ({ onClick }) => {
                     }}
                 >
                     <div className="glossy-highlight"></div>
-                    <span className="btn-text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <motion.span
-                            style={{ display: 'inline-block' }}
-                            animate={isHovered ? {
-                                y: [0, -15, 0],
-                                rotate: [0, -15, 20, 0],
-                            } : { y: 0, rotate: 0 }}
-                            transition={isHovered ? {
-                                duration: 1.2,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                            } : { duration: 0.5, ease: "easeOut" }}
-                        >
-                             🤿
-                        </motion.span>
-                        Dive In!
-                    </span>
+                    <span className="btn-text">
+    <motion.span
+        className="dive-icon"
+        animate={isHovered ? {
+            y: [0, -15, 0],
+            rotate: [0, -15, 20, 0],
+        } : { y: 0, rotate: 0 }}
+        transition={isHovered ? {
+            duration: 1.2,
+            repeat: Infinity,
+            ease: "easeInOut"
+        } : { duration: 0.5, ease: "easeOut" }}
+    >
+        🤿
+    </motion.span>
+
+    <span className="dive-text">Dive In!</span>
+</span>
                 </motion.button>
             </div>
         </div>

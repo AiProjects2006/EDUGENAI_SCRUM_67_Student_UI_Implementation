@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import speechService from '../../../services/SpeechService';
+import { useOceanAudio } from '../../../context/AudioContext';
 import './ActivityMap.css';
 
 const ActivityMap = () => {
     const navigate = useNavigate();
+    const { triggerMascotVoice } = useOceanAudio();
+
+    useEffect(() => {
+        triggerMascotVoice("Welcome to the Coral Islands Map! Let's complete some activities to unlock the Treasure Cave!");
+    }, [triggerMascotVoice]);
 
     const initialLevels = [
 

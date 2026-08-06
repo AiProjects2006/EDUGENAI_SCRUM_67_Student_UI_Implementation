@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useOceanAudio } from '../../../context/AudioContext';
 import './Courses.css';
 
 const Courses = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { triggerMascotVoice } = useOceanAudio();
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    triggerMascotVoice("Let's start your Learning Journey! Pick a course!");
+  }, [triggerMascotVoice]);
 
   const categories = ['All', 'Math', 'Science', 'English', 'ICT'];
   
@@ -61,7 +67,7 @@ const Courses = () => {
               {unit.status === 'locked' ? (
                 <button className="btn-secondary disabled">Locked 🔒</button>
               ) : (
-                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title } })}>
+                <button className="btn-primary" onClick={() => { triggerMascotVoice(unit.title); setTimeout(() => navigate('/modules', { state: { course: unit.title } }), 1000); }}>
                   {unit.status === 'completed' ? '✅ Review' : '▶ Continue'}
                 </button>
               )}

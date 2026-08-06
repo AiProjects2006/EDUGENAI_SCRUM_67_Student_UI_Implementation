@@ -7,6 +7,7 @@ export const AudioProvider = ({ children }) => {
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
   const [isBgmPlaying, setIsBgmPlaying] = useState(false);
   const [mascotState, setMascotState] = useState('idle'); // idle, talking, happy, sad, wave, dance
+  const [mascotMessage, setMascotMessage] = useState('');
   const audioContextRef = useRef(null);
   const bgmIntervalRef = useRef(null);
 
@@ -18,24 +19,26 @@ export const AudioProvider = ({ children }) => {
     };
   }, []);
 
-  const triggerMascotVoice = (text, pitch = 1.6, speed = 0.9) => {
+  const triggerMascotVoice = React.useCallback((text, pitch = 1.6, speed = 0.9) => {
     if (!isVoiceEnabled) return;
     
     speechService.speechMuted = !isVoiceEnabled;
     if (!isVoiceEnabled) return;
     
+    setMascotMessage(text);
     setMascotState('talking');
     speechService.speak(text, () => {
       setMascotState('idle');
+      setMascotMessage('');
     });
-  };
+  }, [isVoiceEnabled]);
   
-  const triggerMascotAnimation = (animationName) => {
+  const triggerMascotAnimation = React.useCallback((animationName) => {
     setMascotState(animationName);
     if (animationName !== 'idle' && animationName !== 'talking') {
       setTimeout(() => setMascotState('idle'), 3000);
     }
-  };
+  }, []);
 
   const toggleVoiceSystem = () => {
     setIsVoiceEnabled(prev => {
@@ -117,6 +120,7 @@ export const AudioProvider = ({ children }) => {
       isVoiceEnabled,
       isBgmPlaying,
       mascotState,
+      mascotMessage,
       triggerMascotAnimation,
       triggerMascotVoice,
       toggleVoiceSystem,

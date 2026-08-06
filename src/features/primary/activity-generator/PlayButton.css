@@ -1,10 +1,11 @@
 .play-button-container {
     position: fixed;
     right: 40px;
-    top: 50%;
+    top: 30%;
     z-index: 1000;
     display: flex;
     align-items: center;
+
 }
 
 
@@ -15,17 +16,22 @@
 
 .gamified-play-btn {
     position: relative;
+    width: 150px;
+    height: 150px;
+
     background: linear-gradient(180deg, #ffb142 0%, #ff793f 100%);
     border: none;
-    border-radius: 60px;
-    padding: 22px 20px;
+    border-radius: 50%;
     cursor: pointer;
-    box-shadow: 
-        0 14px 0 #cc4a00, /* Thick darker shade 3D base */
-        0 25px 30px rgba(0,0,0,0.5), /* Heavy drop shadow */
-        inset 0 -5px 15px rgba(0,0,0,0.2);
+
+    box-shadow:
+            0 14px 0 #cc4a00,
+            0 25px 30px rgba(0, 0, 0, 0.5),
+            inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+
     overflow: hidden;
     outline: none;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,15 +52,33 @@
 
 .btn-text {
     font-family: 'Fredoka One', 'Nunito Black', sans-serif;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 2px;
-    /* Heavy semi-transparent drop shadow underneath the text */
     text-shadow: 0 5px 8px rgba(0, 0, 0, 0.6);
+
     position: relative;
     z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.dive-icon {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.dive-text {
+    display: block;
+    white-space: nowrap;
 }
 
 .bubble-particle {

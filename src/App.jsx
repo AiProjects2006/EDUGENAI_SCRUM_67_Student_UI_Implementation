@@ -14,12 +14,15 @@ import Recommendations from './features/primary/recommendations/Recommendations'
 
 
 import { AudioProvider } from './context/AudioContext';
+import { ProgressProvider } from './context/ProgressContext';
 import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
+import Progress from './features/primary/progress/Progress';
 
 function App() {
   return (
     <AudioProvider>
-      <Router>
+      <ProgressProvider>
+        <Router>
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           
@@ -37,10 +40,11 @@ function App() {
             <Route path="score" element={<ScoreFeedback />} />
             <Route path="generate-activity-score" element={<GenerateActivityScore />} />
             <Route path="recommendations" element={<Recommendations />} />
-
+            <Route path="progress" element={<Progress />} />
           </Route>
         </Routes>
-      </Router>
+        </Router>
+      </ProgressProvider>
     </AudioProvider>
   );
 }

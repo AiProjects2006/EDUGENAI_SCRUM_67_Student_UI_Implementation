@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useProgress } from '../../../context/ProgressContext';
 import './Notes.css';
 
 const Notes = () => {
   const navigate = useNavigate();
   const { triggerMascotVoice } = useOceanAudio();
+  const { incrementModules } = useProgress();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isReading, setIsReading] = useState(false);
@@ -101,7 +103,7 @@ const Notes = () => {
       </div>
 
       <div className="notes-footer">
-        <button className="btn-primary huge-btn" onClick={() => navigate('/generate-activity')}>
+        <button className="btn-primary huge-btn" onClick={() => { incrementModules(); navigate('/generate-activity'); }}>
           Ready for Activities! 🎮
         </button>
       </div>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useProgress } from '../../../context/ProgressContext';
 import '../score-feedback/ScoreFeedback.css';
 
 const GenerateActivityScore = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { triggerMascotVoice } = useOceanAudio();
+  const { incrementActivities, addStars, incrementCourses, updateSubjectProgress } = useProgress();
   const [showConfetti, setShowConfetti] = useState(false);
 
   // Retrieve score from navigation state, or default to mock data
@@ -17,6 +19,12 @@ const GenerateActivityScore = () => {
   useEffect(() => {
     setShowConfetti(true);
     triggerMascotVoice(`Activity Complete! You scored ${percentage} percent!`);
+    incrementActivities();
+    addStars(score * 10);
+    updateSubjectProgress('Mathematics', 5); // Add 5% progress to Mathematics
+    if (percentage === 100) {
+      incrementCourses();
+    }
   }, []);
 
   const handleNextActivity = () => {

@@ -31,6 +31,18 @@ const ScoreFeedback = () => {
         badgeIcon = '🥉';
     }
 
+    // Dynamic Recommendation / Feedback based on score
+    let areaToReview = location.state?.weakness || 'Ocean Habitats';
+    let mascotFeedback = "You did fantastic! Just review your habitats and you'll be perfect!";
+    
+    if (percentage >= 90) {
+        areaToReview = 'None! You are a pro!';
+        mascotFeedback = 'Outstanding work! You mastered this topic completely!';
+    } else if (percentage < 60) {
+        areaToReview = location.state?.weakness || 'Marine Biology Basics';
+        mascotFeedback = "Don't give up! Let's review the basics and try again!";
+    }
+
     useEffect(() => {
         setShowConfetti(true);
         triggerMascotVoice(`Activity Complete! You scored ${percentage} percent and earned a ${badgeLabel}!`);
@@ -108,12 +120,12 @@ const ScoreFeedback = () => {
                     </div>
                     <div className="summary-item weakness">
                         <span>💡 Area to Review</span>
-                        <span>Ocean Habitats</span>
+                        <span>{areaToReview}</span>
                     </div>
                 </div>
 
                 <div className="feedback-box">
-                    <p><strong>Bubbles says:</strong> "You did fantastic! Just review your habitats and you'll be perfect!"</p>
+                    <p><strong>Bubbles says:</strong> "{mascotFeedback}"</p>
                 </div>
 
                 <div className="score-actions">

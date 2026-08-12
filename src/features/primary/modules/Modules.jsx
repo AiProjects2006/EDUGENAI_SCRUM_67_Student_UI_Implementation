@@ -39,7 +39,7 @@ const Modules = () => {
       <div className="modules-adventure-path">
         {modules.map((module, index) => (
           <div key={module.id} className="module-path-item">
-            <div className={`module-card glass-panel ${module.status}`}>
+            <div className={`module-card glass-panel ${module.status}`} onMouseEnter={() => triggerMascotVoice(module.title)}>
               <div className="module-icon">{module.image}</div>
               <div className="module-content">
                 <p className="module-subtitle">Module {module.id}</p>

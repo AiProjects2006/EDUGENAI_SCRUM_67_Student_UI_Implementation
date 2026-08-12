@@ -58,7 +58,7 @@ const Courses = () => {
 
       <div className="courses-grid">
         {filteredUnits.map(unit => (
-          <div key={unit.id} className={`course-card glass-panel ${unit.status}`}>
+          <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
             <div className="course-image">{unit.image}</div>
             <div className="course-content">
               <h3>{unit.title}</h3>
@@ -67,7 +67,7 @@ const Courses = () => {
               {unit.status === 'locked' ? (
                 <button className="btn-secondary disabled">Locked 🔒</button>
               ) : (
-                <button className="btn-primary" onClick={() => { triggerMascotVoice(unit.title); setTimeout(() => navigate('/modules', { state: { course: unit.title } }), 1000); }}>
+                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title } })}>
                   {unit.status === 'completed' ? '✅ Review' : '▶ Continue'}
                 </button>
               )}

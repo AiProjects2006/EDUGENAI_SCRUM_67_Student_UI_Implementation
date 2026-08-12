@@ -88,6 +88,7 @@ const ActivityGenerator = () => {
                                     key={type}
                                     className={`type-bubble glass-panel ${selectedType === type ? 'selected' : ''}`}
                                     onClick={() => setSelectedType(type)}
+                                    onMouseEnter={() => triggerMascotVoice(type)}
                                 >
                                     {type}
                                 </div>
@@ -100,9 +101,9 @@ const ActivityGenerator = () => {
                     <div className="generator-step" key={step}>
                         <h3>Step 2: Choose Difficulty</h3>
                         <div className="difficulty-grid">
-                            <div className={`diff-card glass-panel easy ${selectedDiff === 'easy' ? 'selected' : ''}`} onClick={() => setSelectedDiff('easy')}>Easy 🐠</div>
-                            <div className={`diff-card glass-panel medium ${selectedDiff === 'medium' ? 'selected' : ''}`} onClick={() => setSelectedDiff('medium')}>Medium 🐬</div>
-                            <div className={`diff-card glass-panel hard ${selectedDiff === 'hard' ? 'selected' : ''}`} onClick={() => setSelectedDiff('hard')}>Hard 🦈</div>
+                            <div className={`diff-card glass-panel easy ${selectedDiff === 'easy' ? 'selected' : ''}`} onClick={() => setSelectedDiff('easy')} onMouseEnter={() => triggerMascotVoice('Easy')}>Easy 🐠</div>
+                            <div className={`diff-card glass-panel medium ${selectedDiff === 'medium' ? 'selected' : ''}`} onClick={() => setSelectedDiff('medium')} onMouseEnter={() => triggerMascotVoice('Medium')}>Medium 🐬</div>
+                            <div className={`diff-card glass-panel hard ${selectedDiff === 'hard' ? 'selected' : ''}`} onClick={() => setSelectedDiff('hard')} onMouseEnter={() => triggerMascotVoice('Hard')}>Hard 🦈</div>
                         </div>
                     </div>
                 );
@@ -116,11 +117,12 @@ const ActivityGenerator = () => {
                                     key={count}
                                     className={`count-bubble glass-panel ${selectedCount === count ? 'selected' : ''}`}
                                     onClick={() => { setSelectedCount(count); setCustomCount(''); }}
+                                    onMouseEnter={() => triggerMascotVoice(`${count} questions`)}
                                 >
                                     {count}
                                 </div>
                             ))}
-                            <div className={`count-bubble glass-panel custom-count ${selectedCount === 'custom' ? 'selected' : ''}`}>
+                            <div className={`count-bubble glass-panel custom-count ${selectedCount === 'custom' ? 'selected' : ''}`} onMouseEnter={() => triggerMascotVoice('Custom number of questions')}>
                                 <input
                                     type="number"
                                     placeholder="Custom..."

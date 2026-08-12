@@ -79,6 +79,7 @@ const GenerateActivityActivity = () => {
                             key={index}
                             className={`answer-card glass-panel ${selectedAnswer === index ? 'selected' : ''} ${showFeedback && selectedAnswer === index ? (index === 0 ? 'correct' : 'wrong') : ''}`}
                             onClick={() => !showFeedback && setSelectedAnswer(index)}
+                            onMouseEnter={() => triggerMascotVoice(answer)}
                         >
                             {answer}
                         </div>

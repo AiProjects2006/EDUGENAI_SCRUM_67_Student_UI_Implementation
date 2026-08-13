@@ -6,17 +6,16 @@ export const useProgress = () => useContext(ProgressContext);
 
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem('ocean_progress');
-    if (saved) return JSON.parse(saved);
-    return {
+    const defaultState = {
       coursesCompleted: 0,
       modulesCompleted: 0,
       activitiesDone: 0,
       starsEarned: 0,
       subjectProgress: {
-        Mathematics: { percentage: 10, current: 'Fractions & Decimals', color: '#ef476f' },
-        Science: { percentage: 20, current: 'Marine Biology', color: '#06d6a0' },
-        English: { percentage: 5, current: 'Creative Writing', color: '#ffd166' }
+        Mathematics: { percentage: 10, color: '#ef476f' },
+        Science: { percentage: 20, color: '#06d6a0' },
+        English: { percentage: 5, color: '#ffd166' },
+        ICT: { percentage: 0, color: '#66f2ff' }
       },
       badges: [
         { id: 'math', name: 'Math Whiz', icon: '🥇', earned: false },
@@ -25,6 +24,15 @@ export const ProgressProvider = ({ children }) => {
         { id: 'grammar', name: 'Grammar Master', icon: '🔒', earned: false }
       ]
     };
+
+    const saved = localStorage.getItem('ocean_progress');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Ensure new subjects like ICT are added if they were missing in local storage
+      const mergedSubjectProgress = { ...defaultState.subjectProgress, ...parsed.subjectProgress };
+      return { ...parsed, subjectProgress: mergedSubjectProgress };
+    }
+    return defaultState;
   });
 
   useEffect(() => {

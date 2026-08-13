@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import speechService from '../../../services/SpeechService';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useSaved } from '../../../context/SavedContext';
 import './ActivityMap.css';
 
 const ActivityMap = () => {
     const navigate = useNavigate();
     const { triggerMascotVoice } = useOceanAudio();
+    const { saveItem, removeItem, isSaved } = useSaved();
 
     useEffect(() => {
         triggerMascotVoice("Welcome to the Coral Islands Map! Let's complete some activities to unlock the Treasure Cave!");
@@ -88,7 +90,26 @@ const ActivityMap = () => {
                             <div className="node-icon">
                                 {getNodeIcon(level)}
                             </div>
-                            <div className="node-label glass-panel">{level.label}</div>
+                            <div className="node-label glass-panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                {level.label}
+                                <div style={{ transform: 'scale(0.8)', zIndex: 100, position: 'relative', pointerEvents: 'auto' }}>
+                                  <button 
+                                    className={`gamified-star-btn ${isSaved(level.id, 'Activities') ? 'saved' : ''}`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      e.preventDefault();
+                                      if (isSaved(level.id, 'Activities')) {
+                                        removeItem(level.id, 'Activities');
+                                      } else {
+                                        saveItem({ id: level.id, type: 'Activities', title: level.label, icon: getNodeIcon(level) });
+                                      }
+                                    }}
+                                    title="Save Activity"
+                                  >
+                                    ★
+                                  </button>
+                                </div>
+                            </div>
                             {level.status === 'completed' && !level.isCheckpoint && !level.isBoss && (
                                 <div className="stars-earned">
                                     {'⭐'.repeat(level.stars)}

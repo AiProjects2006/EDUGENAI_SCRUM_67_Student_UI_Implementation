@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useProgress } from '../../../context/ProgressContext';
+import { useSaved } from '../../../context/SavedContext';
 import './Notes.css';
 
 const Notes = () => {
   const navigate = useNavigate();
   const { triggerMascotVoice } = useOceanAudio();
   const { incrementModules } = useProgress();
+  const { saveItem, removeItem, isSaved } = useSaved();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isReading, setIsReading] = useState(false);
+  const noteId = 101; // ID for Geometry Basics notes
 
   useEffect(() => {
     triggerMascotVoice("Let's read our notes on Geometry Basics!");
@@ -60,7 +62,11 @@ const Notes = () => {
   };
 
   const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
+    if (isSaved(noteId, 'Notes')) {
+      removeItem(noteId, 'Notes');
+    } else {
+      saveItem({ id: noteId, type: 'Notes', title: 'Geometry Basics', icon: '📐' });
+    }
   };
 
   return (
@@ -70,11 +76,17 @@ const Notes = () => {
           <button className="back-btn" onClick={() => navigate('/modules')} aria-label="Go Back">
             <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <h2>Geometry Basics</h2>
-          <div className="notes-actions" style={{ position: 'absolute', right: 0 }}>
-            <button className={`action-btn ${isBookmarked ? 'active' : ''}`} onClick={handleBookmark} style={isBookmarked ? {background: 'rgba(42, 157, 143, 0.4)'} : {}}>
-              {isBookmarked ? '🔖 Bookmarked!' : '🔖 Bookmark'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <h2>Geometry Basics</h2>
+            <button 
+              className={`gamified-star-btn ${isSaved(noteId, 'Notes') ? 'saved' : ''}`}
+              onClick={handleBookmark}
+              title="Save Notes"
+            >
+              ★
             </button>
+          </div>
+          <div className="notes-actions" style={{ position: 'absolute', right: 0 }}>
             <button className={`action-btn voice-reading ${isReading ? 'reading' : ''}`} onClick={handleReadAloud}>
               {isReading ? '🔊 Reading...' : '🔊 Read Aloud'}
             </button>

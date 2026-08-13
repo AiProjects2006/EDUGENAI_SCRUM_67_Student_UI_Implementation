@@ -50,7 +50,7 @@ const Progress = () => {
               <div className="sub-prog-item" key={subject}>
                 <div className="prog-label"><span>{subject}</span><span>{details.percentage}%</span></div>
                 <div className="prog-bar"><div className="fill" style={{width: `${details.percentage}%`, background: details.color}}></div></div>
-                <p className="prog-unit" style={{marginTop: '0.5rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)'}}>Current: {details.current}</p>
+                {/*<p className="prog-unit" style={{marginTop: '0.5rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)'}}>Current: {details.current}</p>*/}
               </div>
             ))}
           </div>

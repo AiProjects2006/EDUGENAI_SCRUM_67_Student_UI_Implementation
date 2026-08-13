@@ -18,7 +18,7 @@ const SavedItems = () => {
   };
 
   const filteredItems = savedItems.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = (item.title || '').toLowerCase().includes(search.toLowerCase());
     const matchesFilter = activeFilter === 'All' || item.type === activeFilter;
     return matchesSearch && matchesFilter;
   });

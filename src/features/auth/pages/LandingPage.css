@@ -225,15 +225,7 @@ body {
 .fish-1 { top: 33%; left: 45%; animation-delay: 6s; font-size: 1.5rem; color: rgba(0, 187, 249, 0.15); }
 .fish-2 { top: 67%; left: 50%; animation-delay: 9s; font-size: 1.4rem; }
 
-/* Audio controls */
-.global-audio-controller {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-  z-index: 1000;
-}
+/* Audio controls are globally defined in OceanLayout.css */
 
 .audio-btn {
   background: var(--glass-bg);

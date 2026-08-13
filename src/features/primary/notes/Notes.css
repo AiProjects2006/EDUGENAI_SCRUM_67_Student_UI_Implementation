@@ -1,7 +1,7 @@
 .notes-page {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0 1rem 2rem;
 
 }
 
@@ -99,4 +99,65 @@
 .huge-btn {
   font-size: 1.5rem;
   padding: 15px 40px;
+}
+
+/* --- PRINT STYLES --- */
+.print-all-slides {
+  display: none;
+}
+
+@media print {
+  .notes-header,
+  .slide-navigation,
+  .notes-footer,
+  .notes-content {
+    display: none !important;
+  }
+
+  .print-all-slides {
+    display: block !important;
+  }
+
+  .print-slide {
+    page-break-after: always;
+    break-after: page;
+    padding: 20px;
+    text-align: center;
+    color: black !important;
+  }
+
+  .print-slide:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .print-slide-header {
+    text-align: right;
+    font-size: 14pt;
+    color: #666 !important;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .print-slide h3 {
+    font-size: 28pt;
+    color: black !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .print-slide p {
+    font-size: 16pt;
+    line-height: 1.6;
+    color: black !important;
+    margin-bottom: 2rem;
+  }
+
+  .print-slide .fun-fact {
+    background: transparent !important;
+    border-left: 5px solid #000 !important;
+    color: black !important;
+    max-width: 100%;
+  }
 }

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useSaved } from '../../../context/SavedContext';
 import './Modules.css';
 
 const Modules = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { triggerMascotVoice } = useOceanAudio();
+  const { saveItem, removeItem, isSaved } = useSaved();
   const courseTitle = location.state?.course || 'Geometry Basics';
 
   useEffect(() => {
@@ -42,7 +44,24 @@ const Modules = () => {
             <div className={`module-card glass-panel ${module.status}`} onMouseEnter={() => triggerMascotVoice(module.title)}>
               <div className="module-icon">{module.image}</div>
               <div className="module-content">
-                <p className="module-subtitle">Module {module.id}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <p className="module-subtitle">Module {module.id}</p>
+                  <button 
+                    className={`gamified-star-btn ${isSaved(`module-${module.id}`, 'Modules') ? 'saved' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const saveId = `module-${module.id}`;
+                      if (isSaved(saveId, 'Modules')) { 
+                        removeItem(saveId, 'Modules');
+                      } else {
+                        saveItem({ id: saveId, type: 'Modules', title: module.title, icon: module.image });
+                      }
+                    }}
+                    title="Save Module"
+                  >
+                    ★
+                  </button>
+                </div>
                 <h3>{module.title}</h3>
                 
                 {module.status === 'locked' ? (

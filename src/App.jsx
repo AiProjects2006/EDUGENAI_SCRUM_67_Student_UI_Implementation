@@ -15,14 +15,17 @@ import Recommendations from './features/primary/recommendations/Recommendations'
 
 import { AudioProvider } from './context/AudioContext';
 import { ProgressProvider } from './context/ProgressContext';
+import { SavedProvider } from './context/SavedContext';
 import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
 import Progress from './features/primary/progress/Progress';
+import SavedItems from './features/primary/saved/SavedItems';
 
 function App() {
   return (
     <AudioProvider>
       <ProgressProvider>
-        <Router>
+        <SavedProvider>
+          <Router>
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           
@@ -41,9 +44,11 @@ function App() {
             <Route path="generate-activity-score" element={<GenerateActivityScore />} />
             <Route path="recommendations" element={<Recommendations />} />
             <Route path="progress" element={<Progress />} />
+            <Route path="saved" element={<SavedItems />} />
           </Route>
         </Routes>
-        </Router>
+          </Router>
+        </SavedProvider>
       </ProgressProvider>
     </AudioProvider>
   );

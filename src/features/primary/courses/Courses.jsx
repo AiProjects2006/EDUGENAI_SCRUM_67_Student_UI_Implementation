@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useSaved } from '../../../context/SavedContext';
 import './Courses.css';
 
 const Courses = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { triggerMascotVoice } = useOceanAudio();
+  const { saveItem, removeItem, isSaved } = useSaved();
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -61,7 +63,23 @@ const Courses = () => {
           <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
             <div className="course-image">{unit.image}</div>
             <div className="course-content">
-              <h3>{unit.title}</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <h3>{unit.title}</h3>
+                <button 
+                  className={`gamified-star-btn ${isSaved(unit.id, 'Courses') ? 'saved' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isSaved(unit.id, 'Courses')) {
+                      removeItem(unit.id, 'Courses');
+                    } else {
+                      saveItem({ id: unit.id, type: 'Courses', title: unit.title, icon: unit.image });
+                    }
+                  }}
+                  title="Save to Treasure Chest"
+                >
+                  ★
+                </button>
+              </div>
               <p className="subject-tag">{unit.subject}</p>
               
               {unit.status === 'locked' ? (

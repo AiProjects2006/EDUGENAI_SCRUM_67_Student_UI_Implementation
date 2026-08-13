@@ -23,6 +23,32 @@
 .saved-header .search-bar {
   flex: 1;
   max-width: 400px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 5px 15px;
+  align-items: center;
+}
+
+.saved-header .search-bar input {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  width: 100%;
+}
+
+.saved-header .search-bar input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.saved-header .search-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .saved-categories {

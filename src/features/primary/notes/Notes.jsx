@@ -95,6 +95,21 @@ const Notes = () => {
         </div>
       </div>
 
+      <div className="print-all-slides">
+        {slides.map((slide, index) => (
+          <div key={index} className="print-slide">
+            <div className="print-slide-header">Geometry Basics - Slide {index + 1} of {slides.length}</div>
+            <div className="slide-image">{slide.icon}</div>
+            <h3>{slide.title}</h3>
+            <p>{slide.content}</p>
+            <div className="fun-fact">
+              <span className="mascot-icon">🐙</span>
+              <p><strong>Bubbles says:</strong> {slide.fact}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div className="notes-content glass-panel">
         <div className="slide-viewer">
           <div className="slide-image">{slides[currentSlide].icon}</div>

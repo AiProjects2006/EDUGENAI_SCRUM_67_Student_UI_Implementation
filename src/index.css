@@ -317,3 +317,25 @@ a {
   transform: translateY(4px);
   box-shadow: 0 0 0 #d49a00, 0 2px 5px rgba(255, 183, 3, 0.4);
 }
+
+/* --- GLOBAL PRINT OVERRIDES --- */
+@media print {
+  body, html, #root, .ocean-layout, .ocean-content-wrapper, .ocean-main-content {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+  
+  .top-navigation,
+  .ocean-background,
+  .global-audio-controller,
+  .bubbles-container,
+  .bubbles-mascot,
+  .back-btn {
+    display: none !important;
+  }
+}

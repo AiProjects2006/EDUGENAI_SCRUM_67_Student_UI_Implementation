@@ -1,0 +1,163 @@
+.notes-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+
+}
+
+.notes-header {
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.notes-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.action-btn.voice-reading {
+  background: var(--coral-orange);
+  border: none;
+  animation: pulse-glow 2s infinite;
+}
+
+.notes-content {
+  padding: 3rem;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.slide-viewer {
+  text-align: center;
+}
+
+.slide-image {
+  font-size: 6rem;
+  margin-bottom: 2rem;
+}
+
+.slide-viewer h3 {
+  font-size: 2.5rem;
+  color: var(--golden-yellow);
+  margin-bottom: 1.5rem;
+}
+
+.slide-viewer p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+}
+
+.fun-fact {
+  background: rgba(42, 157, 143, 0.2);
+  border-left: 5px solid var(--sea-green);
+  padding: 1.5rem;
+  border-radius: 0 15px 15px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.mascot-icon {
+  font-size: 2rem;
+}
+
+.slide-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.notes-footer {
+  text-align: center;
+}
+
+.huge-btn {
+  font-size: 1.5rem;
+  padding: 15px 40px;
+}
+
+/* --- PRINT STYLES --- */
+.print-all-slides {
+  display: none;
+}
+
+@media print {
+  .notes-header,
+  .slide-navigation,
+  .notes-footer,
+  .notes-content {
+    display: none !important;
+  }
+
+  .print-all-slides {
+    display: block !important;
+  }
+
+  .print-slide {
+    page-break-after: always;
+    break-after: page;
+    padding: 20px;
+    text-align: center;
+    color: black !important;
+  }
+
+  .print-slide:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .print-slide-header {
+    text-align: right;
+    font-size: 14pt;
+    color: #666 !important;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .print-slide h3 {
+    font-size: 28pt;
+    color: black !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .print-slide p {
+    font-size: 16pt;
+    line-height: 1.6;
+    color: black !important;
+    margin-bottom: 2rem;
+  }
+
+  .print-slide .fun-fact {
+    background: transparent !important;
+    border-left: 5px solid #000 !important;
+    color: black !important;
+    max-width: 100%;
+  }
+}

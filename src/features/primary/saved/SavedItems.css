@@ -1,0 +1,145 @@
+.saved-items-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+.saved-header {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.saved-header h2 {
+  font-size: 2rem;
+  color: var(--golden-yellow);
+  margin: 0;
+}
+
+.saved-header .search-bar {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 5px 15px;
+  align-items: center;
+}
+
+.saved-header .search-bar input {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  width: 100%;
+}
+
+.saved-header .search-bar input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.saved-header .search-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.saved-categories {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.saved-categories .filter-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.saved-categories .filter-btn.active,
+.saved-categories .filter-btn:hover {
+  background: var(--aqua);
+  color: #000;
+  font-weight: bold;
+}
+
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.no-items {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.saved-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.saved-card:hover {
+  transform: translateY(-5px);
+}
+
+.saved-icon {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+
+.saved-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.saved-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.remove-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.remove-btn:hover {
+  color: #ef476f;
+}

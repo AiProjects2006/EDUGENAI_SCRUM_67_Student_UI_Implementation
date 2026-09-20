@@ -4,6 +4,8 @@ import LandingPage from './features/auth/pages/LandingPage';
 import Registration from './features/auth/registration/Registration';
 import Login from './features/auth/login/Login';
 import ForgotPassword from './features/auth/login/ForgotPassword';
+import ProfileSetup from './features/auth/onboarding/ProfileSetup';
+import Onboarding from './features/auth/onboarding/Onboarding';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
@@ -19,6 +21,7 @@ import Recommendations from './features/primary/recommendations/Recommendations'
 import { AudioProvider } from './context/AudioContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { SavedProvider } from './context/SavedContext';
+import { UserProvider } from './context/UserContext';
 import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
 import Progress from './features/primary/progress/Progress';
 import SavedItems from './features/primary/saved/SavedItems';
@@ -28,12 +31,15 @@ function App() {
     <AudioProvider>
       <ProgressProvider>
         <SavedProvider>
-          <Router>
+          <UserProvider>
+            <Router>
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/profile-setup" element={<ProfileSetup />} />
+          <Route path="/grade-select" element={<Onboarding />} />
           
           {/* Protected routes wrapped in OceanLayout */}
           <Route path="/" element={<OceanLayout />}>
@@ -53,7 +59,8 @@ function App() {
             <Route path="saved" element={<SavedItems />} />
           </Route>
         </Routes>
-          </Router>
+            </Router>
+          </UserProvider>
         </SavedProvider>
       </ProgressProvider>
     </AudioProvider>

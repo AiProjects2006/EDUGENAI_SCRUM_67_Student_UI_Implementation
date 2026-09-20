@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import OceanLayout from './components/layout/OceanLayout/OceanLayout';
 import LandingPage from './features/auth/pages/LandingPage';
 import Registration from './features/auth/registration/Registration';
+import Login from './features/auth/login/Login';
+import ForgotPassword from './features/auth/login/ForgotPassword';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
@@ -30,6 +32,8 @@ function App() {
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           
           {/* Protected routes wrapped in OceanLayout */}
           <Route path="/" element={<OceanLayout />}>

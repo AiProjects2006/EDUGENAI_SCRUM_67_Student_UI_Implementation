@@ -4,12 +4,14 @@ import WelcomeCard from './components/WelcomeCard/WelcomeCard';
 import RewardCard from './components/RewardCard/RewardCard';
 import AchievementCard from './components/AchievementCard/AchievementCard';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useUser } from '../../../context/UserContext';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { triggerMascotVoice } = useOceanAudio();
-  const studentName = 'Alex';
+  const { user } = useUser();
+  const studentName = user?.fullName?.split(' ')[0] || 'Alex';
 
   useEffect(() => {
     triggerMascotVoice(`Welcome back to your Dashboard  ${studentName}! Ready to learn?`);

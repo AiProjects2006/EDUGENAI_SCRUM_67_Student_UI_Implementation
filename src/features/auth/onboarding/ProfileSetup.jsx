@@ -6,15 +6,15 @@ import './ProfileSetup.css';
 
 const ProfileSetup = () => {
   const navigate = useNavigate();
-  const { updateUser } = useUser();
+  const { user, updateUser } = useUser();
   const [dob, setDob] = useState('');
   const [calculatedGrade, setCalculatedGrade] = useState('');
   const [gradeNumber, setGradeNumber] = useState(null);
   const [ageError, setAgeError] = useState('');
   
   // Connect context fields
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState(user?.fullName || '');
+  const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -170,7 +170,13 @@ const ProfileSetup = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 pattern="[\+]?[0-9\s\-\(\)]{7,15}"
                 title="Please enter a valid phone number (7-15 characters, allowing +, -, spaces, and parentheses)"
+                style={{ borderColor: phone && !/^[\+]?[0-9\s\-\(\)]{7,15}$/.test(phone) ? '#ff6b6b' : '' }}
               />
+              {phone && !/^[\+]?[0-9\s\-\(\)]{7,15}$/.test(phone) && (
+                <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
+                  Please enter a valid phone number (7-15 characters).
+                </span>
+              )}
             </div>
             
             <div className="input-group dob-group">

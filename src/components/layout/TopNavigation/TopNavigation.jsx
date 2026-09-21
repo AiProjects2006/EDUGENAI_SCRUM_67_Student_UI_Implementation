@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useUser } from '../../../context/UserContext';
 import './TopNavigation.css';
 
 const TopNavigation = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useUser();
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
@@ -12,28 +15,30 @@ const TopNavigation = () => {
 
   return (
     <nav className="top-navigation">
-      <div className="nav-bubbles">
-        <NavLink to="/dashboard" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
-          <span className="icon">🏠</span>
-          <span className="label">Dashboard</span>
-        </NavLink>
-        <NavLink to="/courses" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
-          <span className="icon">📚</span>
-          <span className="label">Courses</span>
-        </NavLink>
-        <NavLink to="/recommendations" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
-          <span className="icon">🎯</span>
-          <span className="label">Recommendations</span>
-        </NavLink>
-        <NavLink to="/progress" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
-          <span className="icon">📈</span>
-          <span className="label">My Progress</span>
-        </NavLink>
-        <NavLink to="/saved" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
-          <span className="icon">⭐</span>
-          <span className="label">Saved</span>
-        </NavLink>
-      </div>
+      {location.pathname !== '/activity' && (
+        <div className="nav-bubbles">
+          <NavLink to="/dashboard" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
+            <span className="icon">🏠</span>
+            <span className="label">Dashboard</span>
+          </NavLink>
+          <NavLink to="/courses" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
+            <span className="icon">📚</span>
+            <span className="label">Courses</span>
+          </NavLink>
+          <NavLink to="/recommendations" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
+            <span className="icon">🎯</span>
+            <span className="label">Recommendations</span>
+          </NavLink>
+          <NavLink to="/progress" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
+            <span className="icon">📈</span>
+            <span className="label">My Progress</span>
+          </NavLink>
+          <NavLink to="/saved" className={({ isActive }) => `nav-bubble ${isActive ? 'active' : ''}`}>
+            <span className="icon">⭐</span>
+            <span className="label">Saved</span>
+          </NavLink>
+        </div>
+      )}
 
       <div className="nav-right">
         <button className="nav-bubble notification-btn" onClick={() => alert('No new notifications!')}>
@@ -43,22 +48,33 @@ const TopNavigation = () => {
 
         <div className="profile-container">
           <button className="nav-bubble profile-btn" onClick={toggleProfile}>
-            <span className="icon">👤</span>
+            <span className="icon">
+              {user.avatar && user.avatar.length > 10 ? (
+                <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              ) : (
+                user.avatar || '👤'
+              )}
+            </span>
           </button>
 
           {profileOpen && (
             <div className="profile-dropdown glass-panel">
-              <div className="dropdown-header">
-                <div className="avatar">👦</div>
-                <div className="user-info">
-                  <h4>Alex Explorer</h4>
-                  <p>Grade 4</p>
+              <div className="dropdown-header" onClick={() => { navigate('/profile'); setProfileOpen(false); }}>
+                <div className="avatar">
+                  {user.avatar && user.avatar.length > 10 ? (
+                    <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                  ) : (
+                    user.avatar || '👤'
+                  )}
                 </div>
+                <div className="user-info">
+                  <h4>{user.fullName || 'Alex Explorer'}</h4>
+                  <p>{user.grade || 'Grade 4'}</p>
+                </div>
+                <span className="go-icon" style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>›</span>
               </div>
               <ul className="dropdown-menu">
-                <li onClick={() => { navigate('/profile'); setProfileOpen(false); }}>View Profile</li>
-                <li onClick={() => { navigate('/profile'); setProfileOpen(false); }}>Edit Profile</li>
-                <li onClick={() => { navigate('/settings'); setProfileOpen(false); }}>Settings</li>
+
                 <li className="logout" onClick={() => { navigate('/login'); setProfileOpen(false); }}>Logout</li>
               </ul>
             </div>

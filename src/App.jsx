@@ -25,6 +25,8 @@ import { UserProvider } from './context/UserContext';
 import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
 import Progress from './features/primary/progress/Progress';
 import SavedItems from './features/primary/saved/SavedItems';
+import Profile from './features/primary/profile/Profile';
+import Account from './features/primary/account/Account';
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
             <Route path="recommendations" element={<Recommendations />} />
             <Route path="progress" element={<Progress />} />
             <Route path="saved" element={<SavedItems />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="account" element={<Account />} />
           </Route>
         </Routes>
             </Router>

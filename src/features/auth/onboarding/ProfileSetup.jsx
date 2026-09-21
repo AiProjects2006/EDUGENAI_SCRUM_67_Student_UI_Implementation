@@ -18,7 +18,7 @@ const ProfileSetup = () => {
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState('https://api.dicebear.com/7.x/bottts/svg?seed=pearl&backgroundColor=b6e3f4');
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=pearl&backgroundColor=b6e3f4');
 
   const locationsList = [
     "Colombo, Sri Lanka",
@@ -77,8 +77,11 @@ const ProfileSetup = () => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setAvatarUrl(imageUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -93,11 +96,7 @@ const ProfileSetup = () => {
     const finalGrade = calculatedGrade;
     const finalGradeNum = gradeNumber;
     
-    // Map avatar URL to emojis for context, or just store the avatarUrl
-    // Context expects an emoji typically, let's just pass an emoji for now
-    // or let's update it to actually show the avatar they want. 
-    // To match the current UserContext format, we'll use an emoji if they haven't uploaded.
-    const finalAvatar = avatarUrl.includes('dicebear') ? '👦' : '🧑';
+    const finalAvatar = avatarUrl;
     
     updateUser({
       fullName: fullName || 'New Explorer',
@@ -121,7 +120,7 @@ const ProfileSetup = () => {
         
         <form onSubmit={handleComplete} className="badge-form">
           <div className="avatar-section">
-            <img src={avatarUrl} alt="Avatar" className="badge-avatar" />
+            <img src={avatarUrl} alt="Avatar" className="badge-avatar" style={{ objectFit: 'cover' }} />
             <input 
               type="file" 
               accept="image/*" 

@@ -5,6 +5,7 @@ import RewardCard from './components/RewardCard/RewardCard';
 import AchievementCard from './components/AchievementCard/AchievementCard';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useUser } from '../../../context/UserContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -18,9 +19,9 @@ const Dashboard = () => {
   }, [triggerMascotVoice]);
 
   const mockBadges = [
-    { tier: 'gold', icon: '🏆', name: 'Math Genius' },
-    { tier: 'silver', icon: '🥈', name: 'Fast Reader' },
-    { tier: 'bronze', icon: '🥉', name: 'Science Starter' }
+    { tier: 'gold', icon: 'twemoji:trophy', name: 'Math Genius' },
+    { tier: 'silver', icon: 'twemoji:2nd-place-medal', name: 'Fast Reader' },
+    { tier: 'bronze', icon: 'twemoji:3rd-place-medal', name: 'Science Starter' }
   ];
 
   return (
@@ -38,7 +39,7 @@ const Dashboard = () => {
               <span className="badge-new">Recent</span>
             </div>
             <div className="continue-content">
-              <div className="course-icon math-bg">➕</div>
+              <div className="course-icon math-bg"><AppIcon icon="twemoji:abacus" /></div>
               <div className="course-details">
                 <h4>Fractions & Decimals</h4>
                 <p>Math • Level 3</p>
@@ -51,7 +52,7 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="continue-content">
-              <div className="course-icon math-bg">➕</div>
+              <div className="course-icon math-bg"><AppIcon icon="twemoji:abacus" /></div>
               <div className="course-details">
                 <h4>Fractions & Decimals</h4>
                 <p>Math • Level 3</p>
@@ -113,19 +114,19 @@ const Dashboard = () => {
         <h3>Your Subjects</h3>
           <div className="subject-bubbles-container">
             <div className="subject-bubble glass-panel math" onMouseEnter={() => triggerMascotVoice("Math! Let's solve some puzzles!")} onClick={() => navigate('/courses', { state: { category: 'Math' } })}>
-              <span className="subject-icon">➕</span>
+              <span className="subject-icon"><AppIcon icon="twemoji:abacus" /></span>
               <h4>Math</h4>
             </div>
             <div className="subject-bubble glass-panel science" onMouseEnter={() => triggerMascotVoice("Science! Let's discover the universe!")} onClick={() => navigate('/courses', { state: { category: 'Science' } })}>
-              <span className="subject-icon">🧪</span>
+              <span className="subject-icon"><AppIcon icon="twemoji:test-tube" /></span>
               <h4>Science</h4>
             </div>
             <div className="subject-bubble glass-panel english" onMouseEnter={() => triggerMascotVoice("English! Let's read some stories!")} onClick={() => navigate('/courses', { state: { category: 'English' } })}>
-              <span className="subject-icon">🔤</span>
+              <span className="subject-icon"><AppIcon icon="twemoji:input-latin-letters" /></span>
               <h4>English</h4>
             </div>
             <div className="subject-bubble glass-panel ict" onMouseEnter={() => triggerMascotVoice("ICT! Let's explore computers!")} onClick={() => navigate('/courses', { state: { category: 'ICT' } })}>
-              <span className="subject-icon">💻</span>
+              <span className="subject-icon"><AppIcon icon="twemoji:laptop" /></span>
               <h4>ICT</h4>
             </div>
           </div>

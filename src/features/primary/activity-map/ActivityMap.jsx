@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import speechService from '../../../services/SpeechService';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useSaved } from '../../../context/SavedContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './ActivityMap.css';
 
 const ActivityMap = () => {
@@ -51,11 +52,11 @@ const ActivityMap = () => {
     };
 
     const getNodeIcon = (level) => {
-        if (level.isBoss) return '🏴‍☠️';
-        if (level.isCheckpoint) return '🐚';
-        if (level.status === 'locked') return '💎';
-        if (level.status === 'completed') return '⭐';
-        return '🫧';
+        if (level.isBoss) return 'twemoji:pirate-flag';
+        if (level.isCheckpoint) return 'twemoji:spiral-shell';
+        if (level.status === 'locked') return 'twemoji:gem-stone';
+        if (level.status === 'completed') return 'twemoji:star';
+        return 'twemoji:bubbles';
     };
 
     return (
@@ -65,7 +66,7 @@ const ActivityMap = () => {
                     <button className="back-btn" onClick={() => navigate('/generate-activity')} aria-label="Go Back">
                         <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
-                    <h2 style={{ margin: 0 }}>Coral Islands Path 🪸</h2>
+                    <h2 style={{ margin: 0 }}>Coral Islands Path <AppIcon icon="twemoji:coral" /></h2>
                 </div>
                 <p style={{ marginTop: '0.5rem' }}>Complete activities to unlock the Treasure Cave!</p>
             </div>
@@ -88,7 +89,7 @@ const ActivityMap = () => {
                             onClick={() => handleNodeClick(level)}
                         >
                             <div className="node-icon">
-                                {getNodeIcon(level)}
+                                <AppIcon icon={getNodeIcon(level)} />
                             </div>
                             <div className="node-label glass-panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                                 {level.label}
@@ -106,18 +107,18 @@ const ActivityMap = () => {
                                     }}
                                     title="Save Activity"
                                   >
-                                    ★
+                                    <AppIcon icon="twemoji:star" />
                                   </button>
                                 </div>
                             </div>
                             {level.status === 'completed' && !level.isCheckpoint && !level.isBoss && (
                                 <div className="stars-earned">
-                                    {'⭐'.repeat(level.stars)}
+                                    {Array(level.stars).fill().map((_, i) => <AppIcon key={i} icon="twemoji:star" />)}
                                 </div>
                             )}
                             {level.status === 'completed' && (level.isCheckpoint || level.isBoss) && (
                                 <div className="badge-earned" title="Badge Unlocked!">
-                                    <span className="icon">🏆</span>
+                                    <span className="icon"><AppIcon icon="twemoji:trophy" /></span>
                                 </div>
                             )}
                         </div>

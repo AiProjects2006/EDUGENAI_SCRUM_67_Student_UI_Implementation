@@ -18,10 +18,10 @@ export const ProgressProvider = ({ children }) => {
         ICT: { percentage: 0, color: '#66f2ff' }
       },
       badges: [
-        { id: 'math', name: 'Math Whiz', icon: '🥇', earned: false },
-        { id: 'science', name: 'Science Pro', icon: '🥈', earned: false },
-        { id: 'reader', name: 'Reader', icon: '🥉', earned: false },
-        { id: 'grammar', name: 'Grammar Master', icon: '🔒', earned: false }
+        { id: 'math', name: 'Math Whiz', icon: 'twemoji:1st-place-medal', earned: false },
+        { id: 'science', name: 'Science Pro', icon: 'twemoji:2nd-place-medal', earned: false },
+        { id: 'reader', name: 'Reader', icon: 'twemoji:3rd-place-medal', earned: false },
+        { id: 'grammar', name: 'Grammar Master', icon: 'twemoji:locked', earned: false }
       ]
     };
 

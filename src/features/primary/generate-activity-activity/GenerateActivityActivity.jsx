@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import speechService from '../../../services/SpeechService';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import '../activity-player/ActivityPlayer.css';
 
 const GenerateActivityActivity = () => {
@@ -64,7 +65,7 @@ const GenerateActivityActivity = () => {
                         <div className="player-progress-fill" style={{ width: `${(currentQuestion / totalQuestions) * 100}%` }}></div>
                     </div>
                 </div>
-                <button className="voice-btn-large" onClick={handleReadQuestion}>🔊 Read</button>
+                <button className="voice-btn-large" onClick={handleReadQuestion}><AppIcon icon="twemoji:speaker-high-volume" /> Read</button>
             </div>
 
             <div className="question-card glass-panel">
@@ -101,7 +102,7 @@ const GenerateActivityActivity = () => {
             {showFeedback && (
                 <div className={`feedback-overlay ${selectedAnswer === 0 ? 'correct' : 'wrong'}`}>
                     <div className="feedback-content">
-                        {selectedAnswer === 0 ? '🎉 Amazing Job!' : '💡 Good try! The correct answer is Sea Anemone.'}
+                        {selectedAnswer === 0 ? <><AppIcon icon="twemoji:party-popper" /> Amazing Job!</> : <><AppIcon icon="twemoji:light-bulb" /> Good try! The correct answer is Sea Anemone.</>}
                     </div>
                 </div>
             )}

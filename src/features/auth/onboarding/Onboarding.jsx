@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Onboarding.css';
 
 const Onboarding = () => {
@@ -33,7 +34,7 @@ const Onboarding = () => {
             onClick={() => handleGradeSelect(grade)}
           >
             <h3>Grade {grade}</h3>
-            <div className="grade-illustration">🎓</div>
+            <div className="grade-illustration"><AppIcon icon="twemoji:graduation-cap" /></div>
           </div>
         ))}
       </div>

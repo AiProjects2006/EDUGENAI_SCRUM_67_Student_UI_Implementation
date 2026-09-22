@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useProgress } from '../../../context/ProgressContext';
 import { useSaved } from '../../../context/SavedContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Notes.css';
 
 const Notes = () => {
@@ -20,21 +21,21 @@ const Notes = () => {
 
   const slides = [
     {
-      icon: '📐',
+      icon: 'twemoji:triangular-ruler',
       title: 'What is a Triangle?',
       content: 'A triangle is a polygon with three edges and three vertices. It is one of the basic shapes in geometry.',
       fact: 'Did you know the starfish is shaped like 5 triangles put together?',
       audio: 'A triangle is a polygon with three edges and three vertices. Did you know the starfish is shaped like 5 triangles put together?'
     },
     {
-      icon: '⏹️',
+      icon: 'twemoji:stop-button',
       title: 'What is a Square?',
       content: 'A square is a regular quadrilateral, which means that it has four equal sides and four equal angles.',
       fact: 'A chessboard is made of 64 smaller squares!',
       audio: 'A square has four equal sides and four equal angles. A chessboard is made of 64 smaller squares!'
     },
     {
-      icon: '⭕',
+      icon: 'twemoji:hollow-red-circle',
       title: 'What is a Circle?',
       content: 'A circle is a shape consisting of all points in a plane that are at a given distance from a given point, the center.',
       fact: 'Bubbles are perfect spheres, which look like circles from any angle!',
@@ -65,7 +66,7 @@ const Notes = () => {
     if (isSaved(noteId, 'Notes')) {
       removeItem(noteId, 'Notes');
     } else {
-      saveItem({ id: noteId, type: 'Notes', title: 'Geometry Basics', icon: '📐' });
+      saveItem({ id: noteId, type: 'Notes', title: 'Geometry Basics', icon: 'twemoji:triangular-ruler' });
     }
   };
 
@@ -83,14 +84,14 @@ const Notes = () => {
               onClick={handleBookmark}
               title="Save Notes"
             >
-              ★
+              <AppIcon icon="twemoji:star" />
             </button>
           </div>
           <div className="notes-actions" style={{ position: 'absolute', right: 0 }}>
             <button className={`action-btn voice-reading ${isReading ? 'reading' : ''}`} onClick={handleReadAloud}>
-              {isReading ? '🔊 Reading...' : '🔊 Read Aloud'}
+              {isReading ? <><AppIcon icon="twemoji:speaker-high-volume" /> Reading...</> : <><AppIcon icon="twemoji:speaker-high-volume" /> Read Aloud</>}
             </button>
-            <button className="action-btn" onClick={handleDownload}>⬇️ Download PDF</button>
+            <button className="action-btn" onClick={handleDownload}><AppIcon icon="twemoji:down-arrow" /> Download PDF</button>
           </div>
         </div>
       </div>
@@ -99,11 +100,11 @@ const Notes = () => {
         {slides.map((slide, index) => (
           <div key={index} className="print-slide">
             <div className="print-slide-header">Geometry Basics - Slide {index + 1} of {slides.length}</div>
-            <div className="slide-image">{slide.icon}</div>
+            <div className="slide-image"><AppIcon icon={slide.icon} /></div>
             <h3>{slide.title}</h3>
             <p>{slide.content}</p>
             <div className="fun-fact">
-              <span className="mascot-icon">🐙</span>
+              <span className="mascot-icon"><AppIcon icon="twemoji:octopus" /></span>
               <p><strong>Bubbles says:</strong> {slide.fact}</p>
             </div>
           </div>
@@ -112,12 +113,12 @@ const Notes = () => {
 
       <div className="notes-content glass-panel">
         <div className="slide-viewer">
-          <div className="slide-image">{slides[currentSlide].icon}</div>
+          <div className="slide-image"><AppIcon icon={slides[currentSlide].icon} /></div>
           <h3>{slides[currentSlide].title}</h3>
           <p>{slides[currentSlide].content}</p>
           
           <div className="fun-fact">
-            <span className="mascot-icon">🐙</span>
+            <span className="mascot-icon"><AppIcon icon="twemoji:octopus" /></span>
             <p><strong>Bubbles says:</strong> {slides[currentSlide].fact}</p>
           </div>
         </div>
@@ -131,7 +132,7 @@ const Notes = () => {
 
       <div className="notes-footer">
         <button className="btn-primary huge-btn" onClick={() => { incrementModules(); navigate('/generate-activity'); }}>
-          Ready for Activities! 🎮
+          Ready for Activities! <AppIcon icon="twemoji:video-game" />
         </button>
       </div>
     </div>

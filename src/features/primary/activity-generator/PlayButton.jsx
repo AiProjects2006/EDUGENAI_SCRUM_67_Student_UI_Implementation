@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './PlayButton.css';
 
 const PlayButton = ({ onClick }) => {
@@ -50,7 +51,7 @@ const PlayButton = ({ onClick }) => {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                         >
-                            🫧
+                            <AppIcon icon="twemoji:bubbles" />
                         </motion.div>
                     ))}
                 </AnimatePresence>
@@ -90,7 +91,7 @@ const PlayButton = ({ onClick }) => {
             ease: "easeInOut"
         } : { duration: 0.5, ease: "easeOut" }}
     >
-        🤿
+        <AppIcon icon="twemoji:diving-mask" />
     </motion.span>
 
     <span className="dive-text">Dive In!</span>

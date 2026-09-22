@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { useUser } from '../../../context/UserContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Registration.css';
 
 const Registration = () => {
@@ -52,7 +53,7 @@ const Registration = () => {
     <div className="registration-page">
       <OceanBackground />
       <div className="registration-card glass-panel">
-        <h2>Join the Adventure! 🌊</h2>
+        <h2>Join the Ocean Adventure <AppIcon icon="twemoji:water-wave" /></h2>
         {error && <div style={{ color: '#ff6b6b', marginBottom: '1rem', fontWeight: 'bold' }}>{error}</div>}
         <form onSubmit={handleRegister}>
           <div className="avatar-section" style={{ textAlign: 'center', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -110,7 +111,7 @@ const Registration = () => {
                 style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '1.2rem', userSelect: 'none' }}
                 title={showPassword ? "Hide Password" : "Show Password"}
               >
-                {showPassword ? '👁️' : '🙈'}
+                {showPassword ? <AppIcon icon="twemoji:eye" /> : <AppIcon icon="twemoji:see-no-evil-monkey" />}
               </span>
             </div>
             {password && password.length < 4 && (
@@ -136,7 +137,7 @@ const Registration = () => {
                 style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '1.2rem', userSelect: 'none' }}
                 title={showConfirmPassword ? "Hide Password" : "Show Password"}
               >
-                {showConfirmPassword ? '👁️' : '🙈'}
+                {showConfirmPassword ? <AppIcon icon="twemoji:eye" /> : <AppIcon icon="twemoji:see-no-evil-monkey" />}
               </span>
             </div>
             {confirmPassword && password !== confirmPassword && (

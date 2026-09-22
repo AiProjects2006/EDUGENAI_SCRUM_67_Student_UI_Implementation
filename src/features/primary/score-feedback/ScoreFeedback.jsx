@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './ScoreFeedback.css';
 
 const ScoreFeedback = () => {
@@ -16,19 +17,19 @@ const ScoreFeedback = () => {
 
     // Determine Badge Tier
     let badgeLabel = 'Participant';
-    let badgeIcon = '🌟';
+    let badgeIcon = 'twemoji:glowing-star';
     if (percentage >= 90) {
         badgeLabel = 'Diamond Badge';
-        badgeIcon = '💎';
+        badgeIcon = 'twemoji:gem-stone';
     } else if (percentage >= 80) {
         badgeLabel = 'Gold Badge';
-        badgeIcon = '🥇';
+        badgeIcon = 'twemoji:1st-place-medal';
     } else if (percentage >= 60) {
         badgeLabel = 'Silver Badge';
-        badgeIcon = '🥈';
+        badgeIcon = 'twemoji:2nd-place-medal';
     } else if (percentage >= 40) {
         badgeLabel = 'Bronze Badge';
-        badgeIcon = '🥉';
+        badgeIcon = 'twemoji:3rd-place-medal';
     }
 
     // Dynamic Recommendation / Feedback based on score
@@ -67,10 +68,10 @@ const ScoreFeedback = () => {
 
     return (
         <div className="score-page">
-            {showConfetti && <div className="confetti-container">🎉🎊✨🎊🎉</div>}
+            {showConfetti && <div className="confetti-container"><AppIcon icon="twemoji:party-popper" /><AppIcon icon="twemoji:confetti-ball" /><AppIcon icon="twemoji:sparkles" /><AppIcon icon="twemoji:confetti-ball" /><AppIcon icon="twemoji:party-popper" /></div>}
 
             <div className="score-card glass-panel">
-                <h2>Activity Complete! 🏆</h2>
+                <h2>Activity Complete! <AppIcon icon="twemoji:trophy" /></h2>
 
                 <div className="score-stats">
                     <div
@@ -81,17 +82,17 @@ const ScoreFeedback = () => {
                         <span className="label">Score</span>
                     </div>
                     <div className="rewards-earned">
-                        <div className="reward"><span className="icon">⭐</span> +{Math.max(1, Math.round(percentage / 33))} Stars</div>
+                        <div className="reward"><span className="icon"><AppIcon icon="twemoji:star" /></span> +{Math.max(1, Math.round(percentage / 33))} Stars</div>
                         {/*90–100% → 3 ⭐*/}
                         {/*60–89%  → 2 ⭐*/}
                         {/*0–59%   → 1 ⭐*/}
-                        <div className="reward"><span className="icon">🪙</span> +{percentage} Coins</div>
+                        <div className="reward"><span className="icon"><AppIcon icon="twemoji:coin" /></span> +{percentage} Coins</div>
                         {/*100% → 100 coins*/}
                         {/*90%  → 90 coins*/}
                         {/*80%  → 80 coins*/}
                         {/*60%  → 60 coins*/}
                         {/*40%  → 40 coins*/}
-                        <div className="reward"><span className="icon">✨</span> +{score * 25} XP</div>
+                        <div className="reward"><span className="icon"><AppIcon icon="twemoji:sparkles" /></span> +{score * 25} XP</div>
                         {/*4/5  → 4 × 25 = 100 XP*/}
                         {/*8/10 → 8 × 25 = 200 XP*/}
                         {/*10/10 → 10 × 25 = 250 XP*/}
@@ -104,22 +105,22 @@ const ScoreFeedback = () => {
 
 
                         {percentage >= 40 && (
-                            <div className="reward badge"><span className="icon">{badgeIcon}</span> {badgeLabel}</div>
+                            <div className="reward badge"><span className="icon"><AppIcon icon={badgeIcon} /></span> {badgeLabel}</div>
                         )}
                     </div>
                 </div>
 
                 <div className="performance-summary">
                     <div className="summary-item correct">
-                        <span>✅ Correct Answers</span>
+                        <span><AppIcon icon="twemoji:check-mark-button" /> Correct Answers</span>
                         <span>{score}</span>
                     </div>
                     <div className="summary-item wrong">
-                        <span>❌ Wrong Answers</span>
+                        <span><AppIcon icon="twemoji:cross-mark" /> Wrong Answers</span>
                         <span>{total - score}</span>
                     </div>
                     <div className="summary-item weakness">
-                        <span>💡 Area to Review</span>
+                        <span><AppIcon icon="twemoji:light-bulb" /> Area to Review</span>
                         <span>{areaToReview}</span>
                     </div>
                 </div>
@@ -131,7 +132,7 @@ const ScoreFeedback = () => {
                 <div className="score-actions">
                     <button className="btn-secondary" onClick={() => navigate('/activity')}>Retry Activity</button>
                     <button className="btn-secondary" onClick={() => navigate('/generate-activity')}>try Generate Activity</button>
-                    <button className="btn-primary" onClick={handleNextActivity}>Next Activity ➡</button>
+                    <button className="btn-primary" onClick={handleNextActivity}>Next Activity <AppIcon icon="twemoji:right-arrow" /></button>
                 </div>
             </div>
         </div>

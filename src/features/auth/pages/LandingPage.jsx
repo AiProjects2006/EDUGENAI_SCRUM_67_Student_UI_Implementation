@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -60,7 +61,7 @@ const LandingPage = () => {
           title="Toggle Bubbles Voice Guidance"
           onClick={toggleVoiceSystem}
         >
-          {isVoiceEnabled ? <i className="fa-solid fa-volume-high"></i> : <i className="fa-solid fa-volume-xmark"></i>}
+          {isVoiceEnabled ? <AppIcon icon="twemoji:speaker-high-volume" /> : <AppIcon icon="twemoji:muted-speaker" />}
         </button>
         <button 
           id="btn-global-bgm" 
@@ -68,7 +69,7 @@ const LandingPage = () => {
           title="Toggle Magical Ambient BGM"
           onClick={toggleBgmSystem}
         >
-          {isBgmPlaying ? <i className="fa-solid fa-music"></i> : <i className="fa-solid fa-music-slash"></i>}
+          {isBgmPlaying ? <AppIcon icon="twemoji:musical-note" /> : <AppIcon icon="twemoji:bell-with-slash" />}
         </button>
       </div>
 
@@ -99,7 +100,7 @@ const LandingPage = () => {
                     <div className="mascot-glowing-backdrop"></div>
                     <div className="showcase-octopus-container">
                       <div className="mascot-octopus floating" style={{ width: '250px', height: '250px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src="/octopus.png" alt="Bubbles Mascot" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'hue-rotate(180deg) brightness(1.1) saturate(1.2)' }} />
+                        <img src="/octopus.png" alt="Bubbles Mascot" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       </div>
                     </div>
                     <div className="hero-bubble-chat">
@@ -138,7 +139,7 @@ const LandingPage = () => {
                 </div>
               </div>
               <div id="magical-powers" className="highlight-split-section">
-              <h2 className="section-title text-center">🐚 Magical Superpowers</h2>
+              <h2 className="section-title text-center"><AppIcon icon="twemoji:spiral-shell" /> Magical Superpowers</h2>
               <div className="landing-features-grid">
                 <div className="feature-item-card" onClick={() => triggerMascotVoice("AI Activities. Custom generated lessons tailored dynamically to your needs.")} style={{cursor: 'pointer'}}>
                   <div className="feat-icon" ><i className="fa-solid fa-wand-magic-sparkles"></i></div>
@@ -199,10 +200,10 @@ const LandingPage = () => {
 
                     <h2>For Primary Students</h2>
                     <ul className="split-list">
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>🎮 Fun learning games</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>🔊 Voice support</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>🎁 Rewards & Badges</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>🐠 Animated lessons</strong> </li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:video-game" /> Fun learning games</strong> </li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:speaker-high-volume" /> Voice support</strong> </li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:wrapped-gift" /> Rewards & Badges</strong> </li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:tropical-fish" /> Animated lessons</strong> </li>
                     </ul>
                     {/*</div>*/}
                     {/*<button className="btn btn-primary" onClick={() => navigate('/register', {state: {gradeGroup: 'primary'}})}>Enter Kids Portal</button>*/}
@@ -214,10 +215,10 @@ const LandingPage = () => {
                     <ul className="split-list">
 
                       <div className="split-badge">Grades 6 - 11</div>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>📚 Structured learning</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>🤖 AI assistant</strong></li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>📝 Practice exams</strong></li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong>📈 Progress analytics</strong></li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:books" /> Structured learning</strong> </li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:robot" /> AI assistant</strong></li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:memo" /> Practice exams</strong></li>
+                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:chart-increasing" /> Progress analytics</strong></li>
                     </ul>
                     {/*<button className="btn btn-secondary" onClick={() => navigate('/register', {state: {gradeGroup: 'secondary'}})}>Enter Teens Portal</button>*/}
                   </div>

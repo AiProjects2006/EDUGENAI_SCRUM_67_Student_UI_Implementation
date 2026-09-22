@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import './ActivityGenerator.css';
 import PlayButton from './PlayButton';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 
 const ActivityGenerator = () => {
     const navigate = useNavigate();
@@ -66,7 +67,7 @@ const ActivityGenerator = () => {
                 <div className="generating-view">
                     <div className="loading-spinner"></div>
                     <h3>Bubbles is generating your magical activity!</h3>
-                    <p>Gathering sea crystals... 💎</p>
+                    <p>Gathering sea crystals... <AppIcon icon="twemoji:gem-stone" /></p>
                 </div>
             );
         }
@@ -101,9 +102,9 @@ const ActivityGenerator = () => {
                     <div className="generator-step" key={step}>
                         <h3>Step 2: Choose Difficulty</h3>
                         <div className="difficulty-grid">
-                            <div className={`diff-card glass-panel easy ${selectedDiff === 'easy' ? 'selected' : ''}`} onClick={() => setSelectedDiff('easy')} onMouseEnter={() => triggerMascotVoice('Easy')}>Easy 🐠</div>
-                            <div className={`diff-card glass-panel medium ${selectedDiff === 'medium' ? 'selected' : ''}`} onClick={() => setSelectedDiff('medium')} onMouseEnter={() => triggerMascotVoice('Medium')}>Medium 🐬</div>
-                            <div className={`diff-card glass-panel hard ${selectedDiff === 'hard' ? 'selected' : ''}`} onClick={() => setSelectedDiff('hard')} onMouseEnter={() => triggerMascotVoice('Hard')}>Hard 🦈</div>
+                            <div className={`diff-card glass-panel easy ${selectedDiff === 'easy' ? 'selected' : ''}`} onClick={() => setSelectedDiff('easy')} onMouseEnter={() => triggerMascotVoice('Easy')}>Easy <AppIcon icon="twemoji:tropical-fish" /></div>
+                            <div className={`diff-card glass-panel medium ${selectedDiff === 'medium' ? 'selected' : ''}`} onClick={() => setSelectedDiff('medium')} onMouseEnter={() => triggerMascotVoice('Medium')}>Medium <AppIcon icon="twemoji:dolphin" /></div>
+                            <div className={`diff-card glass-panel hard ${selectedDiff === 'hard' ? 'selected' : ''}`} onClick={() => setSelectedDiff('hard')} onMouseEnter={() => triggerMascotVoice('Hard')}>Hard <AppIcon icon="twemoji:shark" /></div>
                         </div>
                     </div>
                 );
@@ -143,7 +144,6 @@ const ActivityGenerator = () => {
 
     return (
         <div className="generator-page">
-            <PlayButton onClick={() => navigate('/activity-map')} />
             <div className="generator-card glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
                 <div className="header-content" style={{ marginBottom: '2rem' }}>
                     {step === 1 && (
@@ -151,7 +151,7 @@ const ActivityGenerator = () => {
                             <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
                         </button>
                     )}
-                    <h2 style={{ margin: 0 }}>✨ AI Activity Generator</h2>
+                    <h2 style={{ margin: 0 }}><AppIcon icon="twemoji:sparkles" /> AI Activity Generator</h2>
                 </div>
 
                 {!isGenerating && (
@@ -173,7 +173,7 @@ const ActivityGenerator = () => {
                         {step < 3 ? (
                             <button className="btn-primary" onClick={handleNext}>Next</button>
                         ) : (
-                            <button className="btn-primary generate-btn" onClick={handleGenerate}>Generate Activity 🚀</button>
+                            <button className="btn-primary generate-btn" onClick={handleGenerate}>Generate Activity <AppIcon icon="twemoji:rocket" /></button>
                         )}
                     </div>
                 )}

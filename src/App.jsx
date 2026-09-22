@@ -4,8 +4,6 @@ import LandingPage from './features/auth/pages/LandingPage';
 import Registration from './features/auth/registration/Registration';
 import Login from './features/auth/login/Login';
 import ForgotPassword from './features/auth/login/ForgotPassword';
-import ProfileSetup from './features/auth/onboarding/ProfileSetup';
-import Onboarding from './features/auth/onboarding/Onboarding';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
@@ -25,49 +23,43 @@ import { UserProvider } from './context/UserContext';
 import GenerateActivityScore from "./features/primary/generate-activity-score/GenerateActivityScore.jsx";
 import Progress from './features/primary/progress/Progress';
 import SavedItems from './features/primary/saved/SavedItems';
-import Profile from './features/primary/profile/Profile';
-import Account from './features/primary/account/Account';
 
 function App() {
   return (
-    <AudioProvider>
-      <ProgressProvider>
-        <SavedProvider>
-          <UserProvider>
+    <UserProvider>
+      <AudioProvider>
+        <ProgressProvider>
+          <SavedProvider>
             <Router>
-        <Routes>
-          <Route path="/landing" element={<LandingPage />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/profile-setup" element={<ProfileSetup />} />
-          <Route path="/grade-select" element={<Onboarding />} />
-          
-          {/* Protected routes wrapped in OceanLayout */}
-          <Route path="/" element={<OceanLayout />}>
-            <Route index element={<Navigate to="/landing" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="courses" element={<Courses />} />
-            <Route path="modules" element={<Modules />} />
-            <Route path="notes" element={<Notes />} />
-            <Route path="activity-map" element={<ActivityMap />} />
-            <Route path="activity" element={<ActivityPlayer />} />
-            <Route path="generate-activity" element={<ActivityGenerator />} />
-            <Route path="generate-activity-activity" element={<GenerateActivityActivity />} />
-            <Route path="score" element={<ScoreFeedback />} />
-            <Route path="generate-activity-score" element={<GenerateActivityScore />} />
-            <Route path="recommendations" element={<Recommendations />} />
-            <Route path="progress" element={<Progress />} />
-            <Route path="saved" element={<SavedItems />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="account" element={<Account />} />
-          </Route>
-        </Routes>
+              <Routes>
+                <Route path="/landing" element={<LandingPage />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+
+                {/* Protected routes wrapped in OceanLayout */}
+                <Route path="/" element={<OceanLayout />}>
+                  <Route index element={<Navigate to="/landing" replace />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="courses" element={<Courses />} />
+                  <Route path="modules" element={<Modules />} />
+                  <Route path="notes" element={<Notes />} />
+                  <Route path="activity-map" element={<ActivityMap />} />
+                  <Route path="activity" element={<ActivityPlayer />} />
+                  <Route path="generate-activity" element={<ActivityGenerator />} />
+                  <Route path="generate-activity-activity" element={<GenerateActivityActivity />} />
+                  <Route path="score" element={<ScoreFeedback />} />
+                  <Route path="generate-activity-score" element={<GenerateActivityScore />} />
+                  <Route path="recommendations" element={<Recommendations />} />
+                  <Route path="progress" element={<Progress />} />
+                  <Route path="saved" element={<SavedItems />} />
+                </Route>
+              </Routes>
             </Router>
-          </UserProvider>
-        </SavedProvider>
-      </ProgressProvider>
-    </AudioProvider>
+          </SavedProvider>
+        </ProgressProvider>
+      </AudioProvider>
+    </UserProvider>
   );
 }
 

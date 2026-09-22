@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
     email: 'alex.explorer@school.edu',
     password: 'password123',
     phone: '(+1) 234 567 890',
-    avatar: '👦'
+    avatar: 'twemoji:boy'
   });
 
   const updateUser = (newData) => {

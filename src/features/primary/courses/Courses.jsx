@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useSaved } from '../../../context/SavedContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Courses.css';
 
 const Courses = () => {
@@ -19,10 +20,10 @@ const Courses = () => {
   const categories = ['All', 'Math', 'Science', 'English', 'ICT'];
   
   const units = [
-    { id: 1, title: 'Fractions & Decimals', subject: 'Math', status: 'completed', image: '🔢' },
-    { id: 2, title: 'Geometry Basics', subject: 'Math', status: 'unlocked', image: '📐' },
-    { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'unlocked', image: '🧮' },
-    { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: '🐠' },
+    { id: 1, title: 'Fractions & Decimals', subject: 'Math', status: 'completed', image: 'twemoji:input-numbers' },
+    { id: 2, title: 'Geometry Basics', subject: 'Math', status: 'unlocked', image: 'twemoji:triangular-ruler' },
+    { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'unlocked', image: 'twemoji:abacus' },
+    { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: 'twemoji:tropical-fish' },
   ];
 
   const filteredUnits = units.filter(u => {
@@ -34,7 +35,7 @@ const Courses = () => {
   return (
     <div className="courses-page">
       <div className="courses-header glass-panel">
-        <h2>Your Learning Journey 📚</h2>
+        <h2>Your Learning Journey <AppIcon icon="twemoji:books" /></h2>
         <div className="search-bar">
           <input 
             type="text" 
@@ -42,7 +43,7 @@ const Courses = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="search-btn">🔍</button>
+          <button className="search-btn"><AppIcon icon="twemoji:magnifying-glass-tilted-left" /></button>
         </div>
       </div>
 
@@ -61,7 +62,7 @@ const Courses = () => {
       <div className="courses-grid">
         {filteredUnits.map(unit => (
           <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
-            <div className="course-image">{unit.image}</div>
+            <div className="course-image"><AppIcon icon={unit.image} /></div>
             <div className="course-content">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <h3>{unit.title}</h3>
@@ -77,20 +78,20 @@ const Courses = () => {
                   }}
                   title="Save to Treasure Chest"
                 >
-                  ★
+                  <AppIcon icon="twemoji:star" />
                 </button>
               </div>
               <p className="subject-tag">{unit.subject}</p>
               
               {unit.status === 'locked' ? (
-                <button className="btn-secondary disabled">Locked 🔒</button>
+                <button className="btn-secondary disabled">Locked <AppIcon icon="twemoji:locked" /></button>
               ) : (
                 <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title } })}>
-                  {unit.status === 'completed' ? '✅ Review' : '▶ Continue'}
+                  {unit.status === 'completed' ? <><AppIcon icon="twemoji:check-mark-button" /> Review</> : <><AppIcon icon="twemoji:play-button" /> Continue</>}
                 </button>
               )}
             </div>
-            {unit.status === 'completed' && <div className="completion-badge">⭐</div>}
+            {unit.status === 'completed' && <div className="completion-badge"><AppIcon icon="twemoji:star" /></div>}
           </div>
         ))}
       </div>

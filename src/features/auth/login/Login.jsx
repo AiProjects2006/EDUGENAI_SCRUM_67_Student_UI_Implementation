@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import '../registration/Registration.css';
 
 const Login = () => {
@@ -19,7 +20,7 @@ const Login = () => {
     <div className="registration-page">
       <OceanBackground />
       <div className="registration-card glass-panel">
-        <h2>Welcome Back Explorer! 🌊</h2>
+        <h2>Welcome Back Explorer! <AppIcon icon="twemoji:water-wave" /></h2>
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label>Email</label>
@@ -48,7 +49,7 @@ const Login = () => {
                 style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '1.2rem', userSelect: 'none' }}
                 title={showPassword ? "Hide Password" : "Show Password"}
               >
-                {showPassword ? '👁️' : '🙈'}
+                {showPassword ? <AppIcon icon="twemoji:eye" /> : <AppIcon icon="twemoji:see-no-evil-monkey" />}
               </span>
             </div>
             {password && password.length < 4 && (

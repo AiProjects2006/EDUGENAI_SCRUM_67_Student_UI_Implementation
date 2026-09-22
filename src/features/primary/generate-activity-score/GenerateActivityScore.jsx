@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useProgress } from '../../../context/ProgressContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import '../score-feedback/ScoreFeedback.css';
 
 const GenerateActivityScore = () => {
@@ -33,10 +34,10 @@ const GenerateActivityScore = () => {
 
   return (
     <div className="score-page">
-      {showConfetti && <div className="confetti-container">🎉🎊✨🎊🎉</div>}
+      {showConfetti && <div className="confetti-container"><AppIcon icon="twemoji:party-popper" /><AppIcon icon="twemoji:confetti-ball" /><AppIcon icon="twemoji:sparkles" /><AppIcon icon="twemoji:confetti-ball" /><AppIcon icon="twemoji:party-popper" /></div>}
 
       <div className="score-card glass-panel">
-        <h2>Activity Complete! 🏆</h2>
+        <h2>Activity Complete! <AppIcon icon="twemoji:trophy" /></h2>
 
         <div className="score-stats" style={{ background: 'none', justifyContent: 'center' }}>
           <div 
@@ -51,15 +52,15 @@ const GenerateActivityScore = () => {
 
         <div className="performance-summary">
           <div className="summary-item correct">
-            <span>✅ Correct Answers</span>
+            <span><AppIcon icon="twemoji:check-mark-button" /> Correct Answers</span>
             <span>{score}</span>
           </div>
           <div className="summary-item wrong">
-            <span>❌ Wrong Answers</span>
+            <span><AppIcon icon="twemoji:cross-mark" /> Wrong Answers</span>
             <span>{total - score}</span>
           </div>
           <div className="summary-item weakness">
-            <span>💡 Area to Review</span>
+            <span><AppIcon icon="twemoji:light-bulb" /> Area to Review</span>
             <span>Ocean Habitats</span>
           </div>
         </div>

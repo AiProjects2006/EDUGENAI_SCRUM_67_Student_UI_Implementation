@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import '../registration/Registration.css';
 
 const ForgotPassword = () => {
@@ -20,7 +21,7 @@ const ForgotPassword = () => {
     <div className="registration-page">
       <OceanBackground />
       <div className="registration-card glass-panel">
-        <h2>Reset Password 🌊</h2>
+        <h2>Reset Password <AppIcon icon="twemoji:water-wave" /></h2>
         
         {!isSent ? (
           <>
@@ -37,7 +38,7 @@ const ForgotPassword = () => {
           </>
         ) : (
           <div style={{ padding: '2rem 0' }}>
-            <h3 style={{ color: 'var(--aqua)', marginBottom: '1rem' }}>Message Sent! ✉️</h3>
+            <h3 style={{ color: 'var(--aqua)', marginBottom: '1rem' }}>Message Sent! <AppIcon icon="twemoji:envelope" /></h3>
             <p style={{ color: 'white' }}>
               If an account exists for that email, a reset link was sent. Redirecting back to login...
             </p>

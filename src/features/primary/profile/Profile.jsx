@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './Profile.css';
 
 const Profile = () => {
@@ -14,10 +15,10 @@ const Profile = () => {
         
         <div className="profile-header">
           <div className="avatar-large">
-            {user.avatar && user.avatar.length > 10 ? (
+            {user.avatar && user.avatar.startsWith('data:') ? (
               <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
             ) : (
-              user.avatar || '👤'
+              <AppIcon icon={user.avatar || 'twemoji:bust-in-silhouette'} />
             )}
           </div>
           <h3>{user.fullName}</h3>
@@ -26,20 +27,20 @@ const Profile = () => {
 
         <div className="profile-menu">
           <button className="menu-item" onClick={() => navigate('/account')}>
-            <span className="icon">👤</span>
+            <span className="icon"><AppIcon icon="twemoji:bust-in-silhouette" /></span>
             <span className="text">My Account</span>
             <span className="arrow">›</span>
           </button>
 
 
           <button className="menu-item" onClick={() => navigate('/help')}>
-            <span className="icon">❓</span>
+            <span className="icon"><AppIcon icon="twemoji:question-mark" /></span>
             <span className="text">Help Center</span>
             <span className="arrow">›</span>
           </button>
 
           <button className="menu-item" onClick={() => navigate('/contact')}>
-            <span className="icon">📞</span>
+            <span className="icon"><AppIcon icon="twemoji:telephone-receiver" /></span>
             <span className="text">Contact</span>
             <span className="arrow">›</span>
           </button>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSaved } from '../../../context/SavedContext';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import './SavedItems.css';
 
 const SavedItems = () => {
@@ -26,7 +27,7 @@ const SavedItems = () => {
   return (
     <div className="saved-items-page">
       <div className="saved-header glass-panel">
-        <h2>Your Treasure Chest ⭐</h2>
+        <h2>Your Treasure Chest <AppIcon icon="twemoji:star" /></h2>
         <div className="search-bar">
           <input 
             type="text" 
@@ -34,7 +35,7 @@ const SavedItems = () => {
             value={search} 
             onChange={(e) => setSearch(e.target.value)} 
           />
-          <button className="search-btn">🔍</button>
+          <button className="search-btn"><AppIcon icon="twemoji:magnifying-glass-tilted-left" /></button>
         </div>
       </div>
 
@@ -56,12 +57,15 @@ const SavedItems = () => {
         ) : (
           filteredItems.map(item => (
             <div key={item.id} className="saved-card glass-panel">
-              <div className="saved-icon">{item.icon}</div>
+              <div className="saved-icon">
+                {typeof item.icon === 'string' && item.icon.startsWith('twemoji:') ? 
+                  <AppIcon icon={item.icon} /> : item.icon}
+              </div>
               <div className="saved-info">
                 <h3>{item.title}</h3>
                 <p>{item.type} • {item.time}</p>
               </div>
-              <button className="remove-btn" onClick={() => handleDelete(item.id, item.type)}>✖</button>
+              <button className="remove-btn" onClick={() => handleDelete(item.id, item.type)}><AppIcon icon="twemoji:multiply" /></button>
             </div>
           ))
         )}

@@ -4,6 +4,7 @@ import TopNavigation from '../TopNavigation/TopNavigation';
 import BubblesMascot from '../../mascot/BubblesMascot/BubblesMascot';
 import OceanBackground from '../OceanBackground/OceanBackground';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { AppIcon } from '../../common/AppIcon/AppIcon';
 import './OceanLayout.css';
 
 const OceanLayout = () => {
@@ -22,7 +23,7 @@ const OceanLayout = () => {
           title="Toggle Bubbles Voice Guidance"
           onClick={toggleVoiceSystem}
         >
-          {isVoiceEnabled ? '🔊' : '🔇'}
+          {isVoiceEnabled ? <AppIcon icon="twemoji:speaker-high-volume" /> : <AppIcon icon="twemoji:muted-speaker" />}
         </button>
         <button 
           id="btn-global-bgm" 
@@ -30,7 +31,7 @@ const OceanLayout = () => {
           title="Toggle Magical Ambient BGM"
           onClick={toggleBgmSystem}
         >
-          {isBgmPlaying ? '🎵' : '🔕'}
+          {isBgmPlaying ? <AppIcon icon="twemoji:musical-note" /> : <AppIcon icon="twemoji:bell-with-slash" />}
         </button>
       </div>
 

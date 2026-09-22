@@ -144,7 +144,6 @@ const ActivityGenerator = () => {
 
     return (
         <div className="generator-page">
-            <PlayButton onClick={() => navigate('/activity-map')} />
             <div className="generator-card glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
                 <div className="header-content" style={{ marginBottom: '2rem' }}>
                     {step === 1 && (

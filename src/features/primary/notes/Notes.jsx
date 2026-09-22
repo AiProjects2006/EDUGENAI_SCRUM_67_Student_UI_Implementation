@@ -130,9 +130,12 @@ const Notes = () => {
         </div>
       </div>
 
-      <div className="notes-footer">
+      <div className="notes-footer" style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
         <button className="btn-primary huge-btn" onClick={() => { incrementModules(); navigate('/generate-activity'); }}>
-          Ready for Activities! <AppIcon icon="twemoji:video-game" />
+          Generate AI Activity <AppIcon icon="twemoji:sparkles" />
+        </button>
+        <button className="btn-secondary huge-btn" onClick={() => navigate('/activity-map')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          Explore Quest Map <AppIcon icon="twemoji:world-map" />
         </button>
       </div>
     </div>

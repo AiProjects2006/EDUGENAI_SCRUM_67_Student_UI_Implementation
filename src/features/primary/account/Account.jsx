@@ -76,67 +76,61 @@ const Account = () => {
         </div>
 
         <form className="account-form" onSubmit={handleSave}>
-          <div className="form-group">
+          <div className="input-group">
             <label>Full Name</label>
-            <div className="input-container">
-              <span className="input-icon"><AppIcon icon="mdi:account" /></span>
-              <input 
-                type="text" 
-                name="fullName"
-                value={formData.fullName} 
-                onChange={handleChange} 
-              />
-            </div>
+            <input 
+              type="text" 
+              name="fullName"
+              placeholder="Full Name"
+              value={formData.fullName} 
+              onChange={handleChange} 
+            />
           </div>
 
-          <div className="form-group">
+          <div className="input-group">
             <label>Email</label>
-            <div className="input-container">
-              <span className="input-icon"><AppIcon icon="mdi:email" /></span>
-              <input 
-                type="email" 
-                name="email"
-                value={formData.email} 
-                onChange={handleChange} 
-              />
-            </div>
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Your email"
+              value={formData.email} 
+              onChange={handleChange} 
+            />
           </div>
 
-          <div className="form-group">
+          <div className="input-group">
             <label>Password</label>
-            <div className="input-container">
-              <span className="input-icon"><AppIcon icon="mdi:lock" /></span>
+            <div style={{ position: 'relative' }}>
               <input 
                 type={showPassword ? "text" : "password"} 
                 name="password"
+                placeholder="Password"
                 value={formData.password} 
                 onChange={handleChange} 
+                style={{ width: '100%', paddingRight: '40px' }}
               />
-              <button 
-                type="button" 
-                className="toggle-password" 
+              <span 
                 onClick={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '1.2rem', userSelect: 'none' }}
                 title={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <AppIcon icon="mdi:eye-off" /> : <AppIcon icon="mdi:eye" />}
-              </button>
+                {showPassword ? <AppIcon icon="twemoji:eye" /> : <AppIcon icon="twemoji:see-no-evil-monkey" />}
+              </span>
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="input-group">
             <label>Phone Number</label>
-            <div className="input-container">
-              <span className="input-icon"><AppIcon icon="mdi:phone" /></span>
-              <input 
-                type="text" 
-                name="phone"
-                value={formData.phone} 
-                onChange={handleChange} 
-              />
-            </div>
+            <input 
+              type="text" 
+              name="phone"
+              placeholder="Your phone number"
+              value={formData.phone} 
+              onChange={handleChange} 
+            />
           </div>
 
-          <button type="submit" className="save-btn">Save Changes</button>
+          <button type="submit" className="btn-primary save-btn">Save Changes</button>
         </form>
       </div>
     </div>

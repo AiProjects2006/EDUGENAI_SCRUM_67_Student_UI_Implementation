@@ -15,7 +15,7 @@ const Profile = () => {
         
         <div className="profile-header">
           <div className="avatar-large">
-            {user.avatar && user.avatar.startsWith('data:') ? (
+            {user.avatar && (user.avatar.startsWith('data:') || user.avatar.startsWith('http')) ? (
               <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
             ) : (
               <AppIcon icon={user.avatar || 'twemoji:bust-in-silhouette'} />

@@ -48,9 +48,9 @@ const TopNavigation = () => {
         </button>
 
         <div className="profile-container">
-          <button className="nav-bubble profile-btn" onClick={toggleProfile}>
-            <span className="icon">
-              {user.avatar && user.avatar.startsWith('data:') ? (
+          <button className="nav-bubble profile-btn" onClick={toggleProfile} style={{ padding: 0 }}>
+            <span className="icon" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {user.avatar && (user.avatar.startsWith('data:') || user.avatar.startsWith('http')) ? (
                 <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               ) : (
                 <AppIcon icon={user.avatar || 'twemoji:bust-in-silhouette'} />
@@ -62,7 +62,7 @@ const TopNavigation = () => {
             <div className="profile-dropdown glass-panel">
               <div className="dropdown-header" onClick={() => { navigate('/profile'); setProfileOpen(false); }}>
                 <div className="avatar">
-                  {user.avatar && user.avatar.startsWith('data:') ? (
+                  {user.avatar && (user.avatar.startsWith('data:') || user.avatar.startsWith('http')) ? (
                     <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                   ) : (
                     <AppIcon icon={user.avatar || 'twemoji:bust-in-silhouette'} />

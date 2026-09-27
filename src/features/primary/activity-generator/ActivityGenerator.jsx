@@ -147,7 +147,7 @@ const ActivityGenerator = () => {
             <div className="generator-card glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
                 <div className="header-content" style={{ marginBottom: '2rem' }}>
                     {step === 1 && (
-                        <button className="back-btn" onClick={() => navigate(-1)} aria-label="Go Back">
+                        <button className="back-btn" onClick={() => navigate('/notes')} aria-label="Go Back">
                             <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
                         </button>
                     )}

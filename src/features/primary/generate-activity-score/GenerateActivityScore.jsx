@@ -72,7 +72,7 @@ const GenerateActivityScore = () => {
         <div className="score-actions">
           <button className="btn-secondary" onClick={() => navigate('/generate-activity-activity', { state: location.state })}>Retry Activity</button>
           <button className="btn-secondary" onClick={() => navigate('/generate-activity')}>Generate Another</button>
-          <button className="btn-primary" onClick={handleNextActivity}>DIVE IN!</button>
+          <button className="btn-primary" onClick={handleNextActivity}>Explore Quest Map</button>
         </div>
       </div>
     </div>

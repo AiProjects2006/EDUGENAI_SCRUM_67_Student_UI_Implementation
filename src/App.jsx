@@ -4,6 +4,8 @@ import LandingPage from './features/auth/pages/LandingPage';
 import Registration from './features/auth/registration/Registration';
 import Login from './features/auth/login/Login';
 import ForgotPassword from './features/auth/login/ForgotPassword';
+import ProfileSetup from './features/auth/onboarding/ProfileSetup';
+import Onboarding from './features/auth/onboarding/Onboarding';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
@@ -14,7 +16,8 @@ import ActivityGenerator from './features/primary/activity-generator/ActivityGen
 import GenerateActivityActivity from './features/primary/generate-activity-activity/GenerateActivityActivity';
 import ScoreFeedback from './features/primary/score-feedback/ScoreFeedback';
 import Recommendations from './features/primary/recommendations/Recommendations';
-
+import Profile from './features/primary/profile/Profile';
+import Account from './features/primary/account/Account';
 
 import { AudioProvider } from './context/AudioContext';
 import { ProgressProvider } from './context/ProgressContext';
@@ -36,6 +39,8 @@ function App() {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/profile-setup" element={<ProfileSetup />} />
+                <Route path="/grade-select" element={<Onboarding />} />
 
                 {/* Protected routes wrapped in OceanLayout */}
                 <Route path="/" element={<OceanLayout />}>
@@ -53,6 +58,8 @@ function App() {
                   <Route path="recommendations" element={<Recommendations />} />
                   <Route path="progress" element={<Progress />} />
                   <Route path="saved" element={<SavedItems />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="account" element={<Account />} />
                 </Route>
               </Routes>
             </Router>

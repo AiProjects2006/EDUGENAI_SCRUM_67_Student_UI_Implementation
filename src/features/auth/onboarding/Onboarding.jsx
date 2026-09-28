@@ -12,8 +12,11 @@ const Onboarding = () => {
   const handleGradeSelect = (grade) => {
     updateUser({ grade: `Grade ${grade}` });
     
-    // Always navigate to /dashboard since secondary-dashboard might not be implemented here yet.
-    navigate('/dashboard');
+    if (grade <= 5) {
+      navigate('/dashboard');
+    } else {
+      navigate('/secondary-dashboard');
+    }
   };
 
   const grades = [3, 4, 5, 6, 7, 8, 9, 10, 11];

@@ -76,7 +76,12 @@ const TopNavigation = () => {
               </div>
               <ul className="dropdown-menu">
 
-                <li className="logout" onClick={() => { navigate('/login'); setProfileOpen(false); }}>Logout</li>
+                <li className="logout" onClick={() => { 
+                  sessionStorage.clear();
+                  localStorage.removeItem('ocean_progress'); 
+                  navigate('/login'); 
+                  setProfileOpen(false); 
+                }}>Logout</li>
               </ul>
             </div>
           )}

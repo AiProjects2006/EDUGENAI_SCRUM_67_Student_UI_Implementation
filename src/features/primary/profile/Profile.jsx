@@ -45,7 +45,11 @@ const Profile = () => {
             <span className="arrow">›</span>
           </button>
 
-          <button className="menu-item logout-btn" onClick={() => navigate('/login')}>
+          <button className="menu-item logout-btn" onClick={() => {
+            sessionStorage.clear();
+            localStorage.removeItem('ocean_progress'); 
+            navigate('/login');
+          }}>
             <span className="text">Logout</span>
           </button>
         </div>

@@ -90,8 +90,25 @@ const ScoreFeedback = () => {
                     </div>
                     <div className="rewards-earned">
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:star" /></span> +{Math.max(1, Math.round(percentage / 33))} Stars</div>
+                        {/*90–100% → 3 ⭐*/}
+                        {/*60–89%  → 2 ⭐*/}
+                        {/*0–59%   → 1 ⭐*/}
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:coin" /></span> +{percentage} Coins</div>
+                        {/*100% → 100 coins*/}
+                        {/*90%  → 90 coins*/}
+                        {/*80%  → 80 coins*/}
+                        {/*60%  → 60 coins*/}
+                        {/*40%  → 40 coins*/}
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:sparkles" /></span> +{score * 25} XP</div>
+                        {/*4/5  → 4 × 25 = 100 XP*/}
+                        {/*8/10 → 8 × 25 = 200 XP*/}
+                        {/*10/10 → 10 × 25 = 250 XP*/}
+
+                        {/*const xp = 50 + (score * 25);*/}
+                        {/* Easy	            50 XP*/}
+                        {/* Medium	        75 XP*/}
+                        {/* Hard         	100 XP*/}
+                        {/* Boss Challenge	150 XP*/}
                         {percentage >= 40 && (
                             <div className="reward badge"><span className="icon"><AppIcon icon={badgeIcon} /></span> {badgeLabel}</div>
                         )}

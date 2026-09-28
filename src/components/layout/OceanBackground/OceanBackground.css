@@ -1,0 +1,15 @@
+.ocean-background-component {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Changed from -1 so it doesn't fall behind gradient background */
+  pointer-events: none; /* Make sure it doesn't block clicks */
+  overflow: hidden; /* CRITICAL: Prevents fish from causing horizontal scrolling when they swim to 110vw */
+}
+
+/* Ensure we don't redefine animations if they already exist in OceanLayout.css, 
+   but it's safe to define component specific styles here if needed. 
+   Most of the animation classes like .bg-bubble, .fish, .ocean-decor are already 
+   defined globally or in OceanLayout.css. If we removed OceanLayout.css later we would move them here. */

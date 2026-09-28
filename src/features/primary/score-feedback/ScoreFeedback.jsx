@@ -13,7 +13,10 @@ const ScoreFeedback = () => {
     // Retrieve score from navigation state, or default to mock data
     const score = location.state?.score ?? 4;
     const total = location.state?.total ?? 5;
+    const answerHistory = location.state?.answerHistory || [];
     const percentage = Math.round((score / total) * 100);
+
+    const [reviewType, setReviewType] = useState(null); // 'correct' or 'wrong'
 
     // Determine Badge Tier
     let badgeLabel = 'Participant';
@@ -60,11 +63,15 @@ const ScoreFeedback = () => {
 
         // If they beat the boss (Level 6)
         if (playingLevelId === 6) {
-            navigate('/recommendations');
+            navigate('/recommendations', { state: { score, total, answerHistory } });
         } else {
             navigate('/activity-map');
         }
     };
+
+    const reviewItems = reviewType === 'correct' 
+        ? answerHistory.filter(h => h.isCorrect) 
+        : answerHistory.filter(h => !h.isCorrect);
 
     return (
         <div className="score-page">
@@ -83,27 +90,8 @@ const ScoreFeedback = () => {
                     </div>
                     <div className="rewards-earned">
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:star" /></span> +{Math.max(1, Math.round(percentage / 33))} Stars</div>
-                        {/*90–100% → 3 ⭐*/}
-                        {/*60–89%  → 2 ⭐*/}
-                        {/*0–59%   → 1 ⭐*/}
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:coin" /></span> +{percentage} Coins</div>
-                        {/*100% → 100 coins*/}
-                        {/*90%  → 90 coins*/}
-                        {/*80%  → 80 coins*/}
-                        {/*60%  → 60 coins*/}
-                        {/*40%  → 40 coins*/}
                         <div className="reward"><span className="icon"><AppIcon icon="twemoji:sparkles" /></span> +{score * 25} XP</div>
-                        {/*4/5  → 4 × 25 = 100 XP*/}
-                        {/*8/10 → 8 × 25 = 200 XP*/}
-                        {/*10/10 → 10 × 25 = 250 XP*/}
-
-                        {/*const xp = 50 + (score * 25);*/}
-                        {/* Easy	            50 XP*/}
-                        {/* Medium	        75 XP*/}
-                        {/* Hard         	100 XP*/}
-                        {/* Boss Challenge	150 XP*/}
-
-
                         {percentage >= 40 && (
                             <div className="reward badge"><span className="icon"><AppIcon icon={badgeIcon} /></span> {badgeLabel}</div>
                         )}
@@ -111,11 +99,11 @@ const ScoreFeedback = () => {
                 </div>
 
                 <div className="performance-summary">
-                    <div className="summary-item correct">
+                    <div className="summary-item correct clickable" onClick={() => setReviewType('correct')}>
                         <span><AppIcon icon="twemoji:check-mark-button" /> Correct Answers</span>
                         <span>{score}</span>
                     </div>
-                    <div className="summary-item wrong">
+                    <div className="summary-item wrong clickable" onClick={() => setReviewType('wrong')}>
                         <span><AppIcon icon="twemoji:cross-mark" /> Wrong Answers</span>
                         <span>{total - score}</span>
                     </div>
@@ -132,9 +120,46 @@ const ScoreFeedback = () => {
                 <div className="score-actions">
                     <button className="btn-secondary" onClick={() => navigate('/activity')}>Retry Activity</button>
                     <button className="btn-secondary" onClick={() => navigate('/generate-activity')}>try Generate Activity</button>
-                    <button className="btn-primary" onClick={handleNextActivity}>Next Activity <AppIcon icon="twemoji:right-arrow" /></button>
+                    <button className="btn-primary" onClick={handleNextActivity}>
+                        {parseInt(sessionStorage.getItem('playingLevelId') || '1', 10) === 6 ? 'Recommendations' : 'Next Activity'} <AppIcon icon="twemoji:right-arrow" />
+                    </button>
                 </div>
             </div>
+
+            {/* Review Modal */}
+            {reviewType && (
+                <div className="modal-overlay" onClick={() => setReviewType(null)}>
+                    <div className="modal-content glass-panel" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>{reviewType === 'correct' ? <><AppIcon icon="twemoji:check-mark-button" /> Correct Answers</> : <><AppIcon icon="twemoji:cross-mark" /> Wrong Answers</>}</h2>
+                            <button className="close-btn" onClick={() => setReviewType(null)}><AppIcon icon="twemoji:cross-mark" /></button>
+                        </div>
+                        <div className="modal-body">
+                            {reviewItems.length === 0 ? (
+                                <p style={{ textAlign: 'center', color: '#666' }}>No items to review here.</p>
+                            ) : (
+                                reviewItems.map((item, idx) => (
+                                    <div key={idx} className={`review-item ${item.isCorrect ? 'correct' : 'wrong'}`}>
+                                        <h4 className="review-question">
+                                            {item.icon && <AppIcon icon={item.icon} />} {item.question}
+                                        </h4>
+                                        <div className="review-answers">
+                                            <div className="student-answer">
+                                                <strong>You answered:</strong> <span>{item.studentAnswer}</span>
+                                            </div>
+                                            {!item.isCorrect && (
+                                                <div className="correct-answer">
+                                                    <strong>Correct answer:</strong> <span>{item.correctAnswer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

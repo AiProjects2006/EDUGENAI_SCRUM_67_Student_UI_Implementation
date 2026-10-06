@@ -27,7 +27,6 @@ import GenerateActivityScore from "./features/primary/generate-activity-score/Ge
 import Progress from './features/primary/progress/Progress';
 import SavedItems from './features/primary/saved/SavedItems';
 
-import SecondaryDashboard from './features/secondary/dashboard/SecondaryDashboard';
 
 function App() {
   return (
@@ -43,7 +42,6 @@ function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/profile-setup" element={<ProfileSetup />} />
                 <Route path="/grade-select" element={<Onboarding />} />
-                <Route path="/secondary-dashboard" element={<SecondaryDashboard />} />
 
                 {/* Protected routes wrapped in OceanLayout */}
                 <Route path="/" element={<OceanLayout />}>

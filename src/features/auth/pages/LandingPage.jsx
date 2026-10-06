@@ -208,20 +208,7 @@ const LandingPage = () => {
                     {/*</div>*/}
                     {/*<button className="btn btn-primary" onClick={() => navigate('/register', {state: {gradeGroup: 'primary'}})}>Enter Kids Portal</button>*/}
                   </div>
-                  <div className=" split-card secondary-split feature-item-card primary-split split-card" onClick={() => triggerMascotVoice("For Secondary Students . Structured learning , AI assistant ,  Practice exams , Progress analytics ")} style={{cursor: 'pointer'}}>
 
-                  {/*<div className="split-card secondary-split">*/}
-                    <h2>For Secondary Students</h2>
-                    <ul className="split-list">
-
-                      <div className="split-badge">Grades 6 - 11</div>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:books" /> Structured learning</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:robot" /> AI assistant</strong></li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:memo" /> Practice exams</strong></li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:chart-increasing" /> Progress analytics</strong></li>
-                    </ul>
-                    {/*<button className="btn btn-secondary" onClick={() => navigate('/register', {state: {gradeGroup: 'secondary'}})}>Enter Teens Portal</button>*/}
-                  </div>
 
                 </div>
               </div>

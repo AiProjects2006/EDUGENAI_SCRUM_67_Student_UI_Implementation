@@ -1,0 +1,128 @@
+.courses-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 5px 15px;
+  align-items: center;
+}
+
+.search-bar input {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.categories-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-btn.active {
+  background: var(--coral-orange);
+  border-color: var(--golden-yellow);
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.course-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover:not(.locked) {
+  transform: translateY(-10px);
+}
+
+.course-image {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  background: rgba(255,255,255,0.2);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+}
+
+.course-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.subject-tag {
+  color: var(--golden-yellow);
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.btn-secondary.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255,255,255,0.2);
+}
+
+.completion-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--golden-yellow);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useSaved } from '../../../context/SavedContext';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
+import { useUser } from '../../../context/UserContext';
 import './Courses.css';
 
 const Courses = () => {
@@ -10,6 +11,7 @@ const Courses = () => {
   const location = useLocation();
   const { triggerMascotVoice } = useOceanAudio();
   const { saveItem, removeItem, isSaved } = useSaved();
+  const { user } = useUser();
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -17,14 +19,25 @@ const Courses = () => {
     triggerMascotVoice("Let's start your Learning Journey! Pick a course!");
   }, [triggerMascotVoice]);
 
-  const categories = ['All', 'Math', 'Science', 'English', 'ICT'];
-  
-  const units = [
+  const mockUnits = [
     { id: 1, title: 'Fractions & Decimals', subject: 'Math', status: 'completed', image: 'twemoji:input-numbers' },
     { id: 2, title: 'Geometry Basics', subject: 'Math', status: 'unlocked', image: 'twemoji:triangular-ruler' },
     { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'unlocked', image: 'twemoji:abacus' },
     { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: 'twemoji:tropical-fish' },
   ];
+
+  const units = user?.courses?.length > 0 
+    ? user.courses.map((c, idx) => ({
+        id: c.id || idx,
+        title: c.name,
+        subject: c.category,
+        status: 'unlocked',
+        image: c.icon
+      }))
+    : mockUnits;
+
+  // Only show 'All' and the subjects the student is actually enrolled in
+  const categories = ['All', ...new Set(units.map(u => u.subject))];
 
   const filteredUnits = units.filter(u => {
     const matchesCategory = activeCategory === 'All' || u.subject === activeCategory;

@@ -11,7 +11,7 @@ const Onboarding = () => {
 
   const handleGradeSelect = (grade) => {
     updateUser({ grade: `Grade ${grade}` });
-    navigate('/dashboard');
+    navigate('/course-select');
   };
 
   const grades = [3, 4, 5];

@@ -6,6 +6,7 @@ import Login from './features/auth/login/Login';
 import ForgotPassword from './features/auth/login/ForgotPassword';
 import ProfileSetup from './features/auth/onboarding/ProfileSetup';
 import Onboarding from './features/auth/onboarding/Onboarding';
+import CourseSelection from './features/auth/onboarding/CourseSelection';
 import Dashboard from './features/primary/dashboard/Dashboard';
 import Courses from './features/primary/courses/Courses';
 import Modules from './features/primary/modules/Modules';
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/profile-setup" element={<ProfileSetup />} />
                 <Route path="/grade-select" element={<Onboarding />} />
+                <Route path="/course-select" element={<CourseSelection />} />
 
                 {/* Protected routes wrapped in OceanLayout */}
                 <Route path="/" element={<OceanLayout />}>

@@ -113,22 +113,33 @@ const Dashboard = () => {
       <div className="subjects-section" style={{ marginTop: '2rem' }}>
         <h3>Your Subjects</h3>
           <div className="subject-bubbles-container">
-            <div className="subject-bubble glass-panel math" onMouseEnter={() => triggerMascotVoice("Math! Let's solve some puzzles!")} onClick={() => navigate('/courses', { state: { category: 'Math' } })}>
-              <span className="subject-icon"><AppIcon icon="twemoji:abacus" /></span>
-              <h4>Math</h4>
-            </div>
-            <div className="subject-bubble glass-panel science" onMouseEnter={() => triggerMascotVoice("Science! Let's discover the universe!")} onClick={() => navigate('/courses', { state: { category: 'Science' } })}>
-              <span className="subject-icon"><AppIcon icon="twemoji:test-tube" /></span>
-              <h4>Science</h4>
-            </div>
-            <div className="subject-bubble glass-panel english" onMouseEnter={() => triggerMascotVoice("English! Let's read some stories!")} onClick={() => navigate('/courses', { state: { category: 'English' } })}>
-              <span className="subject-icon"><AppIcon icon="twemoji:input-latin-letters" /></span>
-              <h4>English</h4>
-            </div>
-            <div className="subject-bubble glass-panel ict" onMouseEnter={() => triggerMascotVoice("ICT! Let's explore computers!")} onClick={() => navigate('/courses', { state: { category: 'ICT' } })}>
-              <span className="subject-icon"><AppIcon icon="twemoji:laptop" /></span>
-              <h4>ICT</h4>
-            </div>
+            {(() => {
+              const uniqueCategories = [...new Set((user?.courses || []).map(c => c.category))];
+              return uniqueCategories.length > 0 ? (
+                uniqueCategories.map((category, idx) => {
+                  let icon = "twemoji:books";
+                  if (category === 'Math') icon = "twemoji:abacus";
+                  if (category === 'Science') icon = "twemoji:microscope";
+                  if (category === 'English') icon = "twemoji:open-book";
+                  return (
+                    <div 
+                      key={idx} 
+                      className={`subject-bubble glass-panel ${category.toLowerCase()}`} 
+                      onMouseEnter={() => triggerMascotVoice(`${category}! Let's start learning!`)} 
+                      onClick={() => navigate('/courses', { state: { category: category } })}
+                    >
+                      <span className="subject-icon"><AppIcon icon={icon} /></span>
+                      <h4>{category}</h4>
+                    </div>
+                  );
+                })
+              ) : (
+                <div style={{ color: 'white', padding: '1rem', width: '100%', textAlign: 'center' }}>
+                  <p>No subjects selected yet! Head back to enroll.</p>
+                  <button className="btn-secondary" onClick={() => navigate('/grade-select')} style={{ marginTop: '10px' }}>Select Courses</button>
+                </div>
+              );
+            })()}
           </div>
         </div>
     </div>

@@ -112,8 +112,8 @@ const CourseSelection = () => {
                 >
                   <AppIcon icon={subjectItem.icon} />
                   <h3 style={{ margin: 0 }}>{subjectItem.title}</h3>
-                  <span style={{ fontSize: '14px', background: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '12px', fontWeight: 'bold' }}>
-                    {isExpanded ? 'Close 🙈' : 'Peek Inside 👀'}
+                  <span style={{ fontSize: '14px', background: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    {isExpanded ? <>Close <AppIcon icon="twemoji:see-no-evil-monkey" /></> : <>Peek Inside <AppIcon icon="twemoji:eyes" /></>}
                   </span>
                 </div>
                 <button 
@@ -122,8 +122,8 @@ const CourseSelection = () => {
                   style={{ 
                     padding: '8px 15px', 
                     fontSize: '14px', 
-                    backgroundColor: allSelected ? '#ff6b6b' : '',
-                    borderColor: allSelected ? '#ff6b6b' : ''
+                    backgroundColor: allSelected ? '#ef476f' : '',
+                    borderColor: allSelected ? '#ef476f' : ''
                   }}
                 >
                   {allSelected ? 'Clear All' : 'Select All'}
@@ -160,7 +160,7 @@ const CourseSelection = () => {
                             backgroundColor: '#00f2fe', color: 'white', borderRadius: '50%',
                             width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: '14px', border: '2px solid white'
-                          }}>✓</div>
+                          }}><AppIcon icon="twemoji:check-mark-button" style={{ width: '14px', height: '14px' }} /></div>
                         )}
                       </div>
                     );

@@ -176,10 +176,10 @@ const ProfileSetup = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 pattern="[\+]?[0-9\s\-\(\)]{7,15}"
                 title="Please enter a valid phone number (7-15 characters, allowing +, -, spaces, and parentheses)"
-                style={{ borderColor: phone && !/^[\+]?[0-9\s\-\(\)]{7,15}$/.test(phone) ? '#ff6b6b' : '' }}
+                style={{ borderColor: phone && !/^[\+]?[0-9\s\-\(\)]{7,15}$/.test(phone) ? '#ef476f' : '' }}
               />
               {phone && !/^[\+]?[0-9\s\-\(\)]{7,15}$/.test(phone) && (
-                <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
+                <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
                   Please enter a valid phone number (7-15 characters).
                 </span>
               )}
@@ -188,7 +188,7 @@ const ProfileSetup = () => {
             <div className="input-group dob-group">
               <label>Date of Birth</label>
               <input type="date" value={dob} onChange={handleDobChange} required />
-              {ageError && <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '5px', display: 'block', fontWeight: 'bold' }}>{ageError}</span>}
+              {ageError && <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '5px', display: 'block', fontWeight: 'bold' }}>{ageError}</span>}
               {!ageError && calculatedGrade && <span className="grade-badge-hint">Calculated: {calculatedGrade}</span>}
             </div>
             

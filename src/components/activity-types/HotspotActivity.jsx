@@ -53,7 +53,7 @@ const HotspotActivity = ({ data, onAnswerSubmit }) => {
              />
              <div 
                className="image-placeholder" 
-               style={{ display: 'none', width: '300px', height: '400px', background: '#2c3e50', color: 'white', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', borderRadius: '8px' }}
+               style={{ display: 'none', width: '300px', height: '400px', background: 'rgba(0,0,0,0.3)', color: 'white', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', borderRadius: '8px' }}
              >
                 <span style={{ fontSize: '3rem' }}><AppIcon icon="twemoji:herb" /></span>
                 <p>Plant Diagram (Missing Image)</p>

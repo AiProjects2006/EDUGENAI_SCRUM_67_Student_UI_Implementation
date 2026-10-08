@@ -340,3 +340,7 @@ a {
     display: none !important;
   }
 }
+
+
+body.midnight-theme { background: linear-gradient(180deg, #01122a 0%, #000c1e 50%, #000000 100%); }
+body.midnight-theme .glass-panel, body.midnight-theme .ocean-card { background: rgba(0, 0, 0, 0.4); border-color: rgba(0, 180, 216, 0.1); }

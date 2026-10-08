@@ -9,13 +9,25 @@ const TopNavigation = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, updateUser } = useUser();
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
+    setNotificationsOpen(false);
   };
+
+  const toggleNotifications = () => {
+    setNotificationsOpen(!notificationsOpen);
+    setProfileOpen(false);
+  };
+
+  const [activeNotifications, setActiveNotifications] = useState([
+    { id: 1, type: 'learning', icon: 'twemoji:brain', title: 'Time for Math!', message: "Bubbles says let's do a quest!", time: 'Just now', actionText: "Let's Go! 🚀", actionPath: '/courses' },
+    { id: 2, type: 'subscription', icon: 'twemoji:locked-with-key', title: 'Unlock More Ocean', message: 'Ask your parents to renew your Ocean Pass.', time: '1 day ago', actionText: "View Profile", actionPath: 'profile' }
+  ]);
 
   const [alerts, setAlerts] = useState({ missions: true, sounds: true });
 
@@ -48,10 +60,69 @@ const TopNavigation = () => {
         )}
 
         <div className="nav-right">
-          <button className="nav-bubble notification-btn" onClick={() => alert('No new notifications!')}>
-            <span className="icon"><AppIcon icon="twemoji:bell" /></span>
-            <span className="badge">3</span>
-          </button>
+          <div className="notification-container" style={{ position: 'relative' }}>
+            <button className="nav-bubble notification-btn" onClick={toggleNotifications}>
+              <span className="icon"><AppIcon icon="twemoji:bell" /></span>
+              {activeNotifications.length > 0 && <span className="badge">{activeNotifications.length}</span>}
+            </button>
+            {notificationsOpen && (
+              <div className="profile-dropdown glass-panel" style={{ width: '300px', right: '-10px', top: '70px', padding: '0' }}>
+                <div className="dropdown-header" style={{ padding: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                  <h4 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <AppIcon icon="twemoji:bell" /> Notifications
+                  </h4>
+                </div>
+                <div className="notifications-list" style={{ maxHeight: '400px', overflowY: 'auto', padding: '10px' }}>
+                  {activeNotifications.length === 0 ? (
+                    <div style={{ padding: '20px', textAlign: 'center', opacity: 0.7 }}>No new notifications!</div>
+                  ) : (
+                    activeNotifications.map(notification => (
+                      <div key={notification.id} style={{ 
+                        background: 'rgba(255,255,255,0.1)', 
+                        borderRadius: '15px', 
+                        padding: '15px', 
+                        marginBottom: '10px',
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        gap: '12px',
+                        borderLeft: '4px solid #ef476f'
+                      }}>
+                        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                          <div style={{ fontSize: '2rem', flexShrink: 0 }}><AppIcon icon={notification.icon} /></div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            <strong style={{ fontSize: '1rem', color: 'var(--golden-yellow)' }}>{notification.title}</strong>
+                            <p style={{ fontSize: '0.9rem', margin: 0, opacity: 0.9, lineHeight: 1.3 }}>{notification.message}</p>
+                          </div>
+                        </div>
+                        {notification.actionText && (
+                          <button 
+                            className="btn-primary" 
+                            style={{ padding: '10px 15px', fontSize: '1rem', width: '100%', borderRadius: '15px' }}
+                            onClick={() => {
+                              setActiveNotifications(prev => prev.filter(n => n.id !== notification.id));
+                              setNotificationsOpen(false);
+                              if (notification.actionPath === 'profile') {
+                                setProfileModalOpen(true);
+                              } else {
+                                navigate(notification.actionPath);
+                              }
+                            }}
+                          >
+                            {notification.actionText}
+                          </button>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+                {activeNotifications.length > 0 && (
+                  <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.85rem', cursor: 'pointer', background: 'rgba(0,0,0,0.2)', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px' }} onClick={() => { setActiveNotifications([]); setNotificationsOpen(false); }}>
+                    Dismiss All
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           <div className="profile-container">
             <button className="nav-bubble profile-btn" onClick={toggleProfile} style={{ padding: 0 }}>

@@ -88,7 +88,7 @@ const GenerateActivityScore = () => {
           <div className="modal-content glass-panel" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>{reviewType === 'correct' ? <><AppIcon icon="twemoji:check-mark-button" /> Correct Answers</> : <><AppIcon icon="twemoji:cross-mark" /> Wrong Answers</>}</h2>
-              <button className="close-btn" onClick={() => setReviewType(null)}><AppIcon icon="twemoji:cross-mark" /></button>
+              <button className="close-btn" onClick={() => setReviewType(null)}>×</button>
             </div>
             <div className="modal-body">
               {reviewItems.length === 0 ? (

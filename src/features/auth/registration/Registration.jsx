@@ -54,7 +54,7 @@ const Registration = () => {
       <OceanBackground />
       <div className="registration-card glass-panel">
         <h2>Join the Ocean Adventure <AppIcon icon="twemoji:water-wave" /></h2>
-        {error && <div style={{ color: '#ff6b6b', marginBottom: '1rem', fontWeight: 'bold' }}>{error}</div>}
+        {error && <div style={{ color: '#ef476f', marginBottom: '1rem', fontWeight: 'bold' }}>{error}</div>}
         <form onSubmit={handleRegister}>
           <div className="avatar-section" style={{ textAlign: 'center', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img 
@@ -104,7 +104,7 @@ const Registration = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 minLength="4"
                 required 
-                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 4 ? '#ff6b6b' : '' }}
+                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 4 ? '#ef476f' : '' }}
               />
               <span 
                 onClick={() => setShowPassword(!showPassword)}
@@ -115,7 +115,7 @@ const Registration = () => {
               </span>
             </div>
             {password && password.length < 4 && (
-              <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
+              <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
                 Password must be at least 4 characters.
               </span>
             )}
@@ -130,7 +130,7 @@ const Registration = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 minLength="4"
                 required 
-                style={{ width: '100%', paddingRight: '40px', borderColor: confirmPassword && password !== confirmPassword ? '#ff6b6b' : '' }}
+                style={{ width: '100%', paddingRight: '40px', borderColor: confirmPassword && password !== confirmPassword ? '#ef476f' : '' }}
               />
               <span 
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -141,7 +141,7 @@ const Registration = () => {
               </span>
             </div>
             {confirmPassword && password !== confirmPassword && (
-              <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
+              <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
                 Passwords do not match.
               </span>
             )}

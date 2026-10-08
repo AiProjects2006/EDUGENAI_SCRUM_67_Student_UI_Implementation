@@ -8,7 +8,8 @@
 
 .activity-question {
   font-size: 1.5rem;
-  color: var(--text-dark, #333);
+  color: var(--white);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
   text-align: center;
   margin-bottom: 1rem;
 }

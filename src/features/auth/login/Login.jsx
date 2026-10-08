@@ -42,7 +42,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 minLength="4"
                 required 
-                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 4 ? '#ff6b6b' : '' }}
+                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 4 ? '#ef476f' : '' }}
               />
               <span 
                 onClick={() => setShowPassword(!showPassword)}
@@ -53,7 +53,7 @@ const Login = () => {
               </span>
             </div>
             {password && password.length < 4 && (
-              <span style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
+              <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
                 Password must be at least 4 characters.
               </span>
             )}

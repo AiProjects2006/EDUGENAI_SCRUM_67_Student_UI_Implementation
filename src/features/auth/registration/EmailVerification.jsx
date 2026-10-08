@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
@@ -6,11 +6,48 @@ import './Registration.css';
 
 const EmailVerification = () => {
   const navigate = useNavigate();
+  const [otp, setOtp] = useState(['', '', '', '']);
+  const [error, setError] = useState('');
+  const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
-  const handleVerified = () => {
-    // In a real app, this would happen automatically when they click the email link.
-    // For now, we simulate them being verified and moving to profile setup.
-    navigate('/profile-setup');
+  const handleChange = (e, index) => {
+    const value = e.target.value.replace(/\D/g, ''); 
+    if (value) {
+      const newOtp = [...otp];
+      newOtp[index] = value.slice(-1); 
+      setOtp(newOtp);
+      
+      // Auto-advance
+      if (index < 3) {
+        inputRefs[index + 1].current.focus();
+      } else {
+        // Auto-submit when the 4th box is filled
+        if (newOtp.join('').length === 4) {
+          submitOtp(newOtp.join(''));
+        }
+      }
+    } else {
+      const newOtp = [...otp];
+      newOtp[index] = '';
+      setOtp(newOtp);
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs[index - 1].current.focus();
+    }
+  };
+
+  const submitOtp = (fullOtp) => {
+    if (fullOtp.length < 4) {
+      setError('Please enter all 4 digits.');
+      return;
+    }
+    setError('');
+    setTimeout(() => {
+      navigate('/profile-setup');
+    }, 500); // Tiny delay to let user see the 4th digit before redirecting
   };
 
   return (
@@ -25,14 +62,38 @@ const EmailVerification = () => {
           <AppIcon icon="twemoji:message-in-bottle" />
         </div>
 
-        <p style={{ color: 'white', marginBottom: '2rem', fontSize: '1.1rem', lineHeight: '1.5' }}>
+        <p style={{ color: 'white', marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.5' }}>
           Ahoy! We just sent a message in a bottle to your email address. 
-          Please click the link inside it to verify your account and start your ocean adventure.
+          Enter the 4-digit secret code inside it to verify your account!
         </p>
 
-        <button className="btn-primary" onClick={handleVerified} style={{ padding: '12px 30px', fontSize: '1.1rem' }}>
-          I've Verified My Email! <AppIcon icon="twemoji:check-mark-button" />
-        </button>
+        {error && <div style={{ color: '#ef476f', marginBottom: '1rem', fontWeight: 'bold' }}>{error}</div>}
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '1rem' }}>
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              ref={inputRefs[index]}
+              type="text"
+              maxLength="1"
+              value={digit}
+              onChange={(e) => handleChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              style={{
+                width: '60px',
+                height: '70px',
+                fontSize: '2.5rem',
+                textAlign: 'center',
+                borderRadius: '15px',
+                border: '2px solid rgba(255,255,255,0.4)',
+                background: 'rgba(255,255,255,0.1)',
+                color: 'white',
+                outline: 'none',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

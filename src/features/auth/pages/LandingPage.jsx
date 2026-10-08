@@ -192,24 +192,18 @@ const LandingPage = () => {
 
               <div id="engineered-ages" className="highlight-split-section">
                 <h2 className="section-title text-center">Engineered for All Ages</h2>
-                <div className="split-cards-container">
-                  <div className="feature-item-card primary-split split-card" onClick={() => triggerMascotVoice("For Primary Students . Fun learning games , Voice support ,  Rewards & Badges , Animated lessons ")} style={{cursor: 'pointer'}}>
-                  {/*<div className="split-card primary-split">*/}
+                <div className="split-cards-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                  <div className="feature-item-card primary-split split-card" onClick={() => triggerMascotVoice("For Primary Students . Fun learning games , Voice support ,  Rewards & Badges , Animated lessons ")} style={{cursor: 'pointer', maxWidth: '500px', width: '100%'}}>
                     <div className="split-badge">Grades 3 - 5</div>
 
-
                     <h2>For Primary Students</h2>
-                    <ul className="split-list">
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:video-game" /> Fun learning games</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:speaker-high-volume" /> Voice support</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:wrapped-gift" /> Rewards & Badges</strong> </li>
-                      <li><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:tropical-fish" /> Animated lessons</strong> </li>
+                    <ul className="split-list" style={{ listStyle: 'none', padding: 0, textAlign: 'left', margin: '1rem 0' }}>
+                      <li style={{ marginBottom: '10px' }}><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:video-game" /> Fun learning games</strong> </li>
+                      <li style={{ marginBottom: '10px' }}><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:speaker-high-volume" /> Voice support</strong> </li>
+                      <li style={{ marginBottom: '10px' }}><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:wrapped-gift" /> Rewards & Badges</strong> </li>
+                      <li style={{ marginBottom: '10px' }}><i className="fa-solid fa-circle-check"></i> <strong><AppIcon icon="twemoji:tropical-fish" /> Animated lessons</strong> </li>
                     </ul>
-                    {/*</div>*/}
-                    {/*<button className="btn btn-primary" onClick={() => navigate('/register', {state: {gradeGroup: 'primary'}})}>Enter Kids Portal</button>*/}
                   </div>
-
-
                 </div>
               </div>
 

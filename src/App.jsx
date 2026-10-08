@@ -4,6 +4,7 @@ import LandingPage from './features/auth/pages/LandingPage';
 import Registration from './features/auth/registration/Registration';
 import Login from './features/auth/login/Login';
 import ForgotPassword from './features/auth/login/ForgotPassword';
+import EmailVerification from './features/auth/registration/EmailVerification';
 import ProfileSetup from './features/auth/onboarding/ProfileSetup';
 import Onboarding from './features/auth/onboarding/Onboarding';
 import CourseSelection from './features/auth/onboarding/CourseSelection';
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/verify-email" element={<EmailVerification />} />
                 <Route path="/profile-setup" element={<ProfileSetup />} />
                 <Route path="/grade-select" element={<Onboarding />} />
                 <Route path="/course-select" element={<CourseSelection />} />

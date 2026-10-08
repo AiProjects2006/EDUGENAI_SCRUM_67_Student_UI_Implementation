@@ -17,6 +17,34 @@ const ActivityPlayer = () => {
     const [showFeedback, setShowFeedback] = useState(false);
     const [feedbackData, setFeedbackData] = useState({ isCorrect: false, text: '' });
     const [answerHistory, setAnswerHistory] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(null);
+
+    const currentActivity = activities[currentQuestionIndex];
+    const totalQuestions = activities.length;
+
+    // Timer logic
+    useEffect(() => {
+        if (currentActivity && currentActivity.timeLimitSeconds) {
+            setTimeLeft(currentActivity.timeLimitSeconds);
+        } else {
+            setTimeLeft(null);
+        }
+    }, [currentActivity]);
+
+    useEffect(() => {
+        if (timeLeft === null || showFeedback) return;
+
+        if (timeLeft <= 0) {
+            handleAnswerSubmit(false, "Time's up!", "Ran out of time");
+            return;
+        }
+
+        const timerId = setInterval(() => {
+            setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearInterval(timerId);
+    }, [timeLeft, showFeedback]);
 
     // Load activities for the current level when the component mounts
     useEffect(() => {
@@ -27,9 +55,6 @@ const ActivityPlayer = () => {
         // Otherwise fallback to an empty array (or we could show an error)
         setActivities(levelActivities);
     }, []);
-
-    const currentActivity = activities[currentQuestionIndex];
-    const totalQuestions = activities.length;
 
     useEffect(() => {
         if (currentActivity) {
@@ -101,6 +126,12 @@ const ActivityPlayer = () => {
                         <div className="player-progress-fill" style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}></div>
                     </div>
                 </div>
+                {timeLeft !== null && (
+                    <div className="timer-badge glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '8px', background: timeLeft <= 5 ? 'rgba(255, 71, 111, 0.4)' : 'rgba(0, 0, 0, 0.2)', padding: '8px 20px', borderRadius: '20px', color: timeLeft <= 5 ? '#ffb3c1' : 'white', fontWeight: 'bold', fontSize: '1.2rem', border: `2px solid ${timeLeft <= 5 ? '#ef476f' : 'transparent'}`, transition: 'all 0.3s' }}>
+                        <AppIcon icon="twemoji:hourglass-done" /> 
+                        {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+                    </div>
+                )}
                 <button className="voice-btn-large" onClick={handleReadQuestion}>
                     <AppIcon icon="twemoji:speaker-high-volume" /> Read
                 </button>

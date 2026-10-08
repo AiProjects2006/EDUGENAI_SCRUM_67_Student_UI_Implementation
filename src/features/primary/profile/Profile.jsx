@@ -45,6 +45,16 @@ const Profile = ({ onClose }) => {
           <p style={{ color: 'var(--golden-yellow)', fontWeight: 'bold', margin: 0 }}>{user.grade}</p>
         </div>
 
+        <div style={{ background: 'rgba(79, 172, 254, 0.2)', padding: '15px', borderRadius: '15px', marginBottom: '20px', textAlign: 'center', border: '1px solid rgba(79, 172, 254, 0.4)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '5px' }}>
+            <AppIcon icon="twemoji:calendar" /> <strong style={{ color: '#4facfe' }}>Academic Access</strong>
+          </div>
+          <p style={{ margin: '0 0 10px 0', fontSize: '0.9rem', opacity: 0.9 }}>345 Days Remaining</p>
+          <div style={{ width: '100%', height: '8px', background: 'rgba(0,0,0,0.2)', borderRadius: '4px', overflow: 'hidden' }}>
+             <div style={{ width: '90%', height: '100%', background: '#4facfe', borderRadius: '4px' }}></div>
+          </div>
+        </div>
+
         <div className="settings-section" style={{ marginBottom: '25px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           
           <div 

@@ -46,7 +46,7 @@ const Registration = () => {
       avatar: avatarPreview
     });
 
-    navigate('/profile-setup');
+    navigate('/verify-email');
   };
 
   return (

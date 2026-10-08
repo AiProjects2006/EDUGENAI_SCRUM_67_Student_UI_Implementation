@@ -48,9 +48,9 @@ const ActivityGenerator = () => {
             setTimeout(() => alert("Please select or enter a question count first."), 100);
             return;
         }
-        if (step === 3 && selectedCount === 'custom' && !customCount) {
-            triggerMascotVoice("Please enter a valid custom count.");
-            setTimeout(() => alert("Please enter a valid custom count."), 100);
+        if (step === 3 && selectedCount === 'custom' && (!customCount || parseInt(customCount, 10) <= 0)) {
+            triggerMascotVoice("Please enter a valid number greater than zero.");
+            setTimeout(() => alert("Please enter a valid number greater than zero."), 100);
             return;
         }
 
@@ -126,6 +126,7 @@ const ActivityGenerator = () => {
                             <div className={`count-bubble glass-panel custom-count ${selectedCount === 'custom' ? 'selected' : ''}`} onMouseEnter={() => triggerMascotVoice('Custom number of questions')}>
                                 <input
                                     type="number"
+                                    min="1"
                                     placeholder="Custom..."
                                     value={customCount}
                                     onChange={(e) => {

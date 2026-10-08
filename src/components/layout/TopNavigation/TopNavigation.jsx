@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 import { AppIcon } from '../../common/AppIcon/AppIcon';
@@ -13,6 +13,20 @@ const TopNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, updateUser } = useUser();
+  const navRightRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRightRef.current && !navRightRef.current.contains(event.target)) {
+        setNotificationsOpen(false);
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
@@ -59,7 +73,7 @@ const TopNavigation = () => {
           </div>
         )}
 
-        <div className="nav-right">
+        <div className="nav-right" ref={navRightRef}>
           <div className="notification-container" style={{ position: 'relative' }}>
             <button className="nav-bubble notification-btn" onClick={toggleNotifications}>
               <span className="icon"><AppIcon icon="twemoji:bell" /></span>

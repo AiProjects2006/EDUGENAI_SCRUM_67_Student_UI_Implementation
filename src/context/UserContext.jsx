@@ -10,7 +10,10 @@ export const UserProvider = ({ children }) => {
     password: 'password123',
     phone: '(+1) 234 567 890',
     avatar: 'twemoji:boy',
-    theme: 'daytime'
+    theme: 'daytime',
+    voiceGuidanceEnabled: true,
+    ambientMusicEnabled: true,
+    missionRemindersEnabled: true
   });
 
   useEffect(() => {

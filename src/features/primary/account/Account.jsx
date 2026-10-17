@@ -14,18 +14,52 @@ const Account = () => {
     phone: user.phone || ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full Name is required.';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address.';
+    }
+
+    if (formData.phone && !/^[0-9+\-\s()]{7,15}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid contact number.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSave = (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     updateUser(formData);
-    alert('Changes saved successfully!');
+    setSuccessMessage('Profile changes saved successfully! 🌟');
+    setTimeout(() => {
+      setSuccessMessage('');
+    }, 4000);
   };
 
   const fileInputRef = useRef(null);
@@ -51,6 +85,12 @@ const Account = () => {
           <h2 className="account-title">My Account</h2>
           <div className="placeholder-spacer"></div>
         </div>
+
+        {successMessage && (
+          <div className="success-banner">
+            <AppIcon icon="twemoji:check-mark-button" /> {successMessage}
+          </div>
+        )}
         
         <div className="account-avatar-section">
           <div className="avatar-wrapper">
@@ -75,27 +115,31 @@ const Account = () => {
           <button className="change-picture-text" onClick={() => fileInputRef.current.click()}>Change Picture</button>
         </div>
 
-        <form className="account-form" onSubmit={handleSave}>
+        <form className="account-form" onSubmit={handleSave} noValidate>
           <div className="input-group">
-            <label>Full Name</label>
+            <label>Full Name *</label>
             <input 
               type="text" 
               name="fullName"
-              placeholder="Full Name"
+              placeholder="e.g. Alex Explorer"
               value={formData.fullName} 
               onChange={handleChange} 
+              style={{ borderColor: errors.fullName ? '#ff6b6b' : '' }}
             />
+            {errors.fullName && <span className="error-text">{errors.fullName}</span>}
           </div>
 
           <div className="input-group">
-            <label>Email</label>
+            <label>Email *</label>
             <input 
               type="email" 
               name="email"
-              placeholder="Your email"
+              placeholder="your.email@school.edu"
               value={formData.email} 
               onChange={handleChange} 
+              style={{ borderColor: errors.email ? '#ff6b6b' : '' }}
             />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
           <div className="input-group">
@@ -124,10 +168,12 @@ const Account = () => {
             <input 
               type="text" 
               name="phone"
-              placeholder="Your phone number"
+              placeholder="e.g. 0771234567"
               value={formData.phone} 
               onChange={handleChange} 
+              style={{ borderColor: errors.phone ? '#ff6b6b' : '' }}
             />
+            {errors.phone && <span className="error-text">{errors.phone}</span>}
           </div>
 
           <button type="submit" className="btn-primary save-btn">Save Changes</button>

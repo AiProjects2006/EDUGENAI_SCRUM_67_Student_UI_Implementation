@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { useUser } from '../../../context/UserContext';
@@ -19,7 +19,7 @@ const ProfileSetup = () => {
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState(user?.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=pearl&backgroundColor=b6e3f4');
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar || 'twemoji:boy');
 
   const locationsList = [
     "Colombo, Sri Lanka",
@@ -35,8 +35,6 @@ const ProfileSetup = () => {
     "Mumbai, India",
     "Delhi, India"
   ];
-  
-  const fileInputRef = useRef(null);
 
   const calculateGrade = (dateString) => {
     if (!dateString) {
@@ -75,17 +73,6 @@ const ProfileSetup = () => {
     calculateGrade(e.target.value);
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatarUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleComplete = (e) => {
     e.preventDefault();
     
@@ -95,8 +82,6 @@ const ProfileSetup = () => {
     }
     
     const finalGrade = calculatedGrade;
-    const finalGradeNum = gradeNumber;
-    
     const finalAvatar = avatarUrl;
     
     updateUser({
@@ -121,27 +106,40 @@ const ProfileSetup = () => {
         
         <form onSubmit={handleComplete} className="badge-form">
           <div className="avatar-section">
-            {avatarUrl && (avatarUrl.startsWith('data:') || avatarUrl.startsWith('http')) ? (
-              <img src={avatarUrl} alt="Avatar" className="badge-avatar" style={{ objectFit: 'cover' }} />
-            ) : (
-              <div className="badge-avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>
-                <AppIcon icon={avatarUrl || 'mdi:account'} />
-              </div>
-            )}
-            <input 
-              type="file" 
-              accept="image/*" 
-              ref={fileInputRef} 
-              style={{ display: 'none' }} 
-              onChange={handleAvatarChange}
-            />
-            <button 
-              type="button" 
-              className="btn-secondary small-btn" 
-              onClick={() => fileInputRef.current.click()}
-            >
-              Upload Avatar
-            </button>
+            <div className="badge-avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4.5rem', marginBottom: '8px' }}>
+              <AppIcon icon={avatarUrl || 'twemoji:boy'} />
+            </div>
+
+            <p style={{ margin: '4px 0 10px 0', fontSize: '0.9rem', color: 'var(--aqua)', fontWeight: 'bold' }}>
+              Pick Your Explorer Avatar:
+            </p>
+
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              {['twemoji:boy', 'twemoji:girl', 'twemoji:turtle', 'twemoji:dolphin', 'twemoji:octopus'].map((icon) => (
+                <div
+                  key={icon}
+                  onClick={() => setAvatarUrl(icon)}
+                  style={{
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '26px',
+                    cursor: 'pointer',
+                    border: avatarUrl === icon ? '3px solid #00f2fe' : '2px solid transparent',
+                    boxShadow: avatarUrl === icon ? '0 0 10px rgba(0, 242, 254, 0.4)' : 'none',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                >
+                  <AppIcon icon={icon} />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="form-grid">

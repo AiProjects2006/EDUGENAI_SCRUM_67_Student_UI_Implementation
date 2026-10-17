@@ -4,11 +4,23 @@ import TopNavigation from '../TopNavigation/TopNavigation';
 import BubblesMascot from '../../mascot/BubblesMascot/BubblesMascot';
 import OceanBackground from '../OceanBackground/OceanBackground';
 import { useOceanAudio } from '../../../context/AudioContext';
+import { useUser } from '../../../context/UserContext';
 import { AppIcon } from '../../common/AppIcon/AppIcon';
 import './OceanLayout.css';
 
 const OceanLayout = () => {
   const { isVoiceEnabled, isBgmPlaying, toggleVoiceSystem, toggleBgmSystem } = useOceanAudio();
+  const { updateUser } = useUser();
+
+  const handleToggleVoice = () => {
+    toggleVoiceSystem();
+    updateUser({ voiceGuidanceEnabled: !isVoiceEnabled });
+  };
+
+  const handleToggleBgm = () => {
+    toggleBgmSystem();
+    updateUser({ ambientMusicEnabled: !isBgmPlaying });
+  };
 
   return (
     <div className="ocean-layout">
@@ -21,7 +33,7 @@ const OceanLayout = () => {
           id="btn-global-voice" 
           className={`audio-btn ${!isVoiceEnabled ? 'muted' : ''}`} 
           title="Toggle Bubbles Voice Guidance"
-          onClick={toggleVoiceSystem}
+          onClick={handleToggleVoice}
         >
           {isVoiceEnabled ? <AppIcon icon="twemoji:speaker-high-volume" /> : <AppIcon icon="twemoji:muted-speaker" />}
         </button>
@@ -29,7 +41,7 @@ const OceanLayout = () => {
           id="btn-global-bgm" 
           className={`audio-btn ${!isBgmPlaying ? 'muted' : ''}`} 
           title="Toggle Magical Ambient BGM"
-          onClick={toggleBgmSystem}
+          onClick={handleToggleBgm}
         >
           {isBgmPlaying ? <AppIcon icon="twemoji:musical-note" /> : <AppIcon icon="twemoji:bell-with-slash" />}
         </button>

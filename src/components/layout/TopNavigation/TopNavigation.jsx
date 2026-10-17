@@ -39,11 +39,21 @@ const TopNavigation = () => {
   };
 
   const [activeNotifications, setActiveNotifications] = useState([
-    { id: 1, type: 'learning', icon: 'twemoji:brain', title: 'Time for Math!', message: "Bubbles says let's do a quest!", time: 'Just now', actionText: "Let's Go! 🚀", actionPath: '/courses' },
+    { id: 1, type: 'learning', icon: 'twemoji:brain', title: 'Time for Math!', message: "Bubbles says let's do a quest!", time: 'Just now', actionText: "Let's Go!", actionPath: '/courses' },
     { id: 2, type: 'subscription', icon: 'twemoji:locked-with-key', title: 'Unlock More Ocean', message: 'Ask your parents to renew your Ocean Pass.', time: '1 day ago', actionText: "View Profile", actionPath: 'profile' }
   ]);
 
-  const [alerts, setAlerts] = useState({ missions: true, sounds: true });
+  const [alerts, setAlerts] = useState({ 
+    missions: user.missionRemindersEnabled ?? true 
+  });
+
+  useEffect(() => {
+    if (settingsOpen) {
+      setAlerts({
+        missions: user.missionRemindersEnabled ?? true
+      });
+    }
+  }, [settingsOpen, user.missionRemindersEnabled]);
 
   return (
     <>
@@ -246,21 +256,26 @@ const TopNavigation = () => {
 
             <div className="settings-section" style={{ marginBottom: '25px' }}>
               <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><AppIcon icon="twemoji:bell" /> Mascot Alerts</h3>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.1)', padding: '10px 15px', borderRadius: '10px', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.1)', padding: '10px 15px', borderRadius: '10px' }}>
                 <span style={{ fontWeight: 'bold' }}>New Missions Reminders</span>
                 <span onClick={() => setAlerts(p => ({...p, missions: !p.missions}))} style={{ fontSize: '24px', cursor: 'pointer' }}>
                   <AppIcon icon={alerts.missions ? "twemoji:check-mark-button" : "twemoji:cross-mark"} />
                 </span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.1)', padding: '10px 15px', borderRadius: '10px' }}>
-                <span style={{ fontWeight: 'bold' }}>Ocean Sounds & Music</span>
-                <span onClick={() => setAlerts(p => ({...p, sounds: !p.sounds}))} style={{ fontSize: '24px', cursor: 'pointer' }}>
-                  <AppIcon icon={alerts.sounds ? "twemoji:check-mark-button" : "twemoji:cross-mark"} />
-                </span>
-              </div>
             </div>
 
-            <button className="btn-primary" style={{ width: '100%' }} onClick={() => setSettingsOpen(false)}>Save Changes</button>
+            <button 
+              className="btn-primary" 
+              style={{ width: '100%' }} 
+              onClick={() => {
+                updateUser({
+                  missionRemindersEnabled: alerts.missions
+                });
+                setSettingsOpen(false);
+              }}
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       )}

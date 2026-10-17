@@ -56,7 +56,7 @@ const Account = () => {
       return;
     }
     updateUser(formData);
-    setSuccessMessage('Profile changes saved successfully! 🌟');
+    setSuccessMessage('Profile changes saved successfully!');
     setTimeout(() => {
       setSuccessMessage('');
     }, 4000);

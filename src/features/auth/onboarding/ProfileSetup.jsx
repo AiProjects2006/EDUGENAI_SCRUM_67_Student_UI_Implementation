@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { useUser } from '../../../context/UserContext';
@@ -35,8 +35,6 @@ const ProfileSetup = () => {
     "Mumbai, India",
     "Delhi, India"
   ];
-  
-  const fileInputRef = useRef(null);
 
   const calculateGrade = (dateString) => {
     if (!dateString) {
@@ -75,17 +73,6 @@ const ProfileSetup = () => {
     calculateGrade(e.target.value);
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatarUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleComplete = (e) => {
     e.preventDefault();
     
@@ -95,8 +82,6 @@ const ProfileSetup = () => {
     }
     
     const finalGrade = calculatedGrade;
-    const finalGradeNum = gradeNumber;
-    
     const finalAvatar = avatarUrl;
     
     updateUser({

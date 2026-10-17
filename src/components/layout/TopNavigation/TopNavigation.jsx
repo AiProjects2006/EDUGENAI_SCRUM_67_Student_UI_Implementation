@@ -39,7 +39,7 @@ const TopNavigation = () => {
   };
 
   const [activeNotifications, setActiveNotifications] = useState([
-    { id: 1, type: 'learning', icon: 'twemoji:brain', title: 'Time for Math!', message: "Bubbles says let's do a quest!", time: 'Just now', actionText: "Let's Go! 🚀", actionPath: '/courses' },
+    { id: 1, type: 'learning', icon: 'twemoji:brain', title: 'Time for Math!', message: "Bubbles says let's do a quest!", time: 'Just now', actionText: "Let's Go!", actionPath: '/courses' },
     { id: 2, type: 'subscription', icon: 'twemoji:locked-with-key', title: 'Unlock More Ocean', message: 'Ask your parents to renew your Ocean Pass.', time: '1 day ago', actionText: "View Profile", actionPath: 'profile' }
   ]);
 

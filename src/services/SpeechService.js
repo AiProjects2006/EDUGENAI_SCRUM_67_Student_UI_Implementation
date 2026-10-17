@@ -9,13 +9,20 @@ class SpeechService {
     this.currentUtterance = null;
   }
 
+  // Browsers block audio until the user interacts with the page
+  hasUserGesture() {
+    return !navigator.userActivation || navigator.userActivation.hasBeenActive;
+  }
+
   initAudio() {
     if (!this.audioCtx) {
+      if (!this.hasUserGesture()) return false;
       this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
+      this.audioCtx.resume().catch(() => {});
     }
+    return true;
   }
 
   // Speak text in a cute, child-like high-pitched voice
@@ -31,6 +38,25 @@ class SpeechService {
     }
     this.lastText = text;
     this.lastTime = Date.now();
+
+    if (!this.hasUserGesture()) {
+      // Speech is blocked until the first click/tap; speak then instead of erroring
+      this.pendingSpeech = { text, callback };
+      if (!this.gestureListenerAdded) {
+        this.gestureListenerAdded = true;
+        const flush = () => {
+          window.removeEventListener('pointerdown', flush, true);
+          window.removeEventListener('keydown', flush, true);
+          this.gestureListenerAdded = false;
+          const pending = this.pendingSpeech;
+          this.pendingSpeech = null;
+          if (pending) this.speak(pending.text, pending.callback);
+        };
+        window.addEventListener('pointerdown', flush, true);
+        window.addEventListener('keydown', flush, true);
+      }
+      return;
+    }
 
     if (this.synth) {
       this.synth.cancel(); // Stop current speech
@@ -67,7 +93,9 @@ class SpeechService {
         };
 
         utterance.onerror = (e) => {
-          console.error("Speech synthesis error:", e);
+          if (e.error !== 'interrupted' && e.error !== 'canceled' && e.error !== 'not-allowed') {
+            console.error("Speech synthesis error:", e);
+          }
           this.currentUtterance = null;
           if (callback) callback();
         };
@@ -89,8 +117,7 @@ class SpeechService {
 
   // Sound Effects using Web Audio API (No files needed!)
   playPop() {
-    if (this.soundMuted) return;
-    this.initAudio();
+    if (this.soundMuted || !this.initAudio()) return;
     
     const ctx = this.audioCtx;
     const osc = ctx.createOscillator();
@@ -112,8 +139,7 @@ class SpeechService {
   }
 
   playCorrect() {
-    if (this.soundMuted) return;
-    this.initAudio();
+    if (this.soundMuted || !this.initAudio()) return;
     
     const ctx = this.audioCtx;
     const osc = ctx.createOscillator();
@@ -136,8 +162,7 @@ class SpeechService {
   }
 
   playIncorrect() {
-    if (this.soundMuted) return;
-    this.initAudio();
+    if (this.soundMuted || !this.initAudio()) return;
     
     const ctx = this.audioCtx;
     const osc = ctx.createOscillator();
@@ -158,8 +183,7 @@ class SpeechService {
   }
 
   playTreasureOpen() {
-    if (this.soundMuted) return;
-    this.initAudio();
+    if (this.soundMuted || !this.initAudio()) return;
     
     const ctx = this.audioCtx;
     const time = ctx.currentTime;
@@ -188,8 +212,7 @@ class SpeechService {
   }
 
   playMilestone() {
-    if (this.soundMuted) return;
-    this.initAudio();
+    if (this.soundMuted || !this.initAudio()) return;
     
     const ctx = this.audioCtx;
     const time = ctx.currentTime;

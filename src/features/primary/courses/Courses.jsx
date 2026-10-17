@@ -4,6 +4,7 @@ import { useOceanAudio } from '../../../context/AudioContext';
 import { useSaved } from '../../../context/SavedContext';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import { useUser } from '../../../context/UserContext';
+import { fetchPublishedCourses } from '../../../services/CourseService';
 import './Courses.css';
 
 const Courses = () => {
@@ -14,6 +15,31 @@ const Courses = () => {
   const { user } = useUser();
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [apiUnits, setApiUnits] = useState([]);
+  const [apiLoaded, setApiLoaded] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    const load = () =>
+      fetchPublishedCourses()
+        .then((data) => {
+          if (active) {
+            setApiUnits(data);
+            setApiLoaded(true);
+          }
+        })
+        .catch(() => {});
+
+    load();
+    const interval = setInterval(load, 15000);
+    window.addEventListener('focus', load);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+      window.removeEventListener('focus', load);
+    };
+  }, []);
 
   useEffect(() => {
     triggerMascotVoice("Let's start your Learning Journey! Pick a course!");
@@ -26,7 +52,9 @@ const Courses = () => {
     { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: 'twemoji:tropical-fish' },
   ];
 
-  const units = user?.courses?.length > 0 
+  const units = apiLoaded
+    ? apiUnits
+    : user?.courses?.length > 0 
     ? user.courses.map((c, idx) => ({
         id: c.id || idx,
         title: c.name,
@@ -75,7 +103,11 @@ const Courses = () => {
       <div className="courses-grid">
         {filteredUnits.map(unit => (
           <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
-            <div className="course-image"><AppIcon icon={unit.image} /></div>
+            <div className="course-image">
+              {unit.thumbnailUrl
+                ? <img src={unit.thumbnailUrl} alt={unit.title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover', borderRadius: '12px' }} />
+                : <AppIcon icon={unit.image} />}
+            </div>
             <div className="course-content">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <h3>{unit.title}</h3>
@@ -99,7 +131,7 @@ const Courses = () => {
               {unit.status === 'locked' ? (
                 <button className="btn-secondary disabled">Locked <AppIcon icon="twemoji:locked" /></button>
               ) : (
-                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title } })}>
+                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title, courseId: unit.courseId || unit.id } })}>
                   {unit.status === 'completed' ? <><AppIcon icon="twemoji:check-mark-button" /> Review</> : <><AppIcon icon="twemoji:play-button" /> Continue</>}
                 </button>
               )}

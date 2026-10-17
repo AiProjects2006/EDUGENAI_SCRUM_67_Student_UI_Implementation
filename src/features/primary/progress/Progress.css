@@ -1,0 +1,130 @@
+.progress-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.progress-header {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.progress-header h2 {
+  font-size: 2.5rem;
+  color: var(--golden-yellow);
+  margin-bottom: 0.5rem;
+}
+
+.progress-stats-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.stat-icon {
+  font-size: 3rem;
+}
+
+.stat-info h4 {
+  font-size: 1.1rem;
+  color: var(--aqua);
+  margin-bottom: 0.5rem;
+}
+
+.stat-info p {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.progress-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.progress-section {
+  padding: 2rem;
+}
+
+.progress-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.5rem;
+}
+
+.subject-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sub-prog-item {
+  width: 100%;
+}
+
+.prog-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.prog-bar {
+  width: 100%;
+  height: 15px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.prog-bar .fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-item .icon {
+  font-size: 3rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.badge-item.earned .icon {
+  background: rgba(233, 196, 106, 0.2);
+  border-color: var(--golden-yellow);
+}
+
+.badge-item.locked {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}

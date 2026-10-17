@@ -1,0 +1,91 @@
+.play-button-container {
+    position: fixed;
+    right: 40px;
+    top: 30%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+
+}
+
+
+
+.button-wrapper {
+    position: relative;
+}
+
+.gamified-play-btn {
+    position: relative;
+    width: 150px;
+    height: 150px;
+
+    background: linear-gradient(180deg, #ffb142 0%, #ff793f 100%);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    box-shadow:
+            0 14px 0 #cc4a00,
+            0 25px 30px rgba(0, 0, 0, 0.5),
+            inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+
+    overflow: hidden;
+    outline: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Shiny white glossy curve line along top-left inner border */
+.glossy-highlight {
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 80%;
+    height: 40%;
+    background: linear-gradient(160deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.1) 100%);
+    border-radius: 50px 50px 50px 10px;
+    pointer-events: none;
+    transform: rotate(-2deg);
+}
+
+.btn-text {
+    font-family: 'Fredoka One', 'Nunito Black', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 5px 8px rgba(0, 0, 0, 0.6);
+
+    position: relative;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.dive-icon {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.dive-text {
+    display: block;
+    white-space: nowrap;
+}
+
+.bubble-particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2.5rem;
+    pointer-events: none;
+    z-index: 999;
+}

@@ -2,18 +2,45 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
+import { useUser } from '../../../context/UserContext';
+import { loginStudent } from '../../../services/AuthService';
 import '../registration/Registration.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { updateUser } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (password.length < 4) return;
-    navigate('/dashboard'); // Direct to dashboard on login
+    setError('');
+    setLoading(true);
+
+    try {
+      const result = await loginStudent({
+        usernameOrEmail: email,
+        password: password
+      });
+
+      if (result.user) {
+        updateUser({
+          fullName: result.user.fullName || result.user.username,
+          email: result.user.email || email
+        });
+      }
+
+      navigate('/dashboard');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err.message || 'Unable to log in. Please check your email and password.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,12 +48,17 @@ const Login = () => {
       <OceanBackground />
       <div className="registration-card glass-panel">
         <h2>Welcome Back Explorer! <AppIcon icon="twemoji:water-wave" /></h2>
+        {error && (
+          <div style={{ color: '#ef476f', marginBottom: '1rem', fontWeight: 'bold', background: 'rgba(239, 71, 111, 0.1)', padding: '10px 14px', borderRadius: '10px' }}>
+            {error}
+          </div>
+        )}
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label>Email</label>
+            <label>Email or Username</label>
             <input 
-              type="email" 
-              placeholder="Your email" 
+              type="text" 
+              placeholder="Your email or username" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
@@ -66,7 +98,9 @@ const Login = () => {
               </span>
             </div>
           </div>
-          <button type="submit" className="btn-primary" disabled={password && password.length < 4}>Log In</button>
+          <button type="submit" className="btn-primary" disabled={loading || (password && password.length < 4)}>
+            {loading ? 'Diving In...' : 'Log In'}
+          </button>
         </form>
         <p className="login-link">
           New here? <span onClick={() => navigate('/registration')}>Register now</span>

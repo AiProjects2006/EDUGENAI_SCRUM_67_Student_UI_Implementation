@@ -13,15 +13,13 @@ export const ProgressProvider = ({ children }) => {
       starsEarned: 0,
       subjectProgress: {
         Mathematics: { percentage: 10, color: '#ef476f' },
-        Science: { percentage: 20, color: '#06d6a0' },
-        English: { percentage: 5, color: '#ffd166' },
-        ICT: { percentage: 0, color: '#66f2ff' }
+        "Environmental Studies": { percentage: 20, color: '#06d6a0' },
+        ICT: { percentage: 15, color: '#66f2ff' }
       },
       badges: [
         { id: 'math', name: 'Math Whiz', icon: 'twemoji:1st-place-medal', earned: false },
-        { id: 'science', name: 'Science Pro', icon: 'twemoji:2nd-place-medal', earned: false },
-        { id: 'reader', name: 'Reader', icon: 'twemoji:3rd-place-medal', earned: false },
-        { id: 'grammar', name: 'Grammar Master', icon: 'twemoji:locked', earned: false }
+        { id: 'env', name: 'Nature Explorer', icon: 'twemoji:2nd-place-medal', earned: false },
+        { id: 'ict', name: 'Tech Pioneer', icon: 'twemoji:3rd-place-medal', earned: false }
       ]
     };
 

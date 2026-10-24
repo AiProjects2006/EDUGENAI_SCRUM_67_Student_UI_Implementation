@@ -9,7 +9,7 @@ export const generatorMockActivities = [
       "48",
       "54"
     ],
-    "correctAnswer": "54",
+    "correctAnswer": "42",
     "correctFeedback": "Correct!",
     "incorrectFeedback": "Oops, try again!",
     "id": 1000,

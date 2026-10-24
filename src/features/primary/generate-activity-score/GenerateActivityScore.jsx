@@ -19,12 +19,15 @@ const GenerateActivityScore = () => {
 
   const [reviewType, setReviewType] = useState(null); // 'correct' or 'wrong'
 
+  const courseSubject = location.state?.subject || location.state?.course || 'General';
+  const moduleTopic = location.state?.module || 'Key Concepts';
+
   useEffect(() => {
     setShowConfetti(true);
     triggerMascotVoice(`Activity Complete! You scored ${percentage} percent!`);
     incrementActivities();
     addStars(score * 10);
-    updateSubjectProgress('Mathematics', 5); // Add 5% progress to Mathematics
+    updateSubjectProgress(courseSubject, 5);
     if (percentage === 100) {
       incrementCourses();
     }
@@ -67,17 +70,22 @@ const GenerateActivityScore = () => {
           </div>
           <div className="summary-item weakness">
             <span><AppIcon icon="twemoji:light-bulb" /> Area to Review</span>
-            <span>Ocean Habitats</span>
+            <span>{moduleTopic}</span>
           </div>
         </div>
 
         <div className="feedback-box">
-          <p><strong>Bubbles says:</strong> "You did fantastic! Just review your habitats and you'll be perfect!"</p>
+          <p>
+            <strong>Bubbles says:</strong>{" "}
+            {percentage >= 80
+              ? `You did fantastic! Mastering ${moduleTopic} makes you a superstar!`
+              : `Great effort! Just review ${moduleTopic} and you'll get 100% next time!`}
+          </p>
         </div>
 
         <div className="score-actions">
           <button className="btn-secondary" onClick={() => navigate('/generate-activity-activity', { state: location.state })}>Retry Activity</button>
-          <button className="btn-secondary" onClick={() => navigate('/generate-activity')}>Generate Another</button>
+          <button className="btn-secondary" onClick={() => navigate('/generate-activity', { state: location.state })}>Generate Another</button>
           <button className="btn-primary" onClick={handleNextActivity}>Explore Quest Map</button>
         </div>
       </div>

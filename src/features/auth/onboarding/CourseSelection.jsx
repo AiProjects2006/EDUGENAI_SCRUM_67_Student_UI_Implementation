@@ -7,40 +7,45 @@ import './Onboarding.css';
 
 const catalogData = {
   "Grade 3": [
-    { subject: 'Math', title: 'Mathematics 3', icon: 'twemoji:abacus', courses: [
-      { id: 'math-3-1', name: 'Fractions & Decimals', icon: 'twemoji:input-numbers', category: 'Math' },
-      { id: 'math-3-2', name: 'Geometry Basics', icon: 'twemoji:triangular-ruler', category: 'Math' }
+    { subject: 'Mathematics', title: 'Mathematics 3', icon: 'twemoji:abacus', courses: [
+      { id: 'math-3-1', name: 'Multiplication Basics & Word Problems', icon: 'twemoji:input-numbers', category: 'Mathematics' },
+      { id: 'math-3-2', name: 'Geometry Basics & Shapes', icon: 'twemoji:triangular-ruler', category: 'Mathematics' }
     ]},
-    { subject: 'Science', title: 'Science 3', icon: 'twemoji:microscope', courses: [
-      { id: 'sci-3-1', name: 'Marine Biology', icon: 'twemoji:tropical-fish', category: 'Science' },
-      { id: 'sci-3-2', name: 'Plant Life', icon: 'twemoji:potted-plant', category: 'Science' }
+    { subject: 'Environmental Studies', title: 'Environmental Studies 3', icon: 'twemoji:deciduous-tree', courses: [
+      { id: 'env-3-1', name: 'Our Living Environment', icon: 'twemoji:potted-plant', category: 'Environmental Studies' },
+      { id: 'env-3-2', name: 'Plants and Animals Around Us', icon: 'twemoji:tropical-fish', category: 'Environmental Studies' }
     ]},
-    { subject: 'English', title: 'English 3', icon: 'twemoji:open-book', courses: [
-      { id: 'eng-3-1', name: 'Grammar Basics', icon: 'twemoji:pencil', category: 'English' },
-      { id: 'eng-3-2', name: 'Reading Comprehension', icon: 'twemoji:books', category: 'English' }
+    { subject: 'ICT', title: 'ICT 3', icon: 'twemoji:laptop', courses: [
+      { id: 'ict-3-1', name: 'Introduction to Computers', icon: 'twemoji:desktop-computer', category: 'ICT' },
+      { id: 'ict-3-2', name: 'Mouse & Keyboard Mastery', icon: 'twemoji:computer-mouse', category: 'ICT' }
     ]}
   ],
   "Grade 4": [
-    { subject: 'Math', title: 'Mathematics 4', icon: 'twemoji:abacus', courses: [
-      { id: 'math-4-1', name: 'Fractions & Decimals', icon: 'twemoji:input-numbers', category: 'Math' },
-      { id: 'math-4-2', name: 'Geometry Basics', icon: 'twemoji:triangular-ruler', category: 'Math' }
+    { subject: 'Mathematics', title: 'Mathematics 4', icon: 'twemoji:abacus', courses: [
+      { id: 'math-4-1', name: 'Fractions & Decimals', icon: 'twemoji:input-numbers', category: 'Mathematics' },
+      { id: 'math-4-2', name: 'Geometry & Angles', icon: 'twemoji:triangular-ruler', category: 'Mathematics' }
     ]},
-    { subject: 'Science', title: 'Science 4', icon: 'twemoji:microscope', courses: [
-      { id: 'sci-4-1', name: 'Marine Biology', icon: 'twemoji:tropical-fish', category: 'Science' }
+    { subject: 'Environmental Studies', title: 'Environmental Studies 4', icon: 'twemoji:deciduous-tree', courses: [
+      { id: 'env-4-1', name: 'Our Living Environment & Ecosystems', icon: 'twemoji:water-wave', category: 'Environmental Studies' },
+      { id: 'env-4-2', name: 'Weather and Natural Resources', icon: 'twemoji:sun-behind-cloud', category: 'Environmental Studies' }
     ]},
-    { subject: 'English', title: 'English 4', icon: 'twemoji:open-book', courses: [
-      { id: 'eng-4-1', name: 'Grammar Advanced', icon: 'twemoji:pencil', category: 'English' }
+    { subject: 'ICT', title: 'ICT 4', icon: 'twemoji:laptop', courses: [
+      { id: 'ict-4-1', name: 'Digital Tools & Document Creation', icon: 'twemoji:keyboard', category: 'ICT' },
+      { id: 'ict-4-2', name: 'Internet Basics & Safe Browsing', icon: 'twemoji:globe-with-meridians', category: 'ICT' }
     ]}
   ],
   "Grade 5": [
-    { subject: 'Math', title: 'Mathematics 5', icon: 'twemoji:abacus', courses: [
-      { id: 'math-5-1', name: 'Advanced Algebra', icon: 'twemoji:abacus', category: 'Math' }
+    { subject: 'Mathematics', title: 'Mathematics 5', icon: 'twemoji:abacus', courses: [
+      { id: 'math-5-1', name: 'Advanced Fractions & Ratios', icon: 'twemoji:abacus', category: 'Mathematics' },
+      { id: 'math-5-2', name: 'Measurement, Area & Volume', icon: 'twemoji:triangular-ruler', category: 'Mathematics' }
     ]},
-    { subject: 'Science', title: 'Science 5', icon: 'twemoji:microscope', courses: [
-      { id: 'sci-5-1', name: 'Physics Basics', icon: 'twemoji:rocket', category: 'Science' }
+    { subject: 'Environmental Studies', title: 'Environmental Studies 5', icon: 'twemoji:deciduous-tree', courses: [
+      { id: 'env-5-1', name: 'Ecosystem Preservation & Biodiversity', icon: 'twemoji:globe-showing-americas', category: 'Environmental Studies' },
+      { id: 'env-5-2', name: 'Climate & Energy Conservation', icon: 'twemoji:seedling', category: 'Environmental Studies' }
     ]},
-    { subject: 'English', title: 'English 5', icon: 'twemoji:open-book', courses: [
-      { id: 'eng-5-1', name: 'Essay Writing', icon: 'twemoji:scroll', category: 'English' }
+    { subject: 'ICT', title: 'ICT 5', icon: 'twemoji:laptop', courses: [
+      { id: 'ict-5-1', name: 'Introduction to Computer Basics & Digital Safety', icon: 'twemoji:laptop', category: 'ICT' },
+      { id: 'ict-5-2', name: 'Digital Citizenship & Cyber Safety', icon: 'twemoji:shield', category: 'ICT' }
     ]}
   ]
 };

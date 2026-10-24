@@ -18,7 +18,7 @@ const Recommendations = () => {
     { id: 1, title: 'Creative Writing', description: 'Learn to write stories!', subject: 'english', icon: 'twemoji:open-book', path: '/notes' },
     { id: 2, title: 'Ocean Geography', description: 'Discover the deep blue!', subject: 'science', icon: 'twemoji:water-wave', path: '/notes' }
   ];
-  
+
   let initialActivities = [
     { id: 1, title: 'Pizza Fractions', description: 'Math • Medium Difficulty', subject: 'math', icon: 'twemoji:pizza', path: '/activity-map' },
     { id: 2, title: 'Shark Habitats', description: 'Science • Easy Difficulty', subject: 'science', icon: 'twemoji:shark', path: '/activity-map' }

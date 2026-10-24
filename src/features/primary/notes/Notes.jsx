@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import { useProgress } from '../../../context/ProgressContext';
@@ -7,27 +7,27 @@ import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
 import { fetchModuleSlides } from '../../../services/CourseService';
 import './Notes.css';
 
-const DEFAULT_GEOMETRY_SLIDES = [
+const getModuleCurriculumSlides = (courseTitle = 'General Studies', moduleTitle = 'Lesson Overview') => [
   {
-    icon: 'twemoji:triangular-ruler',
-    title: 'What is a Triangle?',
-    content: 'A triangle is a polygon with three edges and three vertices. It is one of the basic shapes in geometry. The sum of angles in any planar triangle is always 180 degrees.',
-    fact: 'Did you know the starfish is shaped like 5 triangles put together?',
-    audio: 'A triangle is a polygon with three edges and three vertices. Did you know the starfish is shaped like 5 triangles put together?'
+    icon: 'twemoji:open-book',
+    title: `Introduction to ${moduleTitle}`,
+    content: `In this lesson of ${courseTitle}, you will explore the essential foundations and key ideas of ${moduleTitle}. Study each slide carefully to prepare for your activities.`,
+    fact: `Bubbles says: Understanding ${moduleTitle} helps you master ${courseTitle}!`,
+    audio: `Introduction to ${moduleTitle} in ${courseTitle}. Study each slide carefully to prepare for your activities.`
   },
   {
-    icon: 'twemoji:stop-button',
-    title: 'What is a Square?',
-    content: 'A square is a regular quadrilateral, which means that it has four equal sides and four equal angles.',
-    fact: 'A chessboard is made of 64 smaller squares!',
-    audio: 'A square has four equal sides and four equal angles. A chessboard is made of 64 smaller squares!'
+    icon: 'twemoji:light-bulb',
+    title: `Key Concepts of ${moduleTitle}`,
+    content: `Core concepts of ${moduleTitle} connect directly to practical real-world applications. Pay close attention to vocabulary, processes, and relationships between elements.`,
+    fact: 'Did you know? Active learning and self-testing boost concept retention by over 80%!',
+    audio: `Key Concepts of ${moduleTitle}. Core concepts connect directly to real-world applications.`
   },
   {
-    icon: 'twemoji:hollow-red-circle',
-    title: 'What is a Circle?',
-    content: 'A circle is a shape consisting of all points in a plane that are at a given distance from a given point, the center.',
-    fact: 'Bubbles are perfect spheres, which look like circles from any angle!',
-    audio: 'A circle has all points at a given distance from the center. Bubbles look like circles!'
+    icon: 'twemoji:star',
+    title: `Summary & Activity Challenge`,
+    content: `You have completed the overview of ${moduleTitle}! Review the points above, then test your knowledge with interactive AI activities.`,
+    fact: 'Bubbles says: Complete all 15 question types to earn special badges and ocean gems!',
+    audio: `Summary and Activity Challenge. You are now ready to test your knowledge with interactive AI activities!`
   }
 ];
 
@@ -39,55 +39,136 @@ const Notes = () => {
   const { saveItem, removeItem, isSaved } = useSaved();
 
   const {
-    module: moduleTitle = 'Geometry Basics',
+    module: moduleTitle = 'Module Overview',
     moduleId,
-    course: courseTitle = 'Mathematics',
-    courseId
+    course: courseTitle = 'Course',
+    courseId,
+    subject: courseSubject = ''
   } = location.state || {};
 
   const [slides, setSlides] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isReading, setIsReading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [publishedActivity, setPublishedActivity] = useState(null);
+  const isLoadingSlidesRef = useRef(false);
 
   const noteId = moduleId ? `note-${moduleId}` : 101;
 
   useEffect(() => {
     let active = true;
 
+    const checkPublished = async () => {
+      // 1. Check local storage for activities published by teacher
+      try {
+        const raw = localStorage.getItem('published_activities');
+        if (raw) {
+          const list = JSON.parse(raw);
+          const found = list.find((a) =>
+            (moduleId && Number(a.moduleId) === Number(moduleId)) ||
+            (a.moduleTitle && moduleTitle && a.moduleTitle.toLowerCase() === moduleTitle.toLowerCase()) ||
+            (a.courseTitle && courseTitle && a.courseTitle.toLowerCase() === courseTitle.toLowerCase())
+          );
+          if (found && active) {
+            setPublishedActivity(found);
+            return;
+          }
+        }
+      } catch (_) { }
+
+      // 2. Check Activity API via Gateway
+      try {
+        const GATEWAY_URL = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:8087';
+        const modIdParam = moduleId || 1;
+        const res = await fetch(`${GATEWAY_URL}/api/v1/activities?moduleId=${modIdParam}`).catch(() => null);
+        if (res && res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0 && active) {
+            // Fetch detail for first activity
+            const actId = list[0].activityId || list[0].id;
+            const detRes = await fetch(`${GATEWAY_URL}/api/v1/activities/${actId}`).catch(() => null);
+            if (detRes && detRes.ok) {
+              const detail = await detRes.json();
+              if (active && detail && Array.isArray(detail.questions) && detail.questions.length > 0) {
+                const actType = detail.activityType || list[0].activityType || 'MCQ';
+                const formatted = {
+                  ...list[0],
+                  activityType: actType,
+                  questions: detail.questions.map((q, idx) => ({
+                    id: idx + 100,
+                    activityType: q.activityType || actType,
+                    question: q.questionText || q.question || `Question ${idx + 1}`,
+                    options: (q.options || []).map(o => typeof o === 'string' ? o : o.optionText),
+                    correctAnswer: q.correctAnswer || (q.options || []).find(o => o.correct)?.optionText || q.options?.[0]?.optionText,
+                    categories: q.categories || null,
+                    items: q.items || null,
+                    itemsToOrder: q.itemsToOrder || null,
+                    imageUrl: q.imageUrl || null,
+                    passage: q.passage || null,
+                    timeLimitSeconds: q.timeLimitSeconds || (actType === 'TIMED_QUIZ' ? 20 : null),
+                    correctFeedback: 'Great job! That is correct! 🌟',
+                    incorrectFeedback: 'Oops! Try again next time.',
+                    points: q.points || 2
+                  }))
+                };
+                setPublishedActivity(formatted);
+              }
+            }
+          }
+        }
+      } catch (_) { }
+    };
+
+    checkPublished();
+    window.addEventListener('focus', checkPublished);
+    window.addEventListener('storage', checkPublished);
+
+    let channel = null;
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        channel = new BroadcastChannel('edugenai_channel');
+        channel.onmessage = (event) => {
+          if (event.data?.type === 'ACTIVITY_PUBLISHED') {
+            checkPublished();
+          }
+        };
+      }
+    } catch (_) { }
+
+    return () => {
+      active = false;
+      window.removeEventListener('focus', checkPublished);
+      window.removeEventListener('storage', checkPublished);
+      if (channel) channel.close();
+    };
+  }, [moduleId, moduleTitle, courseTitle]);
+
+  useEffect(() => {
+    let active = true;
+
     const loadSlides = async () => {
+      if (isLoadingSlidesRef.current) return;
+      isLoadingSlidesRef.current = true;
       try {
         let loaded = [];
-        if (moduleId) {
-          loaded = await fetchModuleSlides(moduleId);
+        if (moduleId || moduleTitle) {
+          loaded = await fetchModuleSlides(moduleId, moduleTitle, courseId, courseTitle);
         }
 
         if (active) {
           if (Array.isArray(loaded) && loaded.length > 0) {
-            // Real slides from backend - use them
             setSlides(loaded);
-          } else if (!moduleId || (Number(moduleId) === 1 && moduleTitle.toLowerCase().includes('geometry'))) {
-            // Default demo slides for geometry module
-            setSlides(DEFAULT_GEOMETRY_SLIDES);
           } else {
-            // Template for newly created module with no slides yet
-            // Keeps the same structure - only title updates, rest is template
-            setSlides([
-              {
-                icon: 'twemoji:open-book',
-                title: `Welcome to ${moduleTitle}`,
-                content: `You are exploring ${moduleTitle} in ${courseTitle}. Your teacher has prepared this lesson module. Follow the concepts, take notes, and explore the AI activities below!`,
-                fact: 'Bubbles says: Practicing regularly helps you unlock high scores and badges!',
-                audio: `Welcome to ${moduleTitle}. Your teacher has prepared this lesson module. Follow the concepts and take notes!`
-              }
-            ]);
+            // Dynamic curriculum slides based on the module and course
+            setSlides(getModuleCurriculumSlides(courseTitle, moduleTitle));
           }
         }
       } catch (err) {
         if (active && (!slides || slides.length === 0)) {
-          setSlides(DEFAULT_GEOMETRY_SLIDES);
+          setSlides(getModuleCurriculumSlides(courseTitle, moduleTitle));
         }
       } finally {
+        isLoadingSlidesRef.current = false;
         if (active) setLoading(false);
       }
     };
@@ -109,10 +190,10 @@ const Notes = () => {
           }
         };
       }
-    } catch (_) {}
+    } catch (_) { }
 
     // Polling interval so updates from content creator immediately reflect
-    const interval = setInterval(loadSlides, 4000);
+    const interval = setInterval(loadSlides, 8000);
 
     return () => {
       active = false;
@@ -168,7 +249,7 @@ const Notes = () => {
         id: noteId,
         type: 'Notes',
         title: `${courseTitle} - ${moduleTitle}`,
-        icon: slides[currentSlide]?.icon || 'twemoji:triangular-ruler'
+        icon: slides[currentSlide]?.icon || 'twemoji:books'
       });
     }
   };
@@ -181,10 +262,10 @@ const Notes = () => {
         <div className="header-content">
           <button
             className="back-btn"
-            onClick={() => navigate('/modules', { state: { course: courseTitle, courseId } })}
+            onClick={() => navigate('/modules', { state: { course: courseTitle, courseId, subject: courseSubject } })}
             aria-label="Go Back"
           >
-            <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" /></svg>
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -194,7 +275,7 @@ const Notes = () => {
               </div>
               <h2 style={{ margin: 0 }}>{moduleTitle}</h2>
             </div>
-            <button 
+            <button
               className={`gamified-star-btn ${isSaved(noteId, 'Notes') ? 'saved' : ''}`}
               onClick={handleBookmark}
               title="Save Notes"
@@ -255,7 +336,7 @@ const Notes = () => {
           <>
             <div className="slide-viewer">
               <div className="slide-image">
-                <AppIcon icon={activeSlide.icon || 'twemoji:triangular-ruler'} />
+                <AppIcon icon={activeSlide.icon || 'twemoji:books'} />
               </div>
               <h3>{activeSlide.title}</h3>
               <p>{activeSlide.content}</p>
@@ -305,14 +386,51 @@ const Notes = () => {
       </div>
 
       <div className="notes-footer" style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        {publishedActivity && (
+          <button
+            className="btn-primary huge-btn"
+            style={{
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              boxShadow: '0 8px 24px rgba(16, 185, 129, 0.4)',
+              border: '2px solid rgba(255, 255, 255, 0.4)'
+            }}
+            onClick={() => {
+              incrementModules();
+              navigate('/generate-activity-activity', {
+                state: {
+                  type: publishedActivity.activityType || 'Multiple Choice Questions (MCQ)',
+                  diff: publishedActivity.difficulty || 'MEDIUM',
+                  count: publishedActivity.questions?.length || 5,
+                  module: moduleTitle,
+                  course: courseTitle,
+                  subject: courseSubject,
+                  moduleId,
+                  courseId,
+                  generatedQuestions: publishedActivity.questions
+                }
+              });
+            }}
+          >
+            Start Course Activity ({publishedActivity.questions?.length || 5} Questions) <AppIcon icon="twemoji:sparkles" />
+          </button>
+        )}
+
         <button
           className="btn-primary huge-btn"
           onClick={() => {
             incrementModules();
-            navigate('/generate-activity', { state: { module: moduleTitle, course: courseTitle } });
+            navigate('/generate-activity', {
+              state: {
+                module: moduleTitle,
+                course: courseTitle,
+                subject: courseSubject,
+                moduleId,
+                courseId
+              }
+            });
           }}
         >
-          Generate AI Activity <AppIcon icon="twemoji:sparkles" />
+          {publishedActivity ? "Generate AI Questions" : "Generate AI Activity"} <AppIcon icon="twemoji:rocket" />
         </button>
         <button
           className="btn-secondary huge-btn"

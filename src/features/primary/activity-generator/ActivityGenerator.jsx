@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useOceanAudio } from '../../../context/AudioContext';
 import './ActivityGenerator.css';
 import PlayButton from './PlayButton';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
+import aiService from '../../../services/AIService';
 
 const ActivityGenerator = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { triggerMascotVoice } = useOceanAudio();
     const [step, setStep] = useState(1);
     const [isGenerating, setIsGenerating] = useState(false);
@@ -42,7 +44,7 @@ const ActivityGenerator = () => {
         setStep(step + 1);
     };
 
-    const handleGenerate = () => {
+    const handleGenerate = async () => {
         if (step === 3 && !selectedCount) {
             triggerMascotVoice("Please select or enter a question count first.");
             setTimeout(() => alert("Please select or enter a question count first."), 100);
@@ -55,10 +57,56 @@ const ActivityGenerator = () => {
         }
 
         setIsGenerating(true);
+        const finalCount = selectedCount === 'custom' ? parseInt(customCount, 10) : parseInt(selectedCount, 10);
+        const dynamicSubject = location.state?.subject || location.state?.course || 'General';
+        const dynamicTopic = location.state?.module || location.state?.course || 'Lesson Review';
+
+        try {
+            const result = await aiService.generateActivity({
+                moduleId: location.state?.moduleId || 1,
+                subject: dynamicSubject,
+                topic: dynamicTopic,
+                activityType: selectedType,
+                difficulty: selectedDiff,
+                count: finalCount
+            });
+
+            if (result.success && result.formattedQuestions && result.formattedQuestions.length > 0) {
+                navigate('/generate-activity-activity', {
+                    state: {
+                        type: selectedType,
+                        diff: selectedDiff,
+                        count: finalCount,
+                        module: dynamicTopic,
+                        course: location.state?.course,
+                        subject: dynamicSubject,
+                        moduleId: location.state?.moduleId,
+                        courseId: location.state?.courseId,
+                        generatedActivity: result.data,
+                        generatedQuestions: result.formattedQuestions
+                    }
+                });
+                return;
+            }
+        } catch (err) {
+            console.warn('Backend generation failed, utilizing fallback:', err);
+        }
+
+        // Fallback navigation
         setTimeout(() => {
-            const finalCount = selectedCount === 'custom' ? parseInt(customCount, 10) : parseInt(selectedCount, 10);
-            navigate('/generate-activity-activity', { state: { type: selectedType, diff: selectedDiff, count: finalCount } });
-        }, 3000);
+            navigate('/generate-activity-activity', {
+                state: {
+                    type: selectedType,
+                    diff: selectedDiff,
+                    count: finalCount,
+                    module: dynamicTopic,
+                    course: location.state?.course,
+                    subject: dynamicSubject,
+                    moduleId: location.state?.moduleId,
+                    courseId: location.state?.courseId
+                }
+            });
+        }, 1500);
     };
 
     const renderStep = () => {
@@ -148,7 +196,7 @@ const ActivityGenerator = () => {
             <div className="generator-card glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
                 <div className="header-content" style={{ marginBottom: '2rem' }}>
                     {step === 1 && (
-                        <button className="back-btn" onClick={() => navigate('/notes')} aria-label="Go Back">
+                        <button className="back-btn" onClick={() => navigate('/notes', { state: location.state })} aria-label="Go Back">
                             <svg className="back-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
                         </button>
                     )}

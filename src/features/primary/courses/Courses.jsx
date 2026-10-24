@@ -28,16 +28,39 @@ const Courses = () => {
             setApiLoaded(true);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
 
     load();
-    const interval = setInterval(load, 15000);
+
     window.addEventListener('focus', load);
+    window.addEventListener('storage', load);
+    window.addEventListener('coursesUpdated', load);
+
+    let channel = null;
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        channel = new BroadcastChannel('edugenai_channel');
+        channel.onmessage = (event) => {
+          if (
+            !event.data ||
+            event.data.type === 'COURSES_UPDATED' ||
+            event.data.type === 'COURSE_PUBLISHED'
+          ) {
+            load();
+          }
+        };
+      }
+    } catch (_) { }
+
+    const interval = setInterval(load, 3000);
 
     return () => {
       active = false;
       clearInterval(interval);
       window.removeEventListener('focus', load);
+      window.removeEventListener('storage', load);
+      window.removeEventListener('coursesUpdated', load);
+      if (channel) channel.close();
     };
   }, []);
 
@@ -45,31 +68,26 @@ const Courses = () => {
     triggerMascotVoice("Let's start your Learning Journey! Pick a course!");
   }, [triggerMascotVoice]);
 
-  const mockUnits = [
-    { id: 1, title: 'Fractions & Decimals', subject: 'Math', status: 'completed', image: 'twemoji:input-numbers' },
-    { id: 2, title: 'Geometry Basics', subject: 'Math', status: 'unlocked', image: 'twemoji:triangular-ruler' },
-    { id: 3, title: 'Advanced Algebra', subject: 'Math', status: 'unlocked', image: 'twemoji:abacus' },
-    { id: 4, title: 'Marine Biology', subject: 'Science', status: 'unlocked', image: 'twemoji:tropical-fish' },
-  ];
-
   const units = apiLoaded
     ? apiUnits
-    : user?.courses?.length > 0 
-    ? user.courses.map((c, idx) => ({
+    : (user?.courses && user.courses.length > 0)
+      ? user.courses.map((c, idx) => ({
         id: c.id || idx,
-        title: c.name,
-        subject: c.category,
+        courseId: c.id || idx,
+        title: c.name || c.title,
+        subject: c.category || c.subject || 'General',
         status: 'unlocked',
-        image: c.icon
+        image: c.icon || 'twemoji:books',
+        thumbnailUrl: c.thumbnailUrl || null
       }))
-    : mockUnits;
+      : [];
 
   // Only show 'All' and the subjects the student is actually enrolled in
-  const categories = ['All', ...new Set(units.map(u => u.subject))];
+  const categories = ['All', ...new Set(units.map(u => u.subject).filter(Boolean))];
 
   const filteredUnits = units.filter(u => {
     const matchesCategory = activeCategory === 'All' || u.subject === activeCategory;
-    const matchesSearch = u.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = (u.title || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -78,9 +96,9 @@ const Courses = () => {
       <div className="courses-header glass-panel">
         <h2>Your Learning Journey <AppIcon icon="twemoji:books" /></h2>
         <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Search for a course..." 
+          <input
+            type="text"
+            placeholder="Search for a course..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -90,7 +108,7 @@ const Courses = () => {
 
       <div className="categories-filter">
         {categories.map(cat => (
-          <button 
+          <button
             key={cat}
             className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
             onClick={() => setActiveCategory(cat)}
@@ -101,44 +119,54 @@ const Courses = () => {
       </div>
 
       <div className="courses-grid">
-        {filteredUnits.map(unit => (
-          <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
-            <div className="course-image">
-              {unit.thumbnailUrl
-                ? <img src={unit.thumbnailUrl} alt={unit.title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover', borderRadius: '12px' }} />
-                : <AppIcon icon={unit.image} />}
-            </div>
-            <div className="course-content">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h3>{unit.title}</h3>
-                <button 
-                  className={`gamified-star-btn ${isSaved(unit.id, 'Courses') ? 'saved' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isSaved(unit.id, 'Courses')) {
-                      removeItem(unit.id, 'Courses');
-                    } else {
-                      saveItem({ id: unit.id, type: 'Courses', title: unit.title, icon: unit.image });
-                    }
-                  }}
-                  title="Save to Treasure Chest"
-                >
-                  <AppIcon icon="twemoji:star" />
-                </button>
-              </div>
-              <p className="subject-tag">{unit.subject}</p>
-              
-              {unit.status === 'locked' ? (
-                <button className="btn-secondary disabled">Locked <AppIcon icon="twemoji:locked" /></button>
-              ) : (
-                <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title, courseId: unit.courseId || unit.id } })}>
-                  {unit.status === 'completed' ? <><AppIcon icon="twemoji:check-mark-button" /> Review</> : <><AppIcon icon="twemoji:play-button" /> Continue</>}
-                </button>
-              )}
-            </div>
-            {unit.status === 'completed' && <div className="completion-badge"><AppIcon icon="twemoji:star" /></div>}
+        {filteredUnits.length === 0 ? (
+          <div className="empty-courses glass-panel" style={{ textAlign: 'center', padding: '3rem', width: '100%', gridColumn: '1 / -1', color: 'white' }}>
+            <span style={{ fontSize: '3rem' }}><AppIcon icon="twemoji:books" /></span>
+            <h3 style={{ marginTop: '1rem', fontSize: '1.4rem' }}>No courses found</h3>
+            <p style={{ opacity: 0.8, marginTop: '0.5rem' }}>
+              {searchQuery ? `No courses match "${searchQuery}".` : 'No published courses available yet. Check back soon!'}
+            </p>
           </div>
-        ))}
+        ) : (
+          filteredUnits.map(unit => (
+            <div key={unit.id} className={`course-card glass-panel ${unit.status}`} onMouseEnter={() => triggerMascotVoice(unit.title)}>
+              <div className="course-image">
+                {unit.thumbnailUrl
+                  ? <img src={unit.thumbnailUrl} alt={unit.title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover', borderRadius: '12px' }} />
+                  : <AppIcon icon={unit.image} />}
+              </div>
+              <div className="course-content">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <h3>{unit.title}</h3>
+                  <button
+                    className={`gamified-star-btn ${isSaved(unit.id, 'Courses') ? 'saved' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isSaved(unit.id, 'Courses')) {
+                        removeItem(unit.id, 'Courses');
+                      } else {
+                        saveItem({ id: unit.id, type: 'Courses', title: unit.title, icon: unit.image });
+                      }
+                    }}
+                    title="Save to Treasure Chest"
+                  >
+                    <AppIcon icon="twemoji:star" />
+                  </button>
+                </div>
+                <p className="subject-tag">{unit.subject}</p>
+
+                {unit.status === 'locked' ? (
+                  <button className="btn-secondary disabled">Locked <AppIcon icon="twemoji:locked" /></button>
+                ) : (
+                  <button className="btn-primary" onClick={() => navigate('/modules', { state: { course: unit.title, courseId: unit.courseId || unit.id, subject: unit.subject } })}>
+                    {unit.status === 'completed' ? <><AppIcon icon="twemoji:check-mark-button" /> Review</> : <><AppIcon icon="twemoji:play-button" /> Continue</>}
+                  </button>
+                )}
+              </div>
+              {unit.status === 'completed' && <div className="completion-badge"><AppIcon icon="twemoji:star" /></div>}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

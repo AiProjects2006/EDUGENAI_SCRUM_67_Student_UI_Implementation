@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import OceanBackground from '../../../components/layout/OceanBackground/OceanBackground';
 import { useUser } from '../../../context/UserContext';
 import { AppIcon } from '../../../components/common/AppIcon/AppIcon';
+import { registerStudent } from '../../../services/AuthService';
 import './Registration.css';
 
 const Registration = () => {
@@ -16,23 +17,52 @@ const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (password.length < 4 || password !== confirmPassword) {
-      return; // Do not submit if there are inline errors
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long for security.');
+      return;
     }
 
-    // Save initial registration details to context
-    updateUser({
-      fullName: name,
-      email: email,
-      password: password
-    });
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
 
-    navigate('/verify-email');
+    setLoading(true);
+    try {
+      const parts = name.trim().split(/\s+/);
+      const firstName = parts[0] || 'Student';
+      const lastName = parts.slice(1).join(' ') || 'Explorer';
+      const username = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '') || `student_${Date.now()}`;
+
+      await registerStudent({
+        firstName,
+        lastName,
+        username,
+        email: email.trim(),
+        password,
+        contactNumber: '0771234567'
+      });
+
+      // Save registration details to context
+      updateUser({
+        fullName: name,
+        email: email,
+        password: password
+      });
+
+      navigate('/verify-email');
+    } catch (err) {
+      console.error('Registration failed:', err);
+      setError(err.message || 'Failed to register account. Please check your details.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,12 +97,12 @@ const Registration = () => {
             <div style={{ position: 'relative' }}>
               <input 
                 type={showPassword ? "text" : "password"} 
-                placeholder="Create a secret password" 
+                placeholder="Create a secret password (min 8 chars)" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                minLength="4"
+                minLength="8"
                 required 
-                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 4 ? '#ef476f' : '' }}
+                style={{ width: '100%', paddingRight: '40px', borderColor: password && password.length < 8 ? '#ef476f' : '' }}
               />
               <span 
                 onClick={() => setShowPassword(!showPassword)}
@@ -82,9 +112,9 @@ const Registration = () => {
                 {showPassword ? <AppIcon icon="twemoji:eye" /> : <AppIcon icon="twemoji:see-no-evil-monkey" />}
               </span>
             </div>
-            {password && password.length < 4 && (
+            {password && password.length < 8 && (
               <span style={{ color: '#ef476f', fontSize: '0.85rem', marginTop: '4px', display: 'block', fontWeight: 'bold' }}>
-                Password must be at least 4 characters.
+                Password must be at least 8 characters.
               </span>
             )}
           </div>
@@ -96,7 +126,7 @@ const Registration = () => {
                 placeholder="Type it again!" 
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                minLength="4"
+                minLength="8"
                 required 
                 style={{ width: '100%', paddingRight: '40px', borderColor: confirmPassword && password !== confirmPassword ? '#ef476f' : '' }}
               />
@@ -114,7 +144,9 @@ const Registration = () => {
               </span>
             )}
           </div>
-          <button type="submit" className="btn-primary" disabled={password.length < 4 || password !== confirmPassword}>Register</button>
+          <button type="submit" className="btn-primary" disabled={loading || password.length < 8 || password !== confirmPassword}>
+            {loading ? 'Creating Explorer Account...' : 'Register'}
+          </button>
         </form>
         <p className="login-link">
           Already exploring? <span onClick={() => navigate('/login')}>Log in here</span>
